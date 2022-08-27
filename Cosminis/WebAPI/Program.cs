@@ -6,6 +6,7 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Services;
 using Controllers;
+//I am wondering If I can admin priviledges
 
 var builder = WebApplication.CreateBuilder(args);
 
