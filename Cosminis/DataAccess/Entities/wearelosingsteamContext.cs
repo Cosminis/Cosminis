@@ -24,6 +24,7 @@ namespace DataAccess.Entities
         public virtual DbSet<FoodInventory> FoodInventories { get; set; } = null!;
         public virtual DbSet<FoodStat> FoodStats { get; set; } = null!;
         public virtual DbSet<Friends> Friends { get; set; } = null!;
+        public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
         public virtual DbSet<Species> Species { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -254,6 +255,30 @@ namespace DataAccess.Entities
                     .HasConstraintName("FK__friends__userId___308E3499");
             });
 
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.ToTable("orders", "WALS_P2");
+
+                entity.Property(e => e.OrderId).HasColumnName("orderId");
+
+                entity.Property(e => e.Cost)
+                    .HasColumnType("money")
+                    .HasColumnName("cost");
+
+                entity.Property(e => e.TimeOrdered)
+                    .HasColumnType("datetime")
+                    .HasColumnName("timeOrdered")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.UserIdFk).HasColumnName("userId_fk");
+
+                entity.HasOne(d => d.UserIdFkNavigation)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.UserIdFk)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__orders__userId_f__41B8C09B");
+            });
+
             modelBuilder.Entity<Post>(entity =>
             {
                 entity.ToTable("posts", "WALS_P2");
@@ -335,6 +360,8 @@ namespace DataAccess.Entities
                 entity.Property(e => e.EggTimer)
                     .HasColumnType("datetime")
                     .HasColumnName("eggTimer");
+
+                entity.Property(e => e.GemCount).HasColumnName("gemCount");
 
                 entity.Property(e => e.GoldCount).HasColumnName("goldCount");
 
