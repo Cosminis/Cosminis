@@ -22,10 +22,14 @@ namespace DataAccess.Entities
         public int? Mood { get; set; }
         public DateTime? TimeSinceLastFed { get; set; }
         public DateTime? TimeSinceLastPet { get; set; }
-
+        
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual EmotionChart EmotionNavigation { get; set; } = null!;
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual Species SpeciesFkNavigation { get; set; } = null!;
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual User UserFkNavigation { get; set; } = null!;
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual ICollection<User> Users { get; set; }
     }
 }

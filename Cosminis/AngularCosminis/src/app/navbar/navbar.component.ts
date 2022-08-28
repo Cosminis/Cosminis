@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { ResourceApiServicesService } from '../services/Resource-Api-Service/resource-api-service.service';
+import { InteractionService } from '../services/Interaction-Api-Service/interaction.service';
+import { ComsinisApiServiceService } from '../services/Comsini-api-service/comsinis-api-service.service';
 import { FoodElement } from '../Models/FoodInventory';
 import { Router } from '@angular/router';
 import { Users } from '../Models/User';
@@ -13,7 +14,7 @@ import { Users } from '../Models/User';
 
 export class NavbarComponent implements OnInit {
 
-  constructor(public auth0: AuthService, private router: Router, private api:ResourceApiServicesService) { }
+  constructor(public auth0: AuthService, private router: Router, private interApi:InteractionService, private comsiniApi:ComsinisApiServiceService) { }
   foodDisplay : FoodElement[] = []
 
   foodQty : [number, number, number, number, number, number] = [0, 0, 0, 0, 0, 0];
@@ -38,6 +39,24 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  needyCompanion():boolean
+  {
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser : Users = JSON.parse(stringUser);
+    
+    this.interApi.DecrementCompanionMoodValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+      {
+        window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+      })
+
+    this.interApi.DecrementCompanionHungerValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+      {
+        window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+      })
+
+    return true;
+  }
+
   Logout():void{
     this.auth0.logout()
     this.router.navigateByUrl('/login');
@@ -60,7 +79,11 @@ export class NavbarComponent implements OnInit {
     this.CursedFoodCount = sessionStorage.getItem('CursedFoodCount') as unknown as number;
     
     this.userEgg = currentUser.eggCount;
-    this.userGold = currentUser.goldCount;
+    this.userGold = currentUser.goldCount;  
+
+    this.DisplayCompanionMood = sessionStorage.getItem('DisplayCompanionMood') as unknown as number;
+    this.DisplayCompanionHunger = sessionStorage.getItem('DisplayCompanionHunger') as unknown as number;
+
     if(this.currentUsername)
     {
       return true;

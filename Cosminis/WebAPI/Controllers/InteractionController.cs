@@ -21,8 +21,8 @@ public class InteractionController
     {
     	try
     	{
-    		_interactionService.DecrementCompanionMoodValue(companionID);
-    		return Results.Accepted("/Interactions/IncrementalDecrement"); 
+    		Companion companionInstance = _interactionService.DecrementCompanionMoodValue(companionID);
+    		return Results.Accepted("/Interactions/IncrementalDecrement", companionInstance); 
     	}
         catch(TooSoon)
         {
@@ -46,7 +46,7 @@ public class InteractionController
     {
     	try
     	{
-    		_interactionService.ReRollCompanionEmotion(companionID);
+    		Companion companionInstance = _interactionService.ReRollCompanionEmotion(companionID);
     		return Results.Accepted("/Interactions/RerollEmotion"); 
     	}
     	catch(CompNotFound)
@@ -63,8 +63,8 @@ public class InteractionController
     {
     	try
     	{
-    		_interactionService.PetCompanion(userID, companionID);
-    		return Results.Accepted("/Interactions/PetCompanion"); 
+    		Companion companionInstance = _interactionService.PetCompanion(userID, companionID);
+    		return Results.Accepted("/Interactions/PetCompanion", companionInstance); 
     	}          
     	catch(CompNotFound)
         {
@@ -80,18 +80,12 @@ public class InteractionController
         }	
     }
 
-        public IResult DecrementCompanionHungerValue(int companionID)
+    public IResult DecrementCompanionHungerValue(int companionID)
     {
         try
         {
-            if(_interactionService.DecrementCompanionHungerValue(companionID))
-            {
-                return Results.Accepted();
-            }
-            else
-            {
-                return Results.BadRequest();
-            }
+            Companion companionInstance = _interactionService.DecrementCompanionHungerValue(companionID);
+            return Results.Accepted("/Interactions/DecrementCompanionHungerValue", companionInstance);
         }
         catch(ResourceNotFound)
         {
@@ -107,14 +101,8 @@ public class InteractionController
     {
         try
         {
-            if(_interactionService.FeedCompanion(feederID, companionID, foodID))
-            {
-                return Results.Accepted();
-            }
-            else
-            {
-                return Results.BadRequest();
-            }
+            Companion companionInstance = _interactionService.FeedCompanion(feederID, companionID, foodID);
+            return Results.Accepted("/Interactions/FeedCompanion", companionInstance); 
         }
         catch(ResourceNotFound)
         {
@@ -148,6 +136,7 @@ public class InteractionController
             return Results.NotFound("Such a user does not exist"); 
         }    
     }
+
     public IResult PullConvo(int companionID)
     {
         try

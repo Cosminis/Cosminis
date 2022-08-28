@@ -23,7 +23,7 @@ public class InteractionService
         _PostRepo = postRepo;
     }   
 
-    public bool DecrementCompanionMoodValue(int companionID)
+    public Companion DecrementCompanionMoodValue(int companionID)
     {
         Random moodDecrementer = new Random();                                 //creating random number
 
@@ -33,6 +33,11 @@ public class InteractionService
         if(companionMoodToShift == null)                                                   //checking null
         {
             throw new CompNotFound();
+        }
+        if(companionMoodToShift.TimeSinceLastChangedMood == null)
+        {
+            companionMoodToShift.TimeSinceLastChangedMood = DateTime.Now;
+            throw new TooSoon();
         }
 
         try
@@ -144,7 +149,8 @@ public class InteractionService
 
                 ReRollCompanionEmotion(companionID); //idk if we want to do this EVERY time but it's kinda cool.
 
-                return true;
+                Console.WriteLine(companionMoodToShift); 
+                return companionMoodToShift;
             }
         }
         catch(Exception)
@@ -152,10 +158,10 @@ public class InteractionService
             throw new TooSoon();
         }
 
-        return false;
+        return companionMoodToShift;
     }
     
-    public bool DecrementCompanionHungerValue(int companionID)
+    public Companion DecrementCompanionHungerValue(int companionID)
     {
         Companion companionHungerToShift = _compRepo.GetCompanionByCompanionId(companionID); //grabbing the companion
         User companionUser = _userRepo.GetUserByUserId(companionHungerToShift.UserFk); //grabbing the owner of the companion
@@ -196,7 +202,7 @@ public class InteractionService
             Console.WriteLine(e.Message);
             throw;
         }
-        return false;
+        return companionHungerToShift;
     }
 
     public bool ReRollCompanionEmotion(int companionID)
@@ -306,7 +312,7 @@ public class InteractionService
         return false;
     }
 
-    public bool FeedCompanion(int feederID, int companionID, int foodID)
+    public Companion FeedCompanion(int feederID, int companionID, int foodID)
     {
         try
         {
@@ -351,7 +357,7 @@ public class InteractionService
             try
             {
                 _PostRepo.SubmitPost(Post);
-                return true;
+                return checkingComp;
             }
             catch(Exception)
             {
@@ -360,14 +366,14 @@ public class InteractionService
         }
 
         //we gone all the way down here, operation must be completed successfully by now
-        return false;
+        return checkingComp;
     }
     
-    public bool PetCompanion(int userID, int companionID)
+    public Companion PetCompanion(int userID, int companionID)
     {
         try
         {
-            _interRepo.PetCompanion(userID, companionID);
+            Companion companionInstance = _interRepo.PetCompanion(userID, companionID);
             if(userID == null)
             {
                 throw new UserNotFound();
@@ -375,15 +381,14 @@ public class InteractionService
             if(companionID == null)
             {
                 throw new CompNotFound();
-            }            
-            return _interRepo.PetCompanion(userID, companionID);
+            }           
+            Console.WriteLine(companionInstance); 
+            return companionInstance;
         }
         catch (ResourceNotFound)
         {
             throw;
         }        
-
-        return false;
     }
     
     public bool SetShowcaseCompanion(int userId, int companionId)

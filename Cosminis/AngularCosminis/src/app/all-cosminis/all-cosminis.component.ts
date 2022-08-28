@@ -80,15 +80,27 @@ export class AllCosminisComponent implements OnInit
     this.interapi.SetShowcaseCompanion(currentUserID, companionID).subscribe((res) => 
     {
       console.log(res);
-      this.cosminis1 = res;
       if(this.users.showcaseCompanionFk != companionID)
       {
         this.users.showcaseCompanionFk = companionID;
         window.sessionStorage.setItem('currentUser', JSON.stringify(this.users));
       }
       this.showCosminis=Promise.resolve(true);
+      this.cosminiDisplay();
     })
   }  
+
+  cosminiDisplay():void
+  {
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser : Users = JSON.parse(stringUser);
+
+    this.api.getCosminiByID(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+        {
+          window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+          window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
+        })
+  }
 
   getCosminiByUserID(ID : number) : void 
   {
@@ -112,7 +124,6 @@ export class AllCosminisComponent implements OnInit
 showCards = false;
   ngOnInit(): void 
   {
-    
     this.DisplayName.set(3, "Infernog");
     this.DisplayName.set(4, "Pluto");
     this.DisplayName.set(5, "Buds");

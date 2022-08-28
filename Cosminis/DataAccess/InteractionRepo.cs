@@ -28,7 +28,7 @@ public class InteractionRepo : Interactions
     /// </summary>
     /// <param name="companionID"></param>
     /// <param name="amount"></param>
-    public bool SetCompanionMoodValue(int companionID, int amount)
+    public Companion SetCompanionMoodValue(int companionID, int amount)
     {
         Companion companionToDepress = _context.Companions.Find(companionID);  //Get comp followed by checkifnull
         if(companionToDepress == null)
@@ -49,7 +49,7 @@ public class InteractionRepo : Interactions
 
         _context.ChangeTracker.Clear();
 
-        return true;
+        return companionToDepress;
     }
 
     public EmotionChart GetEmotionByEmotionId(int emotionId)
@@ -62,7 +62,7 @@ public class InteractionRepo : Interactions
     /// </summary>
     /// <param name="companionID"></param>
     /// <param name="amount"></param>
-    public bool SetCompanionHungerValue(int companionID, int amount)
+    public Companion SetCompanionHungerValue(int companionID, int amount)
     {
         Companion companionToStarve = _context.Companions.Find(companionID);  //Retrieve companion object from database by the given CompanionID
         if(companionToStarve == null)
@@ -77,7 +77,7 @@ public class InteractionRepo : Interactions
         companionToStarve.TimeSinceLastChangedHunger = DateTime.Now;
         _context.SaveChanges();//save changes
         _context.ChangeTracker.Clear();
-        return true;
+        return companionToStarve;
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ public class InteractionRepo : Interactions
     /// <param name="companionID"></param>
     /// <param name="foodID"></param>
     /// <returns></returns>
-    public bool FeedCompanion(int feederID, int companionID, int foodID)
+    public Companion FeedCompanion(int feederID, int companionID, int foodID)
     {
         Companion companionToStarve = _context.Companions.Find(companionID);  //Retrieve companion object from database by the given CompanionID
         User user2Check = _context.Users.Find(feederID); //Retrieve user object from database by the given FeederID
@@ -210,7 +210,7 @@ public class InteractionRepo : Interactions
         try
         {
             _ResourceRepo.RemoveFood(feederID,foodID); //last step
-            return true; //operation success
+            return companionToStarve; //operation success
         }
         catch(Exception)
         {
@@ -225,7 +225,7 @@ public class InteractionRepo : Interactions
     /// <param name="petterID"></param>
     /// <param name="companionID"></param>
     /// <returns></returns>
-    public bool PetCompanion(int userID, int companionID)//limit petting to every 3-5min
+    public Companion PetCompanion(int userID, int companionID)//limit petting to every 3-5min
     {
         Random agitationRoll = new Random();             //For our random roll later
 
@@ -367,7 +367,7 @@ public class InteractionRepo : Interactions
 
         _context.ChangeTracker.Clear();
 
-        return true;
+        return companionToPet;
     }
 
     /*/// <summary>

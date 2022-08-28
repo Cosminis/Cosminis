@@ -10,7 +10,9 @@ namespace DataAccess.Entities
         public int UserIdTo { get; set; }
         public string Status { get; set; } = null!;
 
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual User UserIdFromNavigation { get; set; } = null!;
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual User UserIdToNavigation { get; set; } = null!;
     }
 }

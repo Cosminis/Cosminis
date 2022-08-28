@@ -64,11 +64,11 @@ public interface IResourceGen
 
 public interface Interactions
 {
-    public bool SetCompanionMoodValue(int companionID, int amount);
-    public bool SetCompanionHungerValue(int companionID, int amount);
+    public Companion SetCompanionMoodValue(int companionID, int amount);
+    public Companion SetCompanionHungerValue(int companionID, int amount);
     public bool RollCompanionEmotion(int companionID, int emotionId);
-    public bool FeedCompanion(int feederID, int companionID, int foodID);
-    public bool PetCompanion(int petterID, int companionID);
+    public Companion FeedCompanion(int feederID, int companionID, int foodID);
+    public Companion PetCompanion(int petterID, int companionID);
     public bool SetShowcaseCompanion(int userId, int companionId);
     public string PullConvo(int CompanionID);
     public EmotionChart GetEmotionByEmotionId(int emotionId);

@@ -73,7 +73,7 @@ app.MapPut("/setCompanion", (int userId, int companionId, InteractionController 
 	return interCon.SetShowcaseCompanion(userId, companionId);
 });
 
-app.MapGet("/interactions/Feed", (int feederID, int companionID, int foodID, InteractionController interCon) =>
+app.MapPut("/interactions/Feed", (int feederID, int companionID, int foodID, InteractionController interCon) =>
 {
 	return interCon.FeedCompanion(feederID, companionID, foodID);
 });
