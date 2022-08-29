@@ -113,7 +113,7 @@ public class InteractionRepo : Interactions
     {
         Companion companionToStarve = _context.Companions.Find(companionID);  //Retrieve companion object from database by the given CompanionID
 
-        DateTime notNullableDate = companionToStarve.TimeSinceLastFeed ?? DateTime.Now;
+        DateTime notNullableDate = companionToStarve.TimeSinceLastFed ?? DateTime.Now;
         double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
 
         if(totalMinutes < 5)
@@ -221,7 +221,7 @@ public class InteractionRepo : Interactions
         {
             _ResourceRepo.RemoveFood(feederID,foodID); //last step
 
-            companionToStarve.TimeSinceLastFeed = DateTime.Now;
+            companionToStarve.TimeSinceLastFed = DateTime.Now;
 
             _context.SaveChanges();
 
