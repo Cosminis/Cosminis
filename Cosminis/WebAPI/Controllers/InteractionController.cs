@@ -46,7 +46,7 @@ public class InteractionController
     {
     	try
     	{
-    		Companion companionInstance = _interactionService.ReRollCompanionEmotion(companionID);
+    		_interactionService.ReRollCompanionEmotion(companionID);
     		return Results.Accepted("/Interactions/RerollEmotion"); 
     	}
     	catch(CompNotFound)

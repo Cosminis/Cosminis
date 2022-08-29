@@ -15,6 +15,7 @@ import { AllCosminisComponent } from './all-cosminis/all-cosminis.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ShopMenuComponent } from './shop-menu/shop-menu.component';
+import { InteractionsComponent } from './interactions/interactions.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ShopMenuComponent } from './shop-menu/shop-menu.component';
     CosminisGoComponent,
     AllCosminisComponent,
     NavbarComponent,
-    ShopMenuComponent
+    ShopMenuComponent,
+    InteractionsComponent
     //AppLoginComponent
   ],
   imports: [
