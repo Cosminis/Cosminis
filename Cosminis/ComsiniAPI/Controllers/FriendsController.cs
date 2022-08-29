@@ -20,20 +20,13 @@ public class FriendsController : ControllerBase
     }
 
     [Route("/Friends/RelationshipStatusByUsername")]
-    [HttpGet()]
+    [HttpGet]
     public ActionResult<List<Friends>> GetRelationshipStatusByUsername(string username, string status)
     {
         try
         {
-            List<Friends> friendsList = this._friendServices.CheckRelationshipStatusByUsername(username, status); 
-            if(friendsList.Count() > 0)
-            {
-                return Ok(friendsList);
-            }
-            else
-            {
-                return NotFound("This user has no relationships with this status.");
-            }
+            List<Friends> friendsList = _friendServices.CheckRelationshipStatusByUsername(username, status); 
+            return Ok(friendsList);
     	}
         catch(UserNotFound)
         {
@@ -50,20 +43,13 @@ public class FriendsController : ControllerBase
     }
 
     [Route("/Friends/FriendsByUserIds")]
-    [HttpGet()]
+    [HttpGet]
     public ActionResult<Friends> Get(int searchingUserId, int user2BeSearchedFor)
     {
         try
         {
-            Friends friendInstance = this._friendServices.FriendsByUserIds(searchingUserId, user2BeSearchedFor); 
-            if(friendInstance != null)
-            {
-                return Ok(friendInstance);
-            }
-            else
-            {
-                return NotFound("This user has no relationships with this status.");
-            }
+            Friends friendInstance = _friendServices.FriendsByUserIds(searchingUserId, user2BeSearchedFor); 
+            return Ok(friendInstance);
     	}
         catch(UserNotFound)
         {
@@ -80,20 +66,13 @@ public class FriendsController : ControllerBase
     }
 
     [Route("/Friends/AddFriendByUsername")]
-    [HttpPost()]
+    [HttpPost]
     public ActionResult<Friends> Post(string userToAdd, string requestReceiver)
     {
         try
         {
-            Friends friendInstance = this._friendServices.AddFriendByUsername(userToAdd, requestReceiver); 
-            if(friendInstance != null)
-            {
-                return Ok(friendInstance);
-            }
-            else
-            {
-                return NotFound("Nah.");
-            }
+            Friends friendInstance = _friendServices.AddFriendByUsername(userToAdd, requestReceiver); 
+            return Ok(friendInstance);
     	}
         catch(UserNotFound)
         {
@@ -114,20 +93,13 @@ public class FriendsController : ControllerBase
     }
 
     [Route("/Friends/RelationshipStatusByUserId")]
-    [HttpGet()]
+    [HttpGet]
     public ActionResult<List<Friends>> GetRelationshipStatusByUserId(int userId, string status)
     {
         try
         {
-            List<Friends> friendsList = this._friendServices.CheckRelationshipStatusByUserId(userId, status); 
-            if(friendsList.Count() > 0)
-            {
-                return Ok(friendsList);
-            }
-            else
-            {
-                return NotFound("This user has no relationships with this status.");
-            }
+            List<Friends> friendsList = _friendServices.CheckRelationshipStatusByUserId(userId, status); 
+            return Ok(friendsList);
     	}
         catch(UserNotFound)
         {
@@ -144,20 +116,13 @@ public class FriendsController : ControllerBase
     }
 
     [Route("/Friends/EditFriendshipStatus")]
-    [HttpPut()]
+    [HttpPut]
     public ActionResult<Friends> EditFriendshipStatus(int editingUserID, int user2BeEdited, string status)
     {
         try
     	{
-            Friends friendInstance = this._friendServices.EditFriendship(editingUserID, user2BeEdited, status); 
-            if(friendInstance != null)
-            {
-                return Ok(friendInstance);
-            }
-            else
-            {
-                return NotFound("Nah.");
-            }
+            Friends friendInstance =_friendServices.EditFriendship(editingUserID, user2BeEdited, status); 
+            return Ok(friendInstance);
     	}
         catch(UserNotFound)
         {

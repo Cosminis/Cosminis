@@ -19,7 +19,7 @@ export class ResourceApiServicesService {
   } 
 
   CheckFood(userId : number) : Observable<FoodElement[]> {
-    return this.http.get(this.url + `foodsUnder/${userId}`) as unknown as Observable<FoodElement[]>;
+    return this.http.get(this.url + `foodsUnder/?userId=${userId}`) as unknown as Observable<FoodElement[]>;
     //use username instead of userid? how does this work since user model doesn't have userId?
   } 
 }

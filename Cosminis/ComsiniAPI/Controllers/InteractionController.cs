@@ -20,36 +20,40 @@ public class InteractionController : ControllerBase
     }
 
     [Route("/setCompanion")]
-    [HttpPut()]
-    public ActionResult<bool> Put(int userId, int companionId)
+    [HttpPut]
+    public ActionResult<bool> showcaseCompanion(int userId, int companionId)
     {
-        bool setShowcase = this._interactionService.SetShowcaseCompanion(userId, companionId); 
-        if(setShowcase == true)
+        try
         {
-            return Ok("gj");
+            if(_interactionService.SetShowcaseCompanion(userId, companionId))
+            {
+                return Ok("Showcase companion has been set");
+            }
+            return Conflict("You cannot set your showcase companion to a companion you do not own.");
         }
-        else
+        catch(CompNotFound)
         {
-            return Conflict("You cannot set your showcase companion to a companion that you do not own.");
+            return NotFound("Such a companion does not exist"); 
         }
+        catch(UserNotFound)
+        {
+            return NotFound("Such a user does not exist"); 
+        }         
     }
 
     [Route("/Interactions/PetCompanion")]
-    [HttpPut()]
+    [HttpPut]
     public ActionResult<Companion> PetCompanion(int userID, int companionID)
     {
         try
     	{
-            Companion companionInstance = this._interactionService.PetCompanion(userID, companionID); 
-            if(companionInstance != null)
-            {
-                return Ok(companionInstance);
-            }
-            else
-            {
-                return NotFound("Nah.");
-            }
-    	}          
+            Companion companionInstance = _interactionService.PetCompanion(userID, companionID);
+            return Ok(companionInstance);
+    	}   
+        catch(TooSoon)
+        {
+            return BadRequest("It has been less than five minutes since this companion has been pet.");
+        }       
     	catch(CompNotFound)
         {
             return NotFound("No companion with this ID exists."); 
@@ -65,21 +69,18 @@ public class InteractionController : ControllerBase
     }    
 
     [Route("/Interactions/FeedCompanion")]
-    [HttpPut()]
+    [HttpPut]
     public ActionResult<Companion> FeedCompanion(int feederID, int companionID, int foodID)
     {
         try
     	{
-            Companion companionInstance = this._interactionService.FeedCompanion(feederID, companionID, foodID); 
-            if(companionInstance != null)
-            {
-                return Ok(companionInstance);
-            }
-            else
-            {
-                return NotFound("Nah.");
-            }
+            Companion companionInstance = _interactionService.FeedCompanion(feederID, companionID, foodID); 
+            return Ok(companionInstance);
         }
+        catch(TooSoon)
+        {
+            return Results.BadRequest("It has been less than five minutes since this companion has been fed.");
+        }         
         catch(ResourceNotFound)
         {
             return NotFound();
@@ -91,20 +92,13 @@ public class InteractionController : ControllerBase
     } 
 
     [Route("/Interactions/IncrementalDecrement")]
-    [HttpPut()]
+    [HttpPut]
     public ActionResult<Companion> DecrementCompanionMoodValue(int companionID)
     {
         try
     	{
-            Companion companionInstance = this._interactionService.DecrementCompanionMoodValue(companionID); 
-            if(companionInstance != null)
-            {
-                return Ok(companionInstance);
-            }
-            else
-            {
-                return NotFound("Nah.");
-            }
+            Companion companionInstance = _interactionService.DecrementCompanionMoodValue(companionID); 
+            return Ok(companionInstance);
     	}
         catch(TooSoon)
         {
@@ -125,20 +119,13 @@ public class InteractionController : ControllerBase
     }  
 
     [Route("/Interactions/DecrementCompanionHungerValue")]
-    [HttpPut()]
+    [HttpPut]
     public ActionResult<Companion> DecrementCompanionHungerValue(int companionID)
     {
         try
     	{
-            Companion companionInstance = this._interactionService.DecrementCompanionHungerValue(companionID); 
-            if(companionInstance != null)
-            {
-                return Ok(companionInstance);
-            }
-            else
-            {
-                return NotFound("Nah.");
-            }
+            Companion companionInstance = _interactionService.DecrementCompanionHungerValue(companionID); 
+            return Ok(companionInstance);
         }
         catch(ResourceNotFound)
         {

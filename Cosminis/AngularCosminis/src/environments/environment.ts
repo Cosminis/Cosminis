@@ -5,7 +5,7 @@
 export const environment = 
 {
   production: false, 
-  api: 'https://comsinis.azurewebsites.net/',
+  api: 'https://cosminis.azurewebsites.net/',
   auth:
   {
     domain: "dev-lj8y5w8u.us.auth0.com",

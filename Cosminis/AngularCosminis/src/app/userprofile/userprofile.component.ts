@@ -273,37 +273,29 @@ export class UserprofileComponent implements OnInit {
     this.doesExist = false;
   }
 
-  showPendingFriends(status : string)
+  displayPendingFriends():void
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
     let currentID = currentUser.userId;
-    
-    this.searchRelationshipsByStatus(status) 
+    this.friendApi.getPendingFriends(currentID as number).subscribe((res) =>
     {
-      this.friendPending = true; 
-      for(let i=0;i<this.friends.length;i++)
+      this.friends = res;
+      for(let i=0;i<this.friends.length;i++)  
       {
-        if(currentID==this.friends[i].userIdFrom)
-        {
-          this.userApi.Find(this.friends[i].userIdTo).subscribe((res) =>
+        this.userApi.Find(this.friends[i].userIdFrom).subscribe((res) =>
+        { 
+          if(res.userId != currentID)
           {
-            this.pendingFriends[i] = res;
-              
-            console.log(this.users[i].username);
-          })
-        }
-        else
-        {
-          this.userApi.Find(this.friends[i].userIdFrom).subscribe((res) =>
-          {
-            this.pendingFriends[i] = res;  
-            console.log(this.users[i].username);
-          })
-        }
+            this.pendingFriends.push(res);
+          }
+          
+          this.friendPending = true; 
+        })  
       }
-    }
+    }) 
   }
+
 
   searchRelationshipsByStatus(status : string)
   {
@@ -392,6 +384,6 @@ export class UserprofileComponent implements OnInit {
     this.updatePostFeed(currentUserId as number);
     this.friendsPostFeed(currentUsername);
     this.showAllFriends(currentUsername);
-    this.showPendingFriends("Pending");
+    this.displayPendingFriends();
   }
 }

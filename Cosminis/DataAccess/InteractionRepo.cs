@@ -112,6 +112,16 @@ public class InteractionRepo : Interactions
     public Companion FeedCompanion(int feederID, int companionID, int foodID)
     {
         Companion companionToStarve = _context.Companions.Find(companionID);  //Retrieve companion object from database by the given CompanionID
+
+        DateTime notNullableDate = companionToStarve.TimeSinceLastFed ?? DateTime.Now;
+        double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
+
+        if(totalMinutes < 5)
+        {
+            throw new TooSoon();
+        }
+
+
         User user2Check = _context.Users.Find(feederID); //Retrieve user object from database by the given FeederID
         FoodStat food2Feed = _context.FoodStats.Find(foodID); //Retrieve foodStats object from database by the given CompanionID
         Species species2check = _context.Species.Find(companionToStarve.SpeciesFk); //Retrieve Species object from database by the given CompanionID
@@ -210,6 +220,13 @@ public class InteractionRepo : Interactions
         try
         {
             _ResourceRepo.RemoveFood(feederID,foodID); //last step
+
+            companionToStarve.TimeSinceLastFed = DateTime.Now;
+
+            _context.SaveChanges();
+
+            _context.ChangeTracker.Clear();            
+
             return companionToStarve; //operation success
         }
         catch(Exception)
@@ -350,6 +367,15 @@ public class InteractionRepo : Interactions
             } 
         }
 
+        /*
+        Console.WriteLine(showcaseMod);
+        Console.WriteLine(moodMod);
+        Console.WriteLine(hungerMod);
+        Console.WriteLine(agitationBaseRoll);
+        Console.WriteLine(totalRoll);
+        Console.WriteLine(moodToOffset);
+        */
+        
         companionToPet.Mood = companionToPet.Mood + moodToOffset; //I think rolling for agitation is good, but the actual numbers may wanna be changed in the end.
 
         if(companionToPet.Mood <= 0) //preventing negatives and values over 100
@@ -361,7 +387,11 @@ public class InteractionRepo : Interactions
             companionToPet.Mood = 100;
         }
         
-        companionToPet.TimeSinceLastPet = DateTime.Now;            
+        //Console.WriteLine(companionToPet.TimeSinceLastPet);
+
+        companionToPet.TimeSinceLastPet = DateTime.Now;   
+
+        //Console.WriteLine(companionToPet.TimeSinceLastPet);         
 
         _context.SaveChanges(); //Maybe this method could also have a percentage change to reroll the emotion? A greater chance to change emotion if mood is low or emotion quality is poor
 

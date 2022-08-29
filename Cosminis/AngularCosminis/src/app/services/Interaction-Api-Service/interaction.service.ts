@@ -29,6 +29,6 @@ export class InteractionService {
   } 
 
   FeedCompanion(UserID : number, CompanionID : number, foodID : number) : Observable<Cosminis> {
-    return this.http.put(this.url + `setCompanion?userId=${UserID}&companionId=${CompanionID}&foodID=${foodID}`, CompanionID) as Observable<Cosminis>;
+    return this.http.put(this.url + `/interactions/Feed?feederId=${UserID}&companionId=${CompanionID}&foodID=${foodID}`, CompanionID) as Observable<Cosminis>;
   } 
 }

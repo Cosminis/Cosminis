@@ -46,7 +46,7 @@ public class InteractionController
     {
     	try
     	{
-    		Companion companionInstance = _interactionService.ReRollCompanionEmotion(companionID);
+    		_interactionService.ReRollCompanionEmotion(companionID);
     		return Results.Accepted("/Interactions/RerollEmotion"); 
     	}
     	catch(CompNotFound)
@@ -65,7 +65,11 @@ public class InteractionController
     	{
     		Companion companionInstance = _interactionService.PetCompanion(userID, companionID);
     		return Results.Accepted("/Interactions/PetCompanion", companionInstance); 
-    	}          
+    	}
+        catch(TooSoon)
+        {
+            return Results.BadRequest("It has been less than five minutes since this companion has been pet.");
+        }                  
     	catch(CompNotFound)
         {
             return Results.NotFound("No companion with this ID exists."); 
@@ -104,6 +108,10 @@ public class InteractionController
             Companion companionInstance = _interactionService.FeedCompanion(feederID, companionID, foodID);
             return Results.Accepted("/Interactions/FeedCompanion", companionInstance); 
         }
+        catch(TooSoon)
+        {
+            return Results.BadRequest("It has been less than five minutes since this companion has been fed.");
+        } 
         catch(ResourceNotFound)
         {
             return Results.NotFound();
@@ -111,7 +119,7 @@ public class InteractionController
         catch(Exception e)
         {
             return Results.BadRequest(e.Message);
-        }
+        } 
     }
 
     public IResult SetShowcaseCompanion(int userId, int companionId)
