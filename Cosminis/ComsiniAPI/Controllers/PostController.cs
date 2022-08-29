@@ -20,7 +20,7 @@ public class PostController : ControllerBase
     }
 
     [Route("/postsBy/{userId}")]
-    [HttpGet]
+    [HttpGet()]
     public ActionResult<Post> Get(int userId)
     {
         try 

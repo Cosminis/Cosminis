@@ -217,9 +217,17 @@ public class ResourceRepo : IResourceGen
         //add eggs to user inventory            -done
         //save changes                          -done
     }
-        public bool AddResources(User User, int Amount)
+    /// <summary>
+    /// Adding Food to user
+    /// </summary>
+    /// <param name="User"></param>
+    /// <param name="Amount"></param>
+    /// <returns></returns>
+    public bool AddResources(User User, int Amount)
     {
-        FoodInventory Inventory2Add2 = 
+        Random randomStat = new();
+        FoodStat? Food2Add = _context.FoodStats.Find(randomStat.Next(1, 9));
+        FoodInventory? Inventory2Add2 = 
         (from IV in _context.FoodInventories
         where (IV.UserIdFk == User.UserId) && (IV.FoodStatsIdFk == Food2Add.FoodStatsId)
         select IV).FirstOrDefault(); //this whole thing returns either a foodInvertory or null
@@ -238,5 +246,6 @@ public class ResourceRepo : IResourceGen
 
         return true;
         }
+        return false;
     }
 }

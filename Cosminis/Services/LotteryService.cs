@@ -10,7 +10,13 @@ using Models;
 namespace Services
 {
     public class LotteryService
-    { 
+    {
+        private IResourceGen _resource;
+        public LotteryService(IResourceGen resource)
+        {
+            _resource = resource;
+        }
+
         /// <summary>
         /// Goes through and selects prize
         /// </summary>
@@ -25,22 +31,22 @@ namespace Services
                 switch (num)
                 {
                     case < 25: // Food
-                        list[0] = Prize() / 2!=0?Prize()/2:1;
+                        list[0] = (Prize() / 2 != 0 ? Prize() / 2 : 1) + list[0];
                         break;
                     case < 50: //Gold
-                        list[1]= Prize() / 2!=0?Prize()/2 *100:100;
+                        list[1]= (Prize() / 2!=0?Prize()/2 * 100 : 100) + list[1];
                         break;
                     case < 80: //Food
-                        list[3]= Prize() / 2!=0?Prize()/2:10;
+                        list[2]= (Prize() / 2!=0?Prize()/2:10) + list[2];
                         break;
                     case < 90: //Food
-                        list[4]= Prize() / 2!=0?Prize()/2:100;
+                        list[3]= (Prize() / 2!=0?Prize()/2:100) + list[3];
                         break;
                     case < 97://Gems
-                        list[5]= Prize() / 5!=0?Prize()/5:1; 
+                        list[4]= (Prize() / 5 != 0 ? Prize() / 5 : 1) + list[4]; 
                         break;
                     default: //eggs
-                        list[6] = 2;
+                        list[5] = 2 + list[5];
                         break;
                 }
                 spins--;
@@ -72,13 +78,16 @@ namespace Services
 
         public User GiveRewards(int spins, User user)
         {
-            List<int> wins = Winnings(spins); 
+            List<int> wins = Winnings(spins);
             //Add food
-
+            int weight = wins[0] + wins[2] + wins[3];
+            _resource.AddFood(user, weight);
             //Add Gold
-
+            _resource.AddGold(user, wins[1]);
             //Add Gems
 
+            //Add Egg
+            _resource.AddEgg(user, wins[5]);
             return user;
         }
     }
