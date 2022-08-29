@@ -36,7 +36,7 @@ public class ResourceServices
     }  
     public List<FoodInventory> PurchaseWithGems(int userId, int[] foodQtyArr, int eggQty, int Gold)
     {
-        if(foodQtyArr.Sum() <= 0 && eggQty <= 0)
+        if(foodQtyArr.Sum() <= 0 && eggQty <= 0 && Gold <= 0)
         {
             throw new GottaBuySomething();
         }        
