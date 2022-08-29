@@ -18,6 +18,11 @@ export class ResourceApiServicesService {
     //use username instead of userid? how does this work since user model doesn't have userId?
   } 
 
+  PurchaseWithGems(userId : number, fQty : number[], eQty : number) : Observable<FoodElement[]> {
+    return this.http.put(this.url + `Resources/PurchaseWithGems?userId=${userId}&eggQty=${eQty}`, fQty) as unknown as Observable<FoodElement[]>;
+   // To be connected with the PurchaseWithGems on the backend
+  } 
+
   CheckFood(userId : number) : Observable<FoodElement[]> {
     return this.http.get(this.url + `foodsUnder/?userId=${userId}`) as unknown as Observable<FoodElement[]>;
     //use username instead of userid? how does this work since user model doesn't have userId?

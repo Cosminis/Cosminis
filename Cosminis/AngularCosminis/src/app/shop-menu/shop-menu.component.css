@@ -91,3 +91,16 @@ h3
     color: white;
     background-color: rgb(83, 44, 184, .9);
 }
+
+.ShopHeader 
+{
+    display: flex;
+    column-gap: 20px;
+}
+
+#gem-shop
+{
+    height: 40px;
+    width: 110px;
+    margin-top: 22px;
+}
