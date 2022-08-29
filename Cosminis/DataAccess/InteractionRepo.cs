@@ -112,6 +112,16 @@ public class InteractionRepo : Interactions
     public Companion FeedCompanion(int feederID, int companionID, int foodID)
     {
         Companion companionToStarve = _context.Companions.Find(companionID);  //Retrieve companion object from database by the given CompanionID
+
+        DateTime notNullableDate = companionToStarve.TimeSinceLastFeed ?? DateTime.Now;
+        double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
+
+        if(totalMinutes < 5)
+        {
+            throw new TooSoon();
+        }
+
+
         User user2Check = _context.Users.Find(feederID); //Retrieve user object from database by the given FeederID
         FoodStat food2Feed = _context.FoodStats.Find(foodID); //Retrieve foodStats object from database by the given CompanionID
         Species species2check = _context.Species.Find(companionToStarve.SpeciesFk); //Retrieve Species object from database by the given CompanionID
@@ -210,6 +220,13 @@ public class InteractionRepo : Interactions
         try
         {
             _ResourceRepo.RemoveFood(feederID,foodID); //last step
+
+            companionToStarve.TimeSinceLastFeed = DateTime.Now;
+
+            _context.SaveChanges();
+
+            _context.ChangeTracker.Clear();            
+
             return companionToStarve; //operation success
         }
         catch(Exception)

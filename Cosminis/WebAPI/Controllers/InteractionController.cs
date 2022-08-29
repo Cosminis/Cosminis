@@ -68,7 +68,7 @@ public class InteractionController
     	}
         catch(TooSoon)
         {
-            return Results.BadRequest("It has been less than five minutes since the last time the mood was changed.");
+            return Results.BadRequest("It has been less than five minutes since this companion has been pet.");
         }                  
     	catch(CompNotFound)
         {
@@ -108,6 +108,10 @@ public class InteractionController
             Companion companionInstance = _interactionService.FeedCompanion(feederID, companionID, foodID);
             return Results.Accepted("/Interactions/FeedCompanion", companionInstance); 
         }
+        catch(TooSoon)
+        {
+            return Results.BadRequest("It has been less than five minutes since this companion has been fed.");
+        } 
         catch(ResourceNotFound)
         {
             return Results.NotFound();
@@ -115,7 +119,7 @@ public class InteractionController
         catch(Exception e)
         {
             return Results.BadRequest(e.Message);
-        }
+        } 
     }
 
     public IResult SetShowcaseCompanion(int userId, int companionId)

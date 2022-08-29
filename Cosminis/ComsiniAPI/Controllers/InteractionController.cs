@@ -52,7 +52,7 @@ public class InteractionController : ControllerBase
     	}   
         catch(TooSoon)
         {
-            return BadRequest("It has been less than five minutes since the last time the mood was changed.");
+            return BadRequest("It has been less than five minutes since this companion has been pet.");
         }       
     	catch(CompNotFound)
         {
@@ -77,6 +77,10 @@ public class InteractionController : ControllerBase
             Companion companionInstance = _interactionService.FeedCompanion(feederID, companionID, foodID); 
             return Ok(companionInstance);
         }
+        catch(TooSoon)
+        {
+            return Results.BadRequest("It has been less than five minutes since this companion has been fed.");
+        }         
         catch(ResourceNotFound)
         {
             return NotFound();

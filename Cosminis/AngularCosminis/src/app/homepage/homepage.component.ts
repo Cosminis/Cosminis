@@ -26,6 +26,8 @@ export class HomepageComponent implements OnInit {
     hunger : 100
   }
 
+  foodChoice : number = 0;
+
   imageLib = new Map<number, string>();
 
   ngOnInit(): void 
@@ -40,6 +42,17 @@ export class HomepageComponent implements OnInit {
     this.cosminiDisplay();
 
     //setInterval(this.smellingHandler, 2500, "my text");
+  }
+
+  feedingOurBaby(foodId : number){
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser = JSON.parse(stringUser);
+
+    this.interApi.FeedCompanion(currentUser.userId, currentUser.showcaseCompanionFk, foodId).subscribe((res) =>
+      {
+        console.log(res);
+        window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
+      })    
   }
 
   pettingOurBaby(){
