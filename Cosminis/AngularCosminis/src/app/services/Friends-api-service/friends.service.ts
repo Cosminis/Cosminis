@@ -30,5 +30,9 @@ export class FriendsService {
 
   RelationshipStatusByUserId(searchingId : number, status : string) : Observable<Friends[]> {
     return this.http.get(this.url + `Friends/RelationshipStatusByUserId?searchingId=${searchingId}&status=${status}`) as Observable<Friends[]>;  
-  }    
+  }
+
+  getPendingFriends(searchingId : number) : Observable<Friends[]> {
+    return this.http.get(this.url + `Friends/RelationshipStatusByUserId?searchingId=${searchingId}&status=Pending`) as Observable<Friends[]>;  
+  }
 }

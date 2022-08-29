@@ -36,25 +36,43 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('/homepage');  // define your component where you want to go
   }
     
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
+    /*setInterval(() => 
+    {
+      let stringUser : string = sessionStorage.getItem('currentUser') as string;
+      let currentUser : Users = JSON.parse(stringUser);
+  
+        this.interApi.DecrementCompanionMoodValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+        {
+          console.log(res);
+          window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+        })
+  
+        this.interApi.DecrementCompanionHungerValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+        {
+          console.log(res);
+          window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
+        })
+    } ,2500);*/
   }
 
-  needyCompanion():boolean
+  needyCompanion():void
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
-    
+
     this.interApi.DecrementCompanionMoodValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
       {
+        console.log(res);
         window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
       })
 
     this.interApi.DecrementCompanionHungerValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
       {
-        window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+        console.log(res);
+        window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
       })
-
-    return true;
   }
 
   Logout():void{
