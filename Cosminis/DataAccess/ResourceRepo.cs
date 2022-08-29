@@ -217,4 +217,26 @@ public class ResourceRepo : IResourceGen
         //add eggs to user inventory            -done
         //save changes                          -done
     }
+        public bool AddResources(User User, int Amount)
+    {
+        FoodInventory Inventory2Add2 = 
+        (from IV in _context.FoodInventories
+        where (IV.UserIdFk == User.UserId) && (IV.FoodStatsIdFk == Food2Add.FoodStatsId)
+        select IV).FirstOrDefault(); //this whole thing returns either a foodInvertory or null
+
+        if(Inventory2Add2 == null) //if user does not have this kind of food yet
+        {
+            Inventory2Add2 = new FoodInventory
+            {
+                UserIdFk = (int) User.UserId,
+                FoodStatsIdFk = Food2Add.FoodStatsId,
+                FoodCount = Amount
+            };
+            _context.Add(Inventory2Add2); //Add a new item onto the table
+            _context.SaveChanges(); //persist the change
+            _context.ChangeTracker.Clear(); //clear the tracker for the next person
+
+        return true;
+        }
+    }
 }
