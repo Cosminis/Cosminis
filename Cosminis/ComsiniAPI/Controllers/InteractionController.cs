@@ -79,7 +79,7 @@ public class InteractionController : ControllerBase
         }
         catch(TooSoon)
         {
-            return Results.BadRequest("It has been less than five minutes since this companion has been fed.");
+            return BadRequest("It has been less than five minutes since this companion has been fed.");
         }         
         catch(ResourceNotFound)
         {
