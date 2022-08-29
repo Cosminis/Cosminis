@@ -350,6 +350,15 @@ public class InteractionRepo : Interactions
             } 
         }
 
+        /*
+        Console.WriteLine(showcaseMod);
+        Console.WriteLine(moodMod);
+        Console.WriteLine(hungerMod);
+        Console.WriteLine(agitationBaseRoll);
+        Console.WriteLine(totalRoll);
+        Console.WriteLine(moodToOffset);
+        */
+        
         companionToPet.Mood = companionToPet.Mood + moodToOffset; //I think rolling for agitation is good, but the actual numbers may wanna be changed in the end.
 
         if(companionToPet.Mood <= 0) //preventing negatives and values over 100
@@ -361,7 +370,11 @@ public class InteractionRepo : Interactions
             companionToPet.Mood = 100;
         }
         
-        companionToPet.TimeSinceLastPet = DateTime.Now;            
+        //Console.WriteLine(companionToPet.TimeSinceLastPet);
+
+        companionToPet.TimeSinceLastPet = DateTime.Now;   
+
+        //Console.WriteLine(companionToPet.TimeSinceLastPet);         
 
         _context.SaveChanges(); //Maybe this method could also have a percentage change to reroll the emotion? A greater chance to change emotion if mood is low or emotion quality is poor
 

@@ -374,6 +374,15 @@ public class InteractionService
         try
         {
             Companion companionInstance = _interRepo.PetCompanion(userID, companionID);
+
+            DateTime notNullableDate = companionInstance.TimeSinceLastPet ?? DateTime.Now;
+            double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
+
+            if(totalMinutes < 5)
+            {
+                throw new TooSoon();
+            }
+
             if(userID == null)
             {
                 throw new UserNotFound();

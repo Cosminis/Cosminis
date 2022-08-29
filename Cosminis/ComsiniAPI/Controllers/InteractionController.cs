@@ -49,7 +49,11 @@ public class InteractionController : ControllerBase
     	{
             Companion companionInstance = _interactionService.PetCompanion(userID, companionID);
             return Ok(companionInstance);
-    	}          
+    	}   
+        catch(TooSoon)
+        {
+            return BadRequest("It has been less than five minutes since the last time the mood was changed.");
+        }       
     	catch(CompNotFound)
         {
             return NotFound("No companion with this ID exists."); 
