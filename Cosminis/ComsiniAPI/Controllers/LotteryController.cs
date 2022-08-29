@@ -21,19 +21,14 @@ namespace Controllers
         }
 
         [HttpGet()]
-        public ActionResult<int> Get([FromRoute] int gemSpent, [FromRoute] int userID)
+        public ActionResult<int> Get(int gemSpent, int userID)
         {
             User user = _user.SearchUserById(userID);
             return _service.CanPlay(gemSpent,user);  
         }
-
-        [HttpGet("testing/")]
-        public ActionResult<List<User>> Get()
-        {
-            return _user.GetAll();
-        }
+         
         [HttpPut()]
-        public ActionResult<User> Put([FromRoute]int spins,[FromBody] User user)
+        public ActionResult<User> Put(int spins,[FromBody] User user)
         {
             if (spins == 0)
             {

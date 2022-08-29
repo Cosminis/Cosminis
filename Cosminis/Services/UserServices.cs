@@ -33,7 +33,11 @@ public class UserServices
     	try
     	{
     		return _userRepo.GetUserByUserId(userId);
-    	}
+        }
+        catch (UserNotFound)
+        {
+            throw new UserNotFound();
+        }
     	catch(Exception)
         {
             throw;

@@ -71,7 +71,7 @@ namespace Services
         /// <returns></returns>
         public int CanPlay(int gemsPaid,User user)
         {
-            int yes= gemsPaid % 5 != 0 ? 0 : gemsPaid % 5;
+            int yes= gemsPaid % 5 != 0 ? 0 : gemsPaid / 5;
             //Remove Gems
             return yes;
         }

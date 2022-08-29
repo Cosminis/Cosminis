@@ -20,11 +20,19 @@ namespace Controllers
             _user = user;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public ActionResult<int> Get([FromRoute] int gemSpent, [FromRoute] int userID)
         {
-            User user = _user.SearchUserById(userID);
-            return _service.CanPlay(gemSpent, user);
+            try
+            {
+                User user = _user.SearchUserById(userID);
+                return Ok(_service.CanPlay(gemSpent, user));
+
+            }
+            catch (UserNotFound)
+            {
+                return BadRequest("NO");
+            }
         }
 
         [HttpGet("testing/")]
