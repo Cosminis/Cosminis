@@ -26,10 +26,18 @@
                     </div>
                     <div class="modal-body">
                         Pet or feed your companion here!
+                        <select class="FoodChoice" [(ngModel)]="foodChoice" id="Choice-number"> 
+                            <option value="1" id="Choice-zero">Chili</option>
+                            <option value="2" id="Choice-one">Cold Cut</option>
+                            <option value="3" id="Choice-two">'Special' Salad</option>
+                            <option value="4" id="Choice-three">Marshmallow</option>
+                            <option value="5" id="Choice-four">Holy Water</option>
+                            <option value="6" id="Choice-five">Devil Fruit</option>
+                        </select>
                     </div>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-primary" (click)="pettingOurBaby()">Pet</button>    
-                        <button type="button" class="btn btn-primary">Feed</button>
+                        <button type="button" class="btn btn-primary" (click)="feedingOurBaby(foodChoice)">Feed</button>
                     </div>
                 </div>
             </div>
