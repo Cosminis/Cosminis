@@ -283,63 +283,20 @@ export class UserprofileComponent implements OnInit {
       this.friends = res;
       for(let i=0;i<this.friends.length;i++)  
       {
-        //if(this.friends[i].userIdTo == currentID)
-        //{
-          this.userApi.Find(this.friends[i].userIdFrom).subscribe((res) =>
-          { 
-            console.log(res);
-            this.pendingFriends[i] = res;
-            this.friendPending = true; 
-            /*
-            this.pendingFriends.forEach((pendingFriends,index)=>
-            {
-              if(pendingFriends==currentUser) //or if(pendingFriends.userId==currentID) 
-              {
-                this.pendingFriends.splice(index,i);
-              }
-            });*/
-            
-            
-          })
-        //}      
+        this.userApi.Find(this.friends[i].userIdFrom).subscribe((res) =>
+        { 
+          if(res.userId != currentID)
+          {
+            this.pendingFriends.push(res);
+          }
+          
+          this.friendPending = true; 
+        })  
       }
     }) 
   }
 
 
-/*
-  showPendingFriends(status : string)
-  {
-    let stringUser : string = sessionStorage.getItem('currentUser') as string;
-    let currentUser : Users = JSON.parse(stringUser);
-    let currentID = currentUser.userId;
-    
-    this.searchRelationshipsByStatus(status) 
-    {
-      this.friendPending = true; 
-      for(let i=0;i<this.friends.length;i++)
-      {
-        if(currentID==this.friends[i].userIdFrom)
-        {
-          this.userApi.Find(this.friends[i].userIdTo).subscribe((res) =>
-          {
-            this.pendingFriends[i] = res;
-              
-            console.log(this.users[i].username);
-          })
-        }
-        else
-        {
-          this.userApi.Find(this.friends[i].userIdFrom).subscribe((res) =>
-          {
-            this.pendingFriends[i] = res;  
-            console.log(this.users[i].username);
-          })
-        }
-      }
-    }
-  }*/
-/*
   searchRelationshipsByStatus(status : string)
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
@@ -370,7 +327,7 @@ export class UserprofileComponent implements OnInit {
         }
       }
     })    
-  }*/
+  }
 
   removeFriends(friendToRemove : string)
   {
