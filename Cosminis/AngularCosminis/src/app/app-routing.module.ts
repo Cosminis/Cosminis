@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import { ShopMenuComponent } from './shop-menu/shop-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GemSpendingMenuComponent } from './gem-spending-menu/gem-spending-menu.component';
 
 const routes: Routes = [
   { 
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'shop', 
     component:ShopMenuComponent
+  },
+  {
+    path: 'GemSpendingShop',
+    component:GemSpendingMenuComponent
   },
   {
     path: '',
