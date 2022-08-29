@@ -33,5 +33,15 @@ public class ResourceServices
 
         List<FoodInventory> groceryList = _resourceRepo.Purchase(userId, foodQtyArr, eggQty);
         return groceryList;
-    }    
+    }  
+    public List<FoodInventory> PurchaseWithGems(int userId, int[] foodQtyArr, int eggQty, int Gold)
+    {
+        if(foodQtyArr.Sum() <= 0 && eggQty <= 0)
+        {
+            throw new GottaBuySomething();
+        }        
+
+        List<FoodInventory> groceryList = _resourceRepo.PurchaseWithGems(userId, foodQtyArr, eggQty, Gold);
+        return groceryList;
+    }   
 }
