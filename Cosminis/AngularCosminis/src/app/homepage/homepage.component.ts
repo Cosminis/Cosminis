@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ComsinisApiServiceService } from '../services/Comsini-api-service/comsinis-api-service.service';
 import { Users } from '../Models/User';
 import { Cosminis } from '../Models/Cosminis';
+import { InteractionService } from '../services/Interaction-Api-Service/interaction.service';
 
 @Component({
   selector: 'app-homepage',
@@ -11,7 +12,7 @@ import { Cosminis } from '../Models/Cosminis';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor(private router: Router, private comsiniApi:ComsinisApiServiceService) { }
+  constructor(private router: Router, private comsiniApi:ComsinisApiServiceService, private interApi:InteractionService) { }
 
   displayCosmini : Cosminis = 
   {
@@ -39,6 +40,17 @@ export class HomepageComponent implements OnInit {
     this.cosminiDisplay();
 
     //setInterval(this.smellingHandler, 2500, "my text");
+  }
+
+  pettingOurBaby(){
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser = JSON.parse(stringUser);
+
+    this.interApi.PetCompanion(currentUser.userId, currentUser.showcaseCompanionFk).subscribe((res) =>
+      {
+        console.log(res);
+        window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+      })
   }
 
   smellingHandler(){ //many people have smelt this
