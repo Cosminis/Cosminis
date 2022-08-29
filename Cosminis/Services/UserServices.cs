@@ -39,7 +39,10 @@ public class UserServices
             throw;
         }	
     }
-
+    public List<User> GetAll()
+    {
+        return _userRepo.GetAll();
+    }
     public User LoginOrReggi(User user2Check)
     {
         try //checks if a user with the username already exist

@@ -33,7 +33,8 @@ public interface IUserDAO
 {
     public User CreateUser(User user);
     public User GetUserByUserName(string username);
-    public User GetUserByUserId(int userId); 
+    public User GetUserByUserId(int userId);
+    public List<User> GetAll();
 }
 
 public interface IPostDAO

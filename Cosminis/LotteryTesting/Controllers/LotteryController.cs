@@ -10,7 +10,7 @@ namespace Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class LotteryController:ControllerBase
+    public class LotteryController : ControllerBase
     {
         private LotteryService _service;
         private UserServices _user;
@@ -24,7 +24,7 @@ namespace Controllers
         public ActionResult<int> Get([FromRoute] int gemSpent, [FromRoute] int userID)
         {
             User user = _user.SearchUserById(userID);
-            return _service.CanPlay(gemSpent,user);  
+            return _service.CanPlay(gemSpent, user);
         }
 
         [HttpGet("testing/")]
@@ -33,7 +33,7 @@ namespace Controllers
             return _user.GetAll();
         }
         [HttpPut()]
-        public ActionResult<User> Put([FromRoute]int spins,[FromBody] User user)
+        public ActionResult<User> Put([FromRoute] int spins, [FromBody] User user)
         {
             if (spins == 0)
             {

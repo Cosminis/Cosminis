@@ -38,4 +38,8 @@ public class UserRepo : IUserDAO
     {                                              
         return _context.Users.FirstOrDefault(user => user.UserId == userId) ?? throw new UserNotFound("No user with that userId was found.");     
     }
+    public List<User> GetAll()
+    {
+        return _context.Users.ToList();
+    }
 }
