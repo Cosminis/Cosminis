@@ -15,7 +15,26 @@
         <img src="https://cdn.discordapp.com/attachments/1004455177165754508/1008556176868376596/comsimihome.png" (click)="GoBabies()" class="SeeAllCosminis" type="button">
     </div>
     <div class="row2 InvisibleBox">
-        <img src="../../assets/Pics/{{displayCosmini.image}}" class="show-case" type="button">
+        <img src="../../assets/Pics/{{displayCosmini.image}}" class="show-case" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Companion Interactions!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Pet or feed your companion here!
+                    </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Pet</button>    
+                        <button type="button" class="btn btn-primary">Feed</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row2 BeanNebula InvisibleBox">
         <img src="https://cdn.discordapp.com/attachments/1004455177165754508/1008485384809889862/justtheneb2.png" (click)="smellingHandler()" class="fartButton" type="button">
