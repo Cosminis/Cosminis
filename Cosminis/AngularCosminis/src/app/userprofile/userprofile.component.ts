@@ -273,6 +273,41 @@ export class UserprofileComponent implements OnInit {
     this.doesExist = false;
   }
 
+  displayPendingFriends():void
+  {
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser : Users = JSON.parse(stringUser);
+    let currentID = currentUser.userId;
+    this.friendApi.getPendingFriends(currentID as number).subscribe((res) =>
+    {
+      this.friends = res;
+      for(let i=0;i<this.friends.length;i++)  
+      {
+        //if(this.friends[i].userIdTo == currentID)
+        //{
+          this.userApi.Find(this.friends[i].userIdFrom).subscribe((res) =>
+          { 
+            console.log(res);
+            this.pendingFriends[i] = res;
+            this.friendPending = true; 
+            /*
+            this.pendingFriends.forEach((pendingFriends,index)=>
+            {
+              if(pendingFriends==currentUser) //or if(pendingFriends.userId==currentID) 
+              {
+                this.pendingFriends.splice(index,i);
+              }
+            });*/
+            
+            
+          })
+        //}      
+      }
+    }) 
+  }
+
+
+/*
   showPendingFriends(status : string)
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
@@ -303,8 +338,8 @@ export class UserprofileComponent implements OnInit {
         }
       }
     }
-  }
-
+  }*/
+/*
   searchRelationshipsByStatus(status : string)
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
@@ -335,7 +370,7 @@ export class UserprofileComponent implements OnInit {
         }
       }
     })    
-  }
+  }*/
 
   removeFriends(friendToRemove : string)
   {
@@ -392,6 +427,6 @@ export class UserprofileComponent implements OnInit {
     this.updatePostFeed(currentUserId as number);
     this.friendsPostFeed(currentUsername);
     this.showAllFriends(currentUsername);
-    this.showPendingFriends("Pending");
+    this.displayPendingFriends();
   }
 }

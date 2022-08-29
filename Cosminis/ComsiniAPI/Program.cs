@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddDbContext<wearelosingsteamContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
+builder.Services.AddDbContext<wearelosingsteamContext>(options => options.UseSqlServer("Server=tcp:p2dbs.database.windows.net,1433;Initial Catalog=wearelosingsteam;Persist Security Info=False;User ID=wearelosingsteam;Password=weL0stSteam;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 builder.Services.AddScoped<ICompanionDAO, CompanionRepo>();
 builder.Services.AddScoped<IFriendsDAO, FriendsRepo>();
 builder.Services.AddScoped<IUserDAO, UserRepo>();
