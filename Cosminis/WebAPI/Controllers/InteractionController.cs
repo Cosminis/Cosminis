@@ -65,7 +65,11 @@ public class InteractionController
     	{
     		Companion companionInstance = _interactionService.PetCompanion(userID, companionID);
     		return Results.Accepted("/Interactions/PetCompanion", companionInstance); 
-    	}          
+    	}
+        catch(TooSoon)
+        {
+            return Results.BadRequest("It has been less than five minutes since the last time the mood was changed.");
+        }                  
     	catch(CompNotFound)
         {
             return Results.NotFound("No companion with this ID exists."); 
