@@ -38,8 +38,9 @@ export class NavbarComponent implements OnInit {
     
   ngOnInit(): void 
   {
-    /*setInterval(() => 
+    setInterval(() => 
     {
+      
       let stringUser : string = sessionStorage.getItem('currentUser') as string;
       let currentUser : Users = JSON.parse(stringUser);
   
@@ -54,7 +55,7 @@ export class NavbarComponent implements OnInit {
           console.log(res);
           window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
         })
-    } ,2500);*/
+    } ,300000);
   }
 
   needyCompanion():void
