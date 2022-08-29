@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ShopMenuComponent } from './shop-menu/shop-menu.component';
 import { InteractionsComponent } from './interactions/interactions.component';
+import { LotteryComponent } from './lottery/lottery.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { InteractionsComponent } from './interactions/interactions.component';
     AllCosminisComponent,
     NavbarComponent,
     ShopMenuComponent,
-    InteractionsComponent
+    InteractionsComponent,
+    LotteryComponent
     //AppLoginComponent
   ],
   imports: [
