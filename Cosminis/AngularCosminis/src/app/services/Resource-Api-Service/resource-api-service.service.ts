@@ -19,7 +19,7 @@ export class ResourceApiServicesService {
   } 
 
   PurchaseWithGems(userId : number, fQty : number[], eQty : number, goldQty : number) : Observable<FoodElement[]> {
-    return this.http.put(this.url + `Resources/PurchaseWithGems?userId=${userId}&eggQty=${eQty}&goldQty=${goldQty}`, fQty) as unknown as Observable<FoodElement[]>;
+    return this.http.put(this.url + `Resources/Purchase/Gems?userId=${userId}&eggQty=${eQty}&Gold=${goldQty}`, fQty) as unknown as Observable<FoodElement[]>;
    // To be connected with the PurchaseWithGems on the backend
   } 
 

@@ -63,7 +63,7 @@ public class ResourceController : ControllerBase
     {
     	try
     	{
-    		List<FoodInventory> groceryList = _resourceServices.Purchase(userId, foodQtyArr, eggQty);
+    		List<FoodInventory> groceryList = _resourceServices.PurchaseWithGems(userId, foodQtyArr, eggQty, Gold);
     		return Ok(groceryList); 
     	}
         catch(ResourceNotFound)
