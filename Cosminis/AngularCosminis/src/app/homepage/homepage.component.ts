@@ -88,6 +88,9 @@ export class HomepageComponent implements OnInit {
   gotoShop(){
     this.router.navigateByUrl('/shop');  // define your component where you want to go
   }
+  gotoLottery(){
+    this.router.navigateByUrl('/lottery');  // Goes to lottey roulette wheel
+  }
   
   cosminiDisplay():void
   {

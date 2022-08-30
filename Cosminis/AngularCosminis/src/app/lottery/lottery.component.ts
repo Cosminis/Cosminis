@@ -18,6 +18,7 @@ export class LotteryComponent implements OnInit {
   spinTime : number = 0;
   spinTimeTotal : number = 0;
   ctx : any;
+  ctxa :any;
   state: string = 'default';
   rotate() {
     this.state = (this.state === 'default' ? 'rotated' : 'default');
@@ -49,12 +50,15 @@ export class LotteryComponent implements OnInit {
 
   drawRouletteWheel():void {
     let canvas:HTMLCanvasElement  = document.getElementById("canvas") as HTMLCanvasElement;
+    let arrow:HTMLCanvasElement  = document.getElementById("arrow") as HTMLCanvasElement;
     if (canvas.getContext) {
       let outsideRadius: number = 200;
       let insideRadius: number =0;
       this.ctx = canvas.getContext("2d");
+      this.ctxa = arrow.getContext("2d")
       this.ctx.clearRect(0,0,500,500);
-  
+      this.ctxa.clearRect(0,0,50,50);
+      
       this.ctx.strokeStyle = "black";
       this.ctx.lineWidth = 2;
   
@@ -80,19 +84,18 @@ export class LotteryComponent implements OnInit {
         this.ctx.rotate(angle + this.arc / 2 + Math.PI / 2);
         this.ctx.restore();
       } 
-  
       //Arrow
-      this.ctx.fillStyle = "red";
-      this.ctx.beginPath();
-      this.ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
-      this.ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
-      this.ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
-      this.ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
-      this.ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
-      this.ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
-      this.ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
-      this.ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
-      this.ctx.fill();
+      this.ctxa.fillStyle = "red";
+      this.ctxa.beginPath();
+      this.ctxa.moveTo(250 - 4, 250 - (outsideRadius + 5));
+      this.ctxa.lineTo(250 + 4, 250 - (outsideRadius + 5));
+      this.ctxa.lineTo(250 + 4, 250 - (outsideRadius - 5));
+      this.ctxa.lineTo(250 + 9, 250 - (outsideRadius - 5));
+      this.ctxa.lineTo(250 + 0, 250 - (outsideRadius - 13));
+      this.ctxa.lineTo(250 - 9, 250 - (outsideRadius - 5));
+      this.ctxa.lineTo(250 - 4, 250 - (outsideRadius - 5));
+      this.ctxa.lineTo(250 - 4, 250 - (outsideRadius + 5));
+      this.ctxa.fill();
     }
   }
   rotateWheel() :void{

@@ -8,6 +8,7 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
 import { ShopMenuComponent } from './shop-menu/shop-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GemSpendingMenuComponent } from './gem-spending-menu/gem-spending-menu.component';
+import { LotteryComponent } from './lottery/lottery.component';
 
 const routes: Routes = [
   { 
@@ -42,6 +43,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/login',
     pathMatch: 'full'
+  },
+  {
+    path: 'lottery',
+    component:LotteryComponent
   },
   {path: '**', redirectTo: '/login', pathMatch: 'full'}
 ];

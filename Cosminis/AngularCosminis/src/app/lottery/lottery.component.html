@@ -1,6 +1,7 @@
+<app-navbar></app-navbar>
 <div class="lottery-container">
     <h2>Big Money No Wammies!</h2>
-    <h2>Only 5 Gems to SPIN!</h2>
+    <h2 id="heading2">Only 5 Gems to SPIN!</h2>
     <div class="spin-btns">
         <button class="spin-1" (click)="spin(1)">Spin Once</button>
         <button class="spin-2" (click)="spin(2)">Spin Twice</button>
@@ -10,6 +11,6 @@
     </div>
     <div class="wheel">
         <canvas id="canvas" width="500" height="500"></canvas>
-        <button class="spin" value="spin" (click)="spin(1)">Spin</button>
+        <canvas id="arrow" width="500" height="500"></canvas>
     </div>
 </div>
