@@ -57,6 +57,22 @@ public class ResourceController : ControllerBase
         }
     }
 
+
+    [Route("/AddGems")]
+    [HttpPut]
+    public ActionResult<User> UpdateGems(int userId, int Amount)
+    {
+        try 
+        {
+            User user2Add2 = _resourceServices.UpdateGems(userId, Amount);
+            return Ok(user2Add2); 
+        }
+        catch(UserNotFound)
+        {
+            return NotFound("This user doesn't exist!"); 
+        }
+    }    
+
     [Route("/Resources/Purchase/Gems")]
     [HttpPut()]
     public ActionResult<List<FoodInventory>> PurchaseWithGems(int userId, int[] foodQtyArr, int eggQty, int Gold)

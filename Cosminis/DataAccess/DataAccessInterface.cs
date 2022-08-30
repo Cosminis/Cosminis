@@ -56,6 +56,7 @@ public interface ICommentDAO
 public interface IResourceGen
 {
     public bool AddGold(User User, int Amount);
+    public User UpdateGems(int userId, int Amount);
     public bool AddEgg(User User, int Amount);
     public bool AddFood(User User, int Weight);
     public bool RemoveFood(int userId, int foodId);

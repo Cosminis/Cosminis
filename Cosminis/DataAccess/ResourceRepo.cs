@@ -218,6 +218,24 @@ public class ResourceRepo : IResourceGen
         //save changes                          -done
     }
 
+    public User UpdateGems(int userId, int Amount)
+    {
+        User User2Add2 = _context.Users.Find(userId);
+        if(User2Add2 == null) //such user does not exist
+        {
+            throw new UserNotFound();
+        }
+        if(User2Add2.GemCount == null)
+        {
+            User2Add2.GemCount = 0;
+        }
+
+        User2Add2.GemCount = User2Add2.GemCount + Amount; //make the change
+        _context.SaveChanges(); //persist the change
+        _context.ChangeTracker.Clear(); //clear the tracker for the next person
+        return User2Add2;
+    }
+
     public List<FoodInventory> PurchaseWithGems(int userId, int[] foodQtyArr, int eggQty, int Gold)
     {
         User? userToBuy = _context.Users.Find(userId);
