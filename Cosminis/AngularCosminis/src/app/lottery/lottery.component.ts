@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations'; 
+import { LotteryService } from '../services/Lottery-Service/lottery.service';
+import { UserApiServicesService } from '../services/User-Api-Service/user-api-services.service';
+import { Users } from '../Models/User';
+import { Route, Router } from '@angular/router';
 @Component({
   selector: 'app-lottery',
   templateUrl: './lottery.component.html',
@@ -24,10 +28,10 @@ export class LotteryComponent implements OnInit {
   ctx : any;
   state: string = 'default';
   rotate() {
-      this.state = (this.state === 'default' ? 'rotated' : 'default');
+    this.state = (this.state === 'default' ? 'rotated' : 'default');
   }
-  constructor() { }
-
+  constructor(private lottery:LotteryService, private user:Users, private route:Router) { }
+  
   byte2Hex(n:number): string {
     let nybHexString: string = "0123456789ABCDEF";
     return String(nybHexString.substring((n >> 4) & 0x0F,1)) + nybHexString.substring(n & 0x0F,1);
@@ -116,7 +120,7 @@ export class LotteryComponent implements OnInit {
       console.log('here');
     
       this.stopRotateWheel();
-    
+      
   }
   stopRotateWheel() :void {
     // clearTimeout(this.spinTimeout);
@@ -131,16 +135,28 @@ export class LotteryComponent implements OnInit {
     let tc: number = ts*t;
     return b+c*(tc + -3*ts + 3*t);
   }
-  spin(): void {
+  spin(spins:number): void {
     // this.spinAngleStart = Math.random() * 10 + 10;
     // this.spinTime = 0;
     // this.spinTimeTotal = Math.random() * 3 + 4 * 1000;
     // this.rotateWheel();
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser : Users = JSON.parse(stringUser);
+    let currentUserId = currentUser.userId as number
     const canvas = document.getElementById('canvas')
     canvas?.classList.remove('spinning');
     if(canvas){
       canvas.classList.add('spinning');
     }
+    this.lottery.CanPlay(spins*5,currentUserId).subscribe((res) => this.lottery.GiveRewards(res,currentUser).subscribe({next: (res) => {
+      console.log(res);
+      this.route.navigateByUrl('/homepage');
+    }, error: (err) => {
+      if(err.status === 404) {
+        alert('You are broke!!');
+      }
+    }}
+));
   }
   ngOnInit(): void {
     this.drawRouletteWheel();
