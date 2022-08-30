@@ -7,11 +7,11 @@ import { FoodElement } from '../Models/FoodInventory';
 import {ChangeDetectorRef} from '@angular/core';
 
 @Component({
-  selector: 'app-shop-menu',
-  templateUrl: './shop-menu.component.html',
-  styleUrls: ['./shop-menu.component.css']
+  selector: 'app-gem-spending-menu',
+  templateUrl: './gem-spending-menu.component.html',
+  styleUrls: ['./gem-spending-menu.component.css']
 })
-export class ShopMenuComponent implements OnInit {
+export class GemSpendingMenuComponent implements OnInit {
 
   constructor(private router: Router, private api:ResourceApiServicesService, private userApi:UserApiServicesService, private ref:ChangeDetectorRef) { }
   foodInvInstance : FoodElement[] = []
@@ -19,11 +19,13 @@ export class ShopMenuComponent implements OnInit {
   foodQty : [number, number, number, number, number, number] = [0, 0, 0, 0, 0, 0];
   purchaseTotal : number = 0;
 
-  confirmPurchase() : void {
+
+  confirmPurchase() : void 
+  {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
     let currentUserId = currentUser.userId as number;
-    this.api.Purchase(currentUserId, this.foodQty, this.eggQty).subscribe((res) => 
+    this.api.PurchaseWithGems(currentUserId, this.foodQty, this.eggQty).subscribe((res) => 
     {
       this.foodInvInstance = res;
       console.log(res);
@@ -39,25 +41,25 @@ export class ShopMenuComponent implements OnInit {
         currentUser = res;
         console.log(currentUser);
         window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-        alert("Congratulations, you just spent a lot of money");
+        alert("Congratulations, you just spent a lot of Gems");
       })
     })
-}
-
-updateTotal() : void {
-  this.purchaseTotal = this.eggQty * 100;
-  for(let i = 0; i < this.foodQty.length; i++) {
-    this.purchaseTotal += this.foodQty[i] * 10;
   }
-}
 
-goToGemShop(){
-  this.router.navigateByUrl('/GemSpendingShop');  // define your component where you want to go
-}
+  updateTotal() : void 
+  {
+    this.purchaseTotal = this.eggQty * 100;  // This value needs to be updated
+    for(let i = 0; i < this.foodQty.length; i++) 
+    {
+      this.purchaseTotal += this.foodQty[i] * 10;  // this value needs to be updated
+    }
+  }
 
+  gotoShop(){
+    this.router.navigateByUrl('/shop');  // define your component where you want to go
+  }
 
   ngOnInit(): void {
-    this.ref.detectChanges();
   }
 
 }

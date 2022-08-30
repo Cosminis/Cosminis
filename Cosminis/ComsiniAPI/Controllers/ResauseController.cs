@@ -56,4 +56,27 @@ public class ResourceController : ControllerBase
             return NotFound("That user has no food"); 
         }
     }
+
+    [Route("/Resources/Purchase/Gems")]
+    [HttpPut()]
+    public ActionResult<List<FoodInventory>> PurchaseWithGems(int userId, int[] foodQtyArr, int eggQty, int Gold)
+    {
+    	try
+    	{
+    		List<FoodInventory> groceryList = _resourceServices.Purchase(userId, foodQtyArr, eggQty);
+    		return Ok(groceryList); 
+    	}
+        catch(ResourceNotFound)
+        {
+            return NotFound("Something went wrong."); 
+        }	
+        catch(InsufficientFunds)
+        {
+            return NotFound("You need more money!"); 
+        }	
+        catch(GottaBuySomething)
+        {
+            return NotFound("You gotta buy something, kid!"); 
+        }	        
+    }   
 }
