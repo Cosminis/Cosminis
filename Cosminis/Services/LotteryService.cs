@@ -73,9 +73,16 @@ namespace Services
         {
             int yes= gemsPaid % 5 != 0 ? 0 : gemsPaid / 5;
             //Remove Gems
+            gemsPaid *= -1;
+            _resource.UpdateGems((int)user.UserId!, gemsPaid);
             return yes;
         }
-
+        /// <summary>
+        /// Reward player 
+        /// </summary>
+        /// <param name="spins"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public User GiveRewards(int spins, User user)
         {
             List<int> wins = Winnings(spins);
@@ -85,7 +92,7 @@ namespace Services
             //Add Gold
             _resource.AddGold(user, wins[1]);
             //Add Gems
-
+            _resource.UpdateGems((int)user.UserId!, wins[4]);
             //Add Egg
             _resource.AddEgg(user, wins[5]);
             return user;

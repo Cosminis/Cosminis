@@ -33,7 +33,12 @@ public class UserController : ControllerBase
             return NotFound("No user with that username was found."); 
         }   
     }
-
+    [Route("/all")]
+    [HttpGet]
+    public ActionResult<List<User>> Get()
+    {
+        return _userServices.GetAll();
+    }
     [Route("/Users/Find")]
     [HttpGet]
     public ActionResult<User> Get(int user2Check)
