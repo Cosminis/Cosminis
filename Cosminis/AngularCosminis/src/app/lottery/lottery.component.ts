@@ -146,7 +146,7 @@ export class LotteryComponent implements OnInit {
       console.log(res);
       this.route.navigateByUrl('/homepage');
     }, error: (err) => {
-      if(err.status === 404) {
+      if(err.status === 400) {
         alert('You are broke!!');
       }
     }}

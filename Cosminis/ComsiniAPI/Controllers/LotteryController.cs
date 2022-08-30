@@ -19,7 +19,12 @@ namespace Controllers
             _service = service;
             _user = user;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gemSpent"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         [HttpGet()]
         public ActionResult<int> Get(int gemSpent, int userID)
         {
