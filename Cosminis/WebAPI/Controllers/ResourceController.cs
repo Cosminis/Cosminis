@@ -58,9 +58,30 @@ public class ResourceController
     		User user2Add2 = _resourceServices.UpdateGems(userId, Amount);
     		return Results.Ok(user2Add2); 
     	}
-        catch(UserNotFound)
+      catch(UserNotFound)
+      {
+        return Results.NotFound("This user doesn't exist."); 
+      }	        
+    }
+
+    public IResult PurchaseWithGems(int userId, int[] foodQtyArr, int eggQty, int Gold)
+    {
+    	try
+    	{
+    		List<FoodInventory> groceryList = _resourceServices.Purchase(userId, foodQtyArr, eggQty);
+    		return Results.Ok(groceryList); 
+    	}
+        catch(ResourceNotFound)
         {
-            return Results.NotFound("This user doesn't exist."); 
+            return Results.NotFound("Something went wrong."); 
+        }	
+        catch(InsufficientFunds)
+        {
+            return Results.NotFound("You need more money!"); 
+        }	
+        catch(GottaBuySomething)
+        {
+            return Results.NotFound("You gotta buy something, kid!"); 
         }	        
-    }          
+    }      
 }

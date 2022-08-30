@@ -235,4 +235,62 @@ public class ResourceRepo : IResourceGen
         _context.ChangeTracker.Clear(); //clear the tracker for the next person
         return User2Add2;
     }
+
+    public List<FoodInventory> PurchaseWithGems(int userId, int[] foodQtyArr, int eggQty, int Gold)
+    {
+        User? userToBuy = _context.Users.Find(userId);
+        if (userToBuy == null)
+        {
+            throw new UserNotFound();
+        }
+
+        int totalFoodCost = ((foodQtyArr.Sum()) * 1);
+
+        int eggCost = (eggQty * 10);
+
+        int goldCost = (Gold / 10);
+
+        int totalCost = ((totalFoodCost + eggCost + goldCost) * -1);
+
+        if ((userToBuy.GemCount + totalCost) < 0)
+        {
+            throw new InsufficientFunds();
+        }
+        else
+        {
+            userToBuy.GemCount = userToBuy.GemCount + totalCost;
+        }
+
+        AddEgg(userToBuy, eggQty);
+
+        userToBuy.GoldCount += Gold;
+
+        int k = 0;
+
+        for (int i = 1; i <= 6; i++)
+        {
+            FoodInventory userFoodInstance = _context.FoodInventories.Find(userToBuy.UserId, i);
+
+            if (userFoodInstance == null)
+            {
+                FoodInventory newFood = new FoodInventory()
+                {
+                    UserIdFk = (int)userToBuy.UserId,
+                    FoodStatsIdFk = i,
+                    FoodCount = 0
+                };
+                _context.FoodInventories.Add(newFood);
+                userFoodInstance = newFood;
+            }
+            userFoodInstance.FoodCount = userFoodInstance.FoodCount + foodQtyArr[k];
+
+            k++;
+        }
+
+        _context.SaveChanges();
+
+        _context.ChangeTracker.Clear();
+
+        return GetFoodInventoryByUserId(userId);
+    }
 }

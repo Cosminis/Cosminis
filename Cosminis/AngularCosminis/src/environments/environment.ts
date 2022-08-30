@@ -8,8 +8,8 @@ export const environment =
   api: 'https://cosminis.azurewebsites.net/',
   auth:
   {
-    domain: "dev-lj8y5w8u.us.auth0.com",
-    clientId: "tGqEiAcYxB9BZh4VpzFXgKbuI82Se4pk",
+    domain: "cosminis.us.auth0.com",
+    clientId: "KwrUdfcjrrP2cBxYLWUaQ1CVpXPjVgER",
     redirectUri: window.location.origin
   }
 };
