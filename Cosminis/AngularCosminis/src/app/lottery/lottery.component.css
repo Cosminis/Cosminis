@@ -3,6 +3,7 @@
   border-radius: 25px;
   width: fit-content;
   height: fit-content;
+  margin:auto;
   background-color: rgba(137, 43, 226, 0.212);
 } 
 .lottery-container h2{
@@ -43,5 +44,5 @@
 }
 #arrow{
   position: absolute;
-  left: 20px;
+  left: 400px;
 }
