@@ -49,6 +49,19 @@ public class ResourceController
         {
             return Results.NotFound("You gotta buy something, kid!"); 
         }	        
+    }    
+
+    public IResult UpdateGems(int userId, int Amount)
+    {
+    	try
+    	{
+    		User user2Add2 = _resourceServices.UpdateGems(userId, Amount);
+    		return Results.Ok(user2Add2); 
+    	}
+      catch(UserNotFound)
+      {
+        return Results.NotFound("This user doesn't exist."); 
+      }	        
     }
 
     public IResult PurchaseWithGems(int userId, int[] foodQtyArr, int eggQty, int Gold)

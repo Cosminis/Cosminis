@@ -33,7 +33,14 @@ public class ResourceServices
 
         List<FoodInventory> groceryList = _resourceRepo.Purchase(userId, foodQtyArr, eggQty);
         return groceryList;
-    }  
+    }   
+
+    public User UpdateGems(int userId, int Amount)
+    {
+        User user2Add2 = _resourceRepo.UpdateGems(userId, Amount);
+        return user2Add2; 
+    } 
+    
     public List<FoodInventory> PurchaseWithGems(int userId, int[] foodQtyArr, int eggQty, int Gold)
     {
         if(foodQtyArr.Sum() <= 0 && eggQty <= 0 && Gold <= 0)
