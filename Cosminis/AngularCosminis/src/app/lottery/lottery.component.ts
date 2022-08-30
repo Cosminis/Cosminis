@@ -23,7 +23,7 @@ export class LotteryComponent implements OnInit {
   rotate() {
     this.state = (this.state === 'default' ? 'rotated' : 'default');
   }
-  constructor(private lottery:LotteryService, private route:Router) { }
+  constructor(private lottery:LotteryService, private route:Router, private user:UserApiServicesService) { }
   
   byte2Hex(n:number): string {
     let nybHexString: string = "0123456789ABCDEF";
@@ -136,16 +136,15 @@ export class LotteryComponent implements OnInit {
     // this.spinTimeTotal = Math.random() * 3 + 4 * 1000;
     // this.rotateWheel();
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
-    let currentUser : number = JSON.parse(stringUser).userID as number;
-    // let currentUserId = currentUser.userId as number
+    let currentUser = JSON.parse(stringUser);
     const canvas = document.getElementById('canvas')
     canvas?.classList.remove('spinning');
     if(canvas){
       canvas.classList.add('spinning');
     }
-    this.lottery.CanPlay(spins*5,currentUser).subscribe((res) => this.lottery.GiveRewards(res,JSON.parse(stringUser)).subscribe({next: (res) => {
+    this.lottery.CanPlay(spins*5,currentUser.userId).subscribe((res) => this.lottery.GiveRewards(res,JSON.parse(stringUser)).subscribe({next: (res) => {
       console.log(res);
-      // this.route.navigateByUrl('/homepage');
+      this.route.navigateByUrl('/homepage');
     }, error: (err) => {
       if(err.status === 404) {
         alert('You are broke!!');
