@@ -218,7 +218,7 @@ public class ResourceRepo : IResourceGen
         //save changes                          -done
     }
 
-    public User AddGems(int userId, int Amount)
+    public User UpdateGems(int userId, int Amount)
     {
         User User2Add2 = _context.Users.Find(userId);
         if(User2Add2 == null) //such user does not exist

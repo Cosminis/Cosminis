@@ -51,11 +51,11 @@ public class ResourceController
         }	        
     }    
 
-    public IResult AddGems(int userId, int Amount)
+    public IResult UpdateGems(int userId, int Amount)
     {
     	try
     	{
-    		User user2Add2 = _resourceServices.AddGems(userId, Amount);
+    		User user2Add2 = _resourceServices.UpdateGems(userId, Amount);
     		return Results.Ok(user2Add2); 
     	}
         catch(UserNotFound)

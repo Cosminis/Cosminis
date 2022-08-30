@@ -59,11 +59,11 @@ public class ResourceController : ControllerBase
 
     [Route("/AddGems")]
     [HttpPut]
-    public ActionResult<User> AddGems(int userId, int Amount)
+    public ActionResult<User> UpdateGems(int userId, int Amount)
     {
         try 
         {
-            User user2Add2 = _resourceServices.AddGems(userId, Amount);
+            User user2Add2 = _resourceServices.UpdateGems(userId, Amount);
             return Ok(user2Add2); 
         }
         catch(UserNotFound)
