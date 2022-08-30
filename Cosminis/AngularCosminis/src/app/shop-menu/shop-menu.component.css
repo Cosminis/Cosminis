@@ -95,10 +95,11 @@ h3
 .ShopHeader 
 {
     display: flex;
+    justify-content: center;
     column-gap: 20px;
 }
 
-#gem-shop
+#gem-button
 {
     height: 40px;
     width: 110px;
