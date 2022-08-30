@@ -17,6 +17,7 @@
     <section class="ShopBody">
 
         <div class="ItemName"><!--Okay so this would be the "Egg purchase row"-->
+            <h3>Gold</h3>
             <h3>Egg(s)</h3>
             <h3>Chili</h3>
             <h3>Cold Cut Sandwich</h3>
@@ -27,16 +28,31 @@
         </div>
 
         <div class="Cost">
-            <h3>100</h3>
+            <h3>1</h3>
             <h3>10</h3>
-            <h3>10</h3>
-            <h3>10</h3>
-            <h3>10</h3>
-            <h3>10</h3>
-            <h3>10</h3>
+            <h3>1</h3>
+            <h3>1</h3>
+            <h3>1</h3>
+            <h3>1</h3>
+            <h3>1</h3>
+            <h3>1</h3>
         </div>
         
         <div class="UserInput">
+            <select class="Quantity" [(ngModel)]="goldQty" id="Choice-number" (change)="updateTotal()"> 
+                <option value="0" id="Choice-zero">0</option>
+                <option value="1" id="Choice-one">10</option>
+                <option value="2" id="Choice-two">20</option>
+                <option value="3" id="Choice-three">30</option>
+                <option value="4" id="Choice-four">40</option>
+                <option value="5" id="Choice-five">50</option>
+                <option value="6" id="Choice-six">60</option>
+                <option value="7" id="Choice-seven">70</option>
+                <option value="8" id="Choice-eight">80</option>
+                <option value="9" id="Choice-nine">90</option>
+                <option value="10" id="Choice-ten">100</option>
+            </select>
+
             <select class="EggQuantity" [(ngModel)]="eggQty" id="Choice-number" (change)="updateTotal()"> 
                 <option value="0" id="Choice-zero">0</option>
                 <option value="1" id="Choice-one">1</option>
@@ -138,6 +154,7 @@
 
         <div class="Subtotal">
             <h3>cost: <span id="totalFoodCost">0</span></h3><!--""subtotal" row"-->
+            <h3>cost: <span id="totalFoodCost">0</span></h3>
             <h3>cost: <span id="totalFoodCost">0</span></h3>
             <h3>cost: <span id="totalFoodCost">0</span></h3>
             <h3>cost: <span id="totalFoodCost">0</span></h3>
