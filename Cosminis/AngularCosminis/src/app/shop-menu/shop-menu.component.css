@@ -95,13 +95,43 @@ h3
 .ShopHeader 
 {
     display: flex;
-    justify-content: center;
-    column-gap: 20px;
 }
 
 #gem-button
 {
+    position: relative;
+    left: -125px;
     height: 40px;
     width: 110px;
-    margin-top: 22px;
+    margin-top: 18px;
 }
+
+.gem-image
+{
+    width: 80px;
+    height: 50px;
+    margin-top: 15px;
+}
+
+.gem-title{
+    padding: 0px;
+    margin-top: 15px;
+}
+
+.gem-button-container {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.gem-title-container {
+    display: flex;
+    justify-content: center;
+    flex-grow: .1;
+}
+
+.gem-image-container {
+    display: flex;
+    flex-grow: 1;
+}
+
