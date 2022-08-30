@@ -16,6 +16,7 @@ export class GemSpendingMenuComponent implements OnInit {
   constructor(private router: Router, private api:ResourceApiServicesService, private userApi:UserApiServicesService, private ref:ChangeDetectorRef) { }
   foodInvInstance : FoodElement[] = []
   eggQty : number = 0;
+  goldQty : number = 0;
   foodQty : [number, number, number, number, number, number] = [0, 0, 0, 0, 0, 0];
   purchaseTotal : number = 0;
 
@@ -25,7 +26,7 @@ export class GemSpendingMenuComponent implements OnInit {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
     let currentUserId = currentUser.userId as number;
-    this.api.PurchaseWithGems(currentUserId, this.foodQty, this.eggQty).subscribe((res) => 
+    this.api.PurchaseWithGems(currentUserId, this.foodQty, this.eggQty, this.goldQty).subscribe((res) => 
     {
       this.foodInvInstance = res;
       console.log(res);

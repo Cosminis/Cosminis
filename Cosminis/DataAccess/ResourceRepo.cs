@@ -262,8 +262,7 @@ public class ResourceRepo : IResourceGen
         }
 
         AddEgg(userToBuy, eggQty);
-
-        userToBuy.GoldCount += Gold;
+        AddGold(userToBuy, Gold);
 
         int k = 0;
 
