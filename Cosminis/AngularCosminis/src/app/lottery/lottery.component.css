@@ -1,0 +1,11 @@
+canvas{
+    /* background-color: aqua; */
+}
+@keyframes spin {
+    0% {rotate:0deg} 
+    100% {rotate: 360deg;}
+  }
+   
+.spinning{  
+    animation: spin 2s linear infinite;
+}

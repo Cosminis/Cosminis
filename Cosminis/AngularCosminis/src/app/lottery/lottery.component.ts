@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-
+import { trigger, state, style, animate, transition } from '@angular/animations'; 
 @Component({
   selector: 'app-lottery',
   templateUrl: './lottery.component.html',
@@ -39,13 +38,13 @@ export class LotteryComponent implements OnInit {
 
   }
   getColor(item: number, maxitem: number): string {
-    let phase : number = 10;
+    let phase : number = 0;
     let center : number = 128;
     let width : number = 127;
     let frequency : number = Math.PI*2/maxitem;
-    let red : number   = Math.sin(frequency*item+7+phase) * width + center;
-    let green : number = Math.sin(frequency*item+7+phase) * width + center;
-    let blue : number  = Math.sin(frequency*item+7+phase) * width + center;
+    let red : number   = Math.sin(frequency*+40+phase) * width + center;
+    let green : number = Math.sin(frequency*item+30+phase) * width + center;
+    let blue : number  = Math.sin(frequency*item+9+phase) * width + center;
     // console.log(Math.floor(red));
     // console.log(blue);
     // console.log(green);
@@ -102,8 +101,7 @@ export class LotteryComponent implements OnInit {
   }
   rotateWheel() :void{
     this.spinTime += 30;
-    // this.spinTimeout = setTimeout('this.rotateWheel()', 30);
-    while(this.spinTime < this.spinTimeTotal){ 
+    // this.spinTimeout = setTimeout('this.rotateWheel()', 30); 
       let spinAngle: number = this.spinAngleStart - this.easeOut(this.spinTime, 0, this.spinAngleStart, this.spinTimeTotal);
       this.startAngle += (spinAngle * Math.PI / 180);
       this.startAngle +=1;
@@ -116,7 +114,7 @@ export class LotteryComponent implements OnInit {
       this.ctx.save();
       this.ctx.restore(); 
       console.log('here');
-    } 
+    
       this.stopRotateWheel();
     
   }
@@ -134,10 +132,15 @@ export class LotteryComponent implements OnInit {
     return b+c*(tc + -3*ts + 3*t);
   }
   spin(): void {
-    this.spinAngleStart = Math.random() * 10 + 10;
-    this.spinTime = 0;
-    this.spinTimeTotal = Math.random() * 3 + 4 * 1000;
-    this.rotateWheel();
+    // this.spinAngleStart = Math.random() * 10 + 10;
+    // this.spinTime = 0;
+    // this.spinTimeTotal = Math.random() * 3 + 4 * 1000;
+    // this.rotateWheel();
+    const canvas = document.getElementById('canvas')
+    canvas?.classList.remove('spinning');
+    if(canvas){
+      canvas.classList.add('spinning');
+    }
   }
   ngOnInit(): void {
     this.drawRouletteWheel();
