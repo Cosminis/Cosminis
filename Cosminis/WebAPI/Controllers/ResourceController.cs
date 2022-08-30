@@ -49,5 +49,18 @@ public class ResourceController
         {
             return Results.NotFound("You gotta buy something, kid!"); 
         }	        
-    }        
+    }    
+
+    public IResult AddGems(int userId, int Amount)
+    {
+    	try
+    	{
+    		User user2Add2 = _resourceServices.AddGems(userId, Amount);
+    		return Results.Ok(user2Add2); 
+    	}
+        catch(UserNotFound)
+        {
+            return Results.NotFound("This user doesn't exist."); 
+        }	        
+    }          
 }

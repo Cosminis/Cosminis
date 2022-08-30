@@ -33,5 +33,11 @@ public class ResourceServices
 
         List<FoodInventory> groceryList = _resourceRepo.Purchase(userId, foodQtyArr, eggQty);
         return groceryList;
-    }    
+    }   
+
+    public User AddGems(int userId, int Amount)
+    {
+        User user2Add2 = _resourceRepo.AddGems(userId, Amount);
+        return user2Add2; 
+    } 
 }

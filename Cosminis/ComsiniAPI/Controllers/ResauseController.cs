@@ -56,4 +56,19 @@ public class ResourceController : ControllerBase
             return NotFound("That user has no food"); 
         }
     }
+
+    [Route("/AddGems")]
+    [HttpPut]
+    public ActionResult<User> AddGems(int userId, int Amount)
+    {
+        try 
+        {
+            User user2Add2 = _resourceServices.AddGems(userId, Amount);
+            return Ok(user2Add2); 
+        }
+        catch(UserNotFound)
+        {
+            return NotFound("This user doesn't exist!"); 
+        }
+    }    
 }

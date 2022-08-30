@@ -259,4 +259,9 @@ app.MapPut("/Resources/Purchase", (int userId, int[] foodQtyArr, int eggQty, Res
     return _resourceCon.Purchase(userId, foodQtyArr, eggQty);
 });
 
+app.MapPost("/Resources/Addgems", (int userId, int Amount, ResourceController _resourceCon) => 
+{
+    return _resourceCon.AddGems(userId, Amount);
+});
+
 app.Run();
