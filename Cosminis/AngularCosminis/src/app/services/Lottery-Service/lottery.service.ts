@@ -8,7 +8,7 @@ import { Users } from 'src/app/Models/User';
 })
 export class LotteryService {
 
-  apiUrl = 'https://localhost:56650/Lottery?'
+  apiUrl :string= 'https://localhost:56650/Lottery?';
 
   constructor(private http: HttpClient) { }
   
