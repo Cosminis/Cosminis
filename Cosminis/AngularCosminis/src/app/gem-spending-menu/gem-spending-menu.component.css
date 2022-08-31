@@ -95,18 +95,16 @@ h3
 .ShopHeader 
 {
   display: flex;
-  justify-content: center;
   column-gap: 5px;
 }
 
 #gem-button
 {
-  position: relative;
-  left: -276px;
   height: 40px;
   width: 110px;
   margin-top: 15px;
   background-color: rgba(203,161,53,1);
+  margin-right: 180px;
 }
 
 .gem-image
@@ -121,3 +119,14 @@ h3
   padding: 0px;
   margin-top: 15px;
 } 
+
+.gem-button-container {
+    display: flex;
+    justify-content: center;
+    flex-grow: .3;
+}
+
+.gem-title-container {
+    display: flex;
+    flex-grow: 1;
+}
