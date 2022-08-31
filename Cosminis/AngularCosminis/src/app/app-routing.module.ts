@@ -8,6 +8,8 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
 import { ShopMenuComponent } from './shop-menu/shop-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GemSpendingMenuComponent } from './gem-spending-menu/gem-spending-menu.component';
+import { PaymentComponent } from './payment/payment.component';
+
 
 const routes: Routes = [
   { 
@@ -37,6 +39,10 @@ const routes: Routes = [
   {
     path: 'GemSpendingShop',
     component:GemSpendingMenuComponent
+  },
+  {
+    path: 'GemPurchaseShop',
+    component:PaymentComponent
   },
   {
     path: '',

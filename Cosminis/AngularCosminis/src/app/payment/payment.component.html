@@ -1,1 +1,54 @@
-<p>payment works!</p>
+<app-navbar></app-navbar>
+<section class="Container1">
+    <div class="column one">
+        <h2>Buy Some Gems!</h2>
+        <div class="separator">
+            <div class="card gem-bundles mb-3" type="button">
+                <div class="card-body">
+                    <h5 class="owner-title">Gem Special!</h5>
+                    <div class="owner-content">Gem Quantity: {{weeklySpecialQty}}</div>
+                </div>
+            </div> 
+            <div class="card gem-bundles mb-3" type="button" *ngFor="let gem of gemQty">
+                <div class="card-body">
+                    <h5 class="owner-title">Gem Bundles</h5>
+                    <div class="owner-content">Gem Quantity: {{gemQty}}</div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="column two">
+        
+        <div class="getorderhistory">
+            <button class="orderhistorybutton" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getOrderHistory()">Click here to view your order history</button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Your past orders:</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                        <div class="modal-body">
+                            <tr *ngFor="let order of orderArr">
+                            <td>{{order.orderId}}</td>
+                            <td>{{order.userIdFk}}</td>
+                            <td>{{order.cost}}</td>
+                            <td>{{order.TimeOrdered}</td>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divider">
+            <div class="card purchase-box mb-3">
+                <div class="purchase-body">
+                    <h5 class="owner-title">Card Information</h5>
+                    <div class="owner-content">Card Number:</div>
+                    <div class="owner-content">Card Exp Date:</div>
+                    <div class="owner-content">Gem Quantity</div>
+                    <div class="submit-button" type="button">Submit Purchase!</div>
+                </div>
+            </div> 
+        </div>
+    </div>      
+</section>

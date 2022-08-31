@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   currentUsernickname : string ="";
   userGold:number = 0;
   userEgg:number = 0;
+  userGems:number =0;
   SpicyFoodCount : number = 0;
   LeafyFoodCount : number = 0;
   ColdFoodCount : number = 0;
@@ -34,6 +35,10 @@ export class NavbarComponent implements OnInit {
 
   gotoHome(){
     this.router.navigateByUrl('/homepage');  // define your component where you want to go
+  }
+
+  buySomeGems(){
+    this.router.navigateByUrl('/GemPurchaseShop');  // define your component where you want to go
   }
     
   ngOnInit(): void 
@@ -98,7 +103,8 @@ export class NavbarComponent implements OnInit {
     this.CursedFoodCount = sessionStorage.getItem('CursedFoodCount') as unknown as number;
     
     this.userEgg = currentUser.eggCount;
-    this.userGold = currentUser.goldCount;  
+    this.userGold = currentUser.goldCount;
+    this.userGems = currentUser.gemCount;  
 
     this.DisplayCompanionMood = sessionStorage.getItem('DisplayCompanionMood') as unknown as number;
     this.DisplayCompanionHunger = sessionStorage.getItem('DisplayCompanionHunger') as unknown as number;
