@@ -23,7 +23,7 @@ export class BattleComponent implements OnInit {
   
   hi: string = 'hi';
 
-  GetFriendId(): number {
+  GetRandomFriendsUserId(): number {
     let stringUser: string = sessionStorage.getItem('currentUser') as string;
     let currentUser: Users = JSON.parse(stringUser);
     let FriendId: number = 0;
