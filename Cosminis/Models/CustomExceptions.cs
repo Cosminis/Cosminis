@@ -239,3 +239,13 @@ public class PendingFriends : Exception
         System.Runtime.Serialization.SerializationInfo info,
         System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
+
+public class OrderNotFound : Exception
+{
+    public OrderNotFound() { }
+    public OrderNotFound(string message) : base(message) { }
+    public OrderNotFound(string message, System.Exception inner) : base(message, inner) { }
+    protected OrderNotFound(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}
