@@ -66,7 +66,7 @@ public class UserServices
             {
                 User foundUser = _userRepo.CreateUser(newUser);
 
-                _companionRepo.GenerateCompanion(foundUser.userId); // when new user craete successfully, it has to creat companion
+                _companionRepo.GenerateCompanion(foundUser.UserId); // when new user craete successfully, it has to creat companion
 
                 return foundUser; // if found, return new user
 
