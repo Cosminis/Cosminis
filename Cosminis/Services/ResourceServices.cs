@@ -50,5 +50,14 @@ public class ResourceServices
 
         List<FoodInventory> groceryList = _resourceRepo.PurchaseWithGems(userId, foodQtyArr, eggQty, Gold);
         return groceryList;
-    }   
+    }
+
+    public Order PurchaseGems(int userId, int Amount, decimal cost)
+    {
+        User user2Add2 = _resourceRepo.UpdateGems(userId, Amount);
+        Order receiptToBeGenerated = _resourceRepo.createOrder(userId, cost);
+        
+        return receiptToBeGenerated;
+    } 
+
 }

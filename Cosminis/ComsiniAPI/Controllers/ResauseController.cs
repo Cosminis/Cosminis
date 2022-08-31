@@ -95,4 +95,19 @@ public class ResourceController : ControllerBase
             return NotFound("You gotta buy something, kid!"); 
         }	        
     }   
+
+    [Route("/Resources/GemAdds")]
+    [HttpPut]
+    public ActionResult<Order> PurchaseGems(int userId, int Amount, decimal cost)
+    {
+        try 
+        {
+            Order receiptToBeGenerated = _resourceServices.PurchaseGems(userId, Amount, cost);
+            return Ok(receiptToBeGenerated); 
+        }
+        catch(UserNotFound)
+        {
+            return NotFound("This user doesn't exist!"); 
+        }
+    }       
 }

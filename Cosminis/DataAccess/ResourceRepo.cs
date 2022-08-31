@@ -293,4 +293,31 @@ public class ResourceRepo : IResourceGen
 
         return GetFoodInventoryByUserId(userId);
     }
+
+    public Order createOrder(int userId, decimal cost) 
+    {
+        User userToBuy = _context.Users.Find(userId);
+        if (userToBuy == null)
+        {
+            throw new UserNotFound();
+        }      
+
+        Order newOrder = new Order()
+        {
+            UserIdFk = (int)userToBuy.UserId, 
+            Cost = cost,
+            TimeOrdered = DateTime.Now
+        };
+
+        if(newOrder.OrderId == null)
+        {
+            newOrder.OrderId = 0;
+        }         
+
+        _context.Orders.Add(newOrder);
+        _context.SaveChanges();
+        _context.ChangeTracker.Clear();
+
+        return newOrder;
+    }    
 }
