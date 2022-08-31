@@ -28,15 +28,15 @@ public class CompanionRepo : ICompanionDAO
         //creature index is only 3-8
         switch (creatureRarityRoulette)
         {
-            case (creatureRarityRoulette < 51):
+            case int n when (n < 51):
                 Random common =  new Random();
                 creatureRoulette = common.Next(3,5);
                 break;
-            case (creatureRarityRoulette < 75):
+            case int n when (n < 75):
                 Random uncommon =  new Random();
                 creatureRoulette = uncommon.Next(5,7);
                 break;
-            case (creatureRarityRoulette < 99):                       //this is rare
+            case int n when (n < 99):                       //this is rare
                 creatureRoulette = 7;
                 break;
             default:
