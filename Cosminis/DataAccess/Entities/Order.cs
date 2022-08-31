@@ -10,6 +10,7 @@ namespace DataAccess.Entities
         public decimal Cost { get; set; }
         public DateTime TimeOrdered { get; set; }
 
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual User UserIdFkNavigation { get; set; } = null!;
     }
 }
