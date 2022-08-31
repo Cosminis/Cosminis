@@ -30,4 +30,12 @@ export class BattleService {
   DifficultyScale(RosterOne: number[], RosterTwo: number[]): Observable<number> {
     return this.http.get(this.apiUrl + "Scalar"  + RosterOne + "/" + RosterTwo) as unknown  as Observable<number>;
   }
+  //the length of the match is determined by the roster with the smallest amount of cosminis
+  BattleLength(RosterOne: number[], RosterTwo: number[]): number {
+    if (RosterOne.length > RosterTwo.length) {
+      return RosterTwo.length;
+    } else {
+      return RosterOne.length;
+    }
+  }
 }
