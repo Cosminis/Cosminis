@@ -63,4 +63,22 @@ public class BattleController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    
+    [Route("/Battle/Scalar")]
+    [HttpPut()]
+    public ActionResult<int> JudgingDiffcult(int[] Roster, int SizeOne)
+    {
+        try
+        {
+            int[] RosterOne = Roster.Take(SizeOne).ToArray();
+            int[] RosterTwo = Roster.Skip(SizeOne).ToArray();
+            int ReturnCompIDs = _service.JudgingDiffcult(RosterOne, RosterTwo);
+            return Ok(ReturnCompIDs);
+        }
+        catch(Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

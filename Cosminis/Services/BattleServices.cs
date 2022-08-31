@@ -161,4 +161,46 @@ public class BattleServices
             return 2; //Tie
         }
     }
+
+    public int JudgingDiffcult(int[] RosterOne, int[] RosterTwo) //returns [-100,100] -100 means you are guaranteed to win and you get no reward from doing so, 100 means you are guaranteed to lose but if you somehow win you get double the reward
+    {
+        int returnValue = 0;
+
+        List<Companion> CompOne = new List<Companion>();
+        List<Companion> CompTwo = new List<Companion>();
+        List<int> CompOneHunger = new List<int>();
+        List<int> CompTwoHunger = new List<int>();
+        List<int> CompOneMood = new List<int>();
+        List<int> CompTwoMood = new List<int>();
+
+        try
+        {
+            foreach(int i in RosterOne)
+            {
+                CompOne.Add(_compRepo.GetCompanionByCompanionId(i)); //fetch the lists
+            }
+            foreach(int i in RosterTwo)
+            {
+                CompTwo.Add(_compRepo.GetCompanionByCompanionId(i));
+            }
+            foreach(Companion comp in CompOne)
+            {
+                CompOneHunger.Add(comp.Hunger ?? 0); //gather their combat relevant stats
+                CompOneMood.Add(comp.Mood ?? 0);
+            }
+            foreach(Companion comp in CompTwo)
+            {
+                CompTwoHunger.Add(comp.Hunger ?? 0);
+                CompTwoMood.Add(comp.Mood ?? 0);
+            }
+
+            returnValue = (int) (-1 * (((CompOneHunger.Average()/2)-(CompTwoHunger.Average()/2)) + ((CompOneMood.Average()/2)-(CompTwoMood.Average()/2))));
+        }
+        catch
+        {
+            throw;
+        }
+
+        return returnValue;
+    }
 }
