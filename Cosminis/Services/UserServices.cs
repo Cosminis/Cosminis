@@ -10,10 +10,12 @@ namespace Services;
 public class UserServices
 {
 	private readonly IUserDAO _userRepo;
+    private readonly ICompanionDAO _companionRepo;
 
-    public UserServices(IUserDAO userRepo)
+    public UserServices(IUserDAO userRepo, ICompanionDAO companionRepo)
     {
         _userRepo = userRepo;
+        _companionRepo = companionRepo;
     }
 
     public User SearchFriend(string username)
@@ -42,6 +44,7 @@ public class UserServices
 
     public User LoginOrReggi(User user2Check)
     {
+
         try //checks if a user with the username already exist
         {
             User user = _userRepo.GetUserByUserName(user2Check.Username);
@@ -61,7 +64,12 @@ public class UserServices
             };
             try
             {
-                return _userRepo.CreateUser(newUser);
+                User foundUser = _userRepo.CreateUser(newUser);
+
+                _companionRepo.GenerateCompanion(foundUser.userId);
+
+                return foundUser;
+
             }
             catch(Exception)
             {
