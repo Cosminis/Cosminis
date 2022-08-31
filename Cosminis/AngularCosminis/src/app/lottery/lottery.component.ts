@@ -4,6 +4,7 @@ import { LotteryService } from '../services/Lottery-Service/lottery.service';
 import { UserApiServicesService } from '../services/User-Api-Service/user-api-services.service';
 import { Users } from '../Models/User';
 import { Route, Router } from '@angular/router';
+import { ComsinisApiServiceService } from '../services/Comsini-api-service/comsinis-api-service.service';
 @Component({
   selector: 'app-lottery',
   templateUrl: './lottery.component.html',
@@ -144,6 +145,12 @@ export class LotteryComponent implements OnInit {
     }
     this.lottery.CanPlay(spins*5,currentUser.userId).subscribe((res) => this.lottery.GiveRewards(res,JSON.parse(stringUser)).subscribe({next: (res) => {
       console.log(res);
+      if (res){
+        alert('Congradulations')
+        if(canvas){
+          canvas.style.display ='none';
+        }
+      }
       this.route.navigateByUrl('/homepage');
     }, error: (err) => {
       if(err.status === 400) {
