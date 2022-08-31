@@ -62,13 +62,13 @@ public class UserServices
                 EggTimer = DateTime.Now,
                 AboutMe = user2Check.AboutMe,
             };
-            try
+            try  // check for create new user 
             {
                 User foundUser = _userRepo.CreateUser(newUser);
 
-                _companionRepo.GenerateCompanion(foundUser.userId);
+                _companionRepo.GenerateCompanion(foundUser.userId); // when new user craete successfully, it has to creat companion
 
-                return foundUser;
+                return foundUser; // if found, return new user
 
             }
             catch(Exception)
