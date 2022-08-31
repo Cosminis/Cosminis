@@ -58,6 +58,11 @@ public class ResourceServices
         Order receiptToBeGenerated = _resourceRepo.createOrder(userId, cost);
         
         return receiptToBeGenerated;
-    } 
+    }
 
+    public List<Order> GetReceiptsByUserId(int userId)
+    {
+        List<Order> receipts = _resourceRepo.GetReceiptsByUserId(userId);
+        return receipts; 
+    }    
 }

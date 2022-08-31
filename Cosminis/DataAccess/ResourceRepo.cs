@@ -319,5 +319,33 @@ public class ResourceRepo : IResourceGen
         _context.ChangeTracker.Clear();
 
         return newOrder;
-    }    
+    } 
+    
+    public List<Order> GetReceiptsByUserId(int userId)                       //Finding allllll the companions someone is friends with
+    {
+        User userToBuy = _context.Users.Find(userId);
+        if (userToBuy == null)
+        {
+            throw new UserNotFound();
+        }    
+
+        List<Order> orderList = new List<Order>();              
+
+        IEnumerable<Order> orderQuery =                             //Query to search companions by userId.
+            from Orders in _context.Orders
+            where Orders.UserIdFk == userToBuy.UserId
+            select Orders;
+    
+        foreach(Order order in orderQuery)                //Going through each object and adding it to a list.
+        {
+            orderList.Add(order);
+        }        
+
+        if(orderList.Count() < 1)                                       //Doesn't return if they have no friends (this shouldn't happen).
+        {
+            throw new OrderNotFound();
+        }
+
+        return orderList;
+    }          
 }
