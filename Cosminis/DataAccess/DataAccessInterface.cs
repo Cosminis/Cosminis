@@ -13,6 +13,7 @@ public interface ICompanionDAO
     public List<Companion> GetCompanionByUser(int userId);
     public Companion GetCompanionByCompanionId(int companionId);
     public bool DeleteCompanion(int companionId);
+    public Species FindSpeciesByID(int SpeciesID);
 }
 
 public interface IFriendsDAO
