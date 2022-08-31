@@ -21,11 +21,11 @@ public class BattleController : ControllerBase
 
     [Route("/Battle/Roster")]
     [HttpGet()]
-    public ActionResult<List<int>> CreateRoster()
+    public ActionResult<List<Companion>> CreateRoster()
     {
         try
         {
-            List<int> ReturnCompIDs = _service.CreateRoster();
+            List<Companion> ReturnCompIDs = _service.CreateRoster();
             return Ok(ReturnCompIDs);
         }
         catch(Exception e)
@@ -36,11 +36,11 @@ public class BattleController : ControllerBase
 
     [Route("/Battle/Opponent")]
     [HttpGet()]
-    public ActionResult<List<int>> CreateRoster(int OpponentID)
+    public ActionResult<List<Companion>> CreateRoster(int OpponentID)
     {
         try
         {
-            List<int> ReturnCompIDs = _service.CreateRoster(OpponentID);
+            List<Companion> ReturnCompIDs = _service.CreateRoster(OpponentID);
             return Ok(ReturnCompIDs);
         }
         catch(Exception e)

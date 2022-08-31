@@ -18,7 +18,7 @@ public class BattleServices
         this._compRepo = compRepo;
         this._userRepo = userRepo;
     }   
-    public List<int> CreateRoster()
+    public List<Companion> CreateRoster()
     {
         List<int> ReturnCompIDs = new List<int>();
         List<Companion> TrackingComps = new List<Companion>();
@@ -48,10 +48,10 @@ public class BattleServices
             ReturnCompIDs.Add(Chomp.CompanionId);
         }
 
-        return ReturnCompIDs;
+        return TrackingComps;
     }
 
-    public List<int> CreateRoster(int OpponentID)
+    public List<Companion> CreateRoster(int OpponentID)
     {
         List<int> ReturnCompIDs = new List<int>();
         List<Companion> TrackingComps = new List<Companion>();
@@ -79,7 +79,7 @@ public class BattleServices
             ReturnCompIDs.Add(Chomp.CompanionId);
         }
 
-        return ReturnCompIDs;
+        return TrackingComps;
     }
 
     public bool IsTheUserWorthy(int OpponentID)
