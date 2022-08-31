@@ -58,7 +58,7 @@ public class UserServices
                 Password = user2Check.Password,
                 AccountAge = DateTime.Now,
                 GoldCount = 0,
-                EggCount = 0,
+                EggCount = 1,
                 EggTimer = DateTime.Now,
                 AboutMe = user2Check.AboutMe,
             };
