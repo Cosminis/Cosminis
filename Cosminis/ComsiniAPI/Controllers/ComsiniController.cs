@@ -13,10 +13,16 @@ namespace Controllers;
 public class CompanionController : ControllerBase
 {
     private readonly CompanionServices _service;
+    private readonly UserServices _userService;
+    private readonly CompanionRepo _companionRepo;
+    private readonly ResourceRepo _resourceRepo;
 
-    public CompanionController(CompanionServices service)
+    public CompanionController(CompanionServices service, CompanionRepo companionRepo, ResourceRepo resourceRepo, UserServices userServices)
     {
         _service = service;
+        _userService = userServices;
+        _companionRepo = companionRepo;
+        _resourceRepo = resourceRepo;
     }
 
     [Route("/companions/GetAll")]
@@ -68,4 +74,17 @@ public class CompanionController : ControllerBase
             return NotFound("Something went wrong with this request.");
         }         
     } 
+    [Route("companions/generate")]
+    [HttpPost()]
+    public ActionResult<Companion> GenerateFreeCompanion(int userId)
+    {
+        try{
+            User user = _userService.SearchUserById(userId);
+            _resourceRepo.AddEgg(user, 1);
+            return _companionRepo.GenerateCompanion(userId);
+        }
+        catch(Exception){
+            throw;
+        }
+    }
 }
