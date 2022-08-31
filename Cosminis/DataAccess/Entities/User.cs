@@ -17,7 +17,7 @@ namespace DataAccess.Entities
             PostIdFks = new HashSet<Post>();
         }
 
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         public string Username { get; set; } = null!;
         public string Password { get; set; } = null!;
         public DateTime AccountAge { get; set; }

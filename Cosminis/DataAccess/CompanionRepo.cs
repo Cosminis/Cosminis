@@ -20,7 +20,30 @@ public class CompanionRepo : ICompanionDAO
     public Companion GenerateCompanion(int userIdInput)         //This method hatches a companion of a random species w/ a random emotion.
     {
         Random randomCreature = new Random();
-        int creatureRoulette = randomCreature.Next(3,9);            //random species generator (species are 3-9 because of an error...).
+        //int creatureRoulette = randomCreature.Next(3,9);            //random species generator (species are 3-9 because of an error...).
+        int creatureRoulette = 0;           
+        int creatureRarityRoulette = randomCreature.Next(0,100);
+
+        // this assigns rarity to the new creatures that are hatched
+        //creature index is only 3-8
+        switch (creatureRarityRoulette)
+        {
+            case int n when (n < 51):
+                Random common =  new Random();
+                creatureRoulette = common.Next(3,5);
+                break;
+            case int n when (n < 75):
+                Random uncommon =  new Random();
+                creatureRoulette = uncommon.Next(5,7);
+                break;
+            case int n when (n < 99):                       //this is rare
+                creatureRoulette = 7;
+                break;
+            default:
+                creatureRoulette = 8;                           //this is super rare
+                break;
+        }
+
 
         Random randomEmotion = new Random();
         int emotionRoulette = randomCreature.Next(0,10);            //random emotion generator (0 worst, 10 is best).
