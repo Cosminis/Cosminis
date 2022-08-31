@@ -1,8 +1,15 @@
 <app-navbar></app-navbar>
 <section class="ShopContainer">
     <section class="ShopHeader">
-        <button id="gem-button" type="button" (click)="goToGemShop()" class="btn btn-light">Gem Shop</button>
-        <h1>Welcome to the Gold Shop!</h1> 
+        <div class="gem-button-container">
+            <button id="gem-button" type="button" (click)="goToGemShop()" class="btn btn-light">Gem Shop</button>
+        </div>
+        <div class="gem-title-container">
+            <h1 class="gem-title">Welcome to the Gold Shop!</h1> 
+        </div>
+        <div class="gem-image-container">
+            <img src= "../../assets/Pics/goldcoins-transparent.png" class="gem-image">
+        </div>
     </section>
 
     <section class="ShopTitles">     
