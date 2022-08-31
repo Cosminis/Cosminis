@@ -307,12 +307,7 @@ public class ResourceRepo : IResourceGen
             UserIdFk = (int)userToBuy.UserId, 
             Cost = cost,
             TimeOrdered = DateTime.Now
-        };
-
-        if(newOrder.OrderId == null)
-        {
-            newOrder.OrderId = 0;
-        }         
+        };       
 
         _context.Orders.Add(newOrder);
         _context.SaveChanges();
