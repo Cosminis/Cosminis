@@ -17,7 +17,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ShopMenuComponent } from './shop-menu/shop-menu.component';
 import { InteractionsComponent } from './interactions/interactions.component';
 import { GemSpendingMenuComponent } from './gem-spending-menu/gem-spending-menu.component';
-import { PaymentComponent } from './payment/payment.component';
+import { LotteryComponent } from './lottery/lottery.component'; 
+import { PaymentComponent } from './payment/payment.component'; 
 
 @NgModule({
   declarations: [
@@ -30,8 +31,9 @@ import { PaymentComponent } from './payment/payment.component';
     NavbarComponent,
     ShopMenuComponent,
     InteractionsComponent,
-    GemSpendingMenuComponent,
-    PaymentComponent
+    GemSpendingMenuComponent, 
+    LotteryComponent,
+    PaymentComponent 
     //AppLoginComponent
   ],
   imports: [
