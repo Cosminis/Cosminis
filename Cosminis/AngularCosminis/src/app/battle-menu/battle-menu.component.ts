@@ -26,6 +26,31 @@ export class BattleMenuComponent implements OnInit {
   PlayerRisk: number = 0;
   WinStreak: number = 0;
   LoseStreak: number = 0;
+  
+  Starting: boolean = true;
+  Picking: boolean = true;
+  Battling: boolean = true;
+  Lost: boolean = true;
+  Won: boolean = true;
+
+  /*
+    starting
+    --> roster will be name for opponent and player
+    --> cutroster
+    --> risk factor
+    --> place bet
+----picking
+|   --> choosing cosminis to fight
+----battling
+    --> obtain victor
+    --> increment lose or win
+    Won
+    --> cash out
+    --> play again?
+    Lost
+    --> play again?
+  */
+
 
   OpponentCosmini2Battle: Cosminis = {
     companionId: 0,
@@ -104,6 +129,20 @@ export class BattleMenuComponent implements OnInit {
       }
     })
   }
+
+  StartGame()
+  {
+    while (this.Starting)
+    {
+      this.CreatePlayerRoster();
+      this.CutRosters();
+      this.CalculateRiskFactor
+      
+    }
+  }
+
+
+
   ngOnInit(): void {
   }
 
