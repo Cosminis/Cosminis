@@ -211,14 +211,7 @@ public class InteractionRepo : Interactions
         {
             SetCompanionHungerValue(companionID,hungerAmount);
             SetCompanionMoodValue(companionID,moodAmount);
-        }
-        catch(Exception)
-        {
-            throw;
-        }
 
-        try
-        {
             _ResourceRepo.RemoveFood(feederID,foodID); //last step
 
             companionToStarve.TimeSinceLastFed = DateTime.Now;
