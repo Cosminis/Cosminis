@@ -116,7 +116,7 @@ public class CompanionServices
     {
         try
         {
-            _CompanionRepo.GenerateCompanion(userIdInput);
+           return _CompanionRepo.GenerateCompanion(userIdInput);
         }
         catch (TooFewResources)
         {
