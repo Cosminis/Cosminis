@@ -73,6 +73,10 @@ export class HomepageComponent implements OnInit {
     audio.play();
   }
 
+  gotoBattleSelect(){
+    this.router.navigateByUrl('/BattleSelection');  // goes to the battle selection screen
+  }
+
   GoAway(){
     this.router.navigateByUrl('/Go');  // define your component where you want to go
   }
