@@ -38,7 +38,7 @@ builder.Services.AddScoped<PostServices>();
 builder.Services.AddScoped<CommentServices>();
 builder.Services.AddScoped<LikeServices>();
 builder.Services.AddScoped<InteractionService>();
-
+builder.Services.AddScoped<LotteryService>();
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
