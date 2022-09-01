@@ -373,10 +373,12 @@ public class InteractionService
     {
         try
         {
-            Companion companionInstance = _interRepo.PetCompanion(userID, companionID);
-
+            Companion companionInstance = _compRepo.GetCompanionByCompanionId(companionID);
+            Console.WriteLine(companionInstance.TimeSinceLastPet);
             DateTime notNullableDate = companionInstance.TimeSinceLastPet ?? DateTime.Now;
             double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
+
+            Console.WriteLine(totalMinutes);
 
             if(totalMinutes < 5)
             {
@@ -392,6 +394,9 @@ public class InteractionService
                 throw new CompNotFound();
             }           
             Console.WriteLine(companionInstance); 
+
+            companionInstance = _interRepo.PetCompanion(userID, companionID);
+
             return companionInstance;
         }
         catch (ResourceNotFound)
