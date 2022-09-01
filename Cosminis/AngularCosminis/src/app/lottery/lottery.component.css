@@ -1,9 +1,18 @@
+#arrow,#canvas{
+    position:absolute;
+    /* justify-content: center; */
+    margin-left: 5%;
+}
 .lottery-container{
+    /* position:absolute; */
     border: 10px solid rgba(0, 0, 0, 0.456);
     border-radius: 25px;
-    width: fit-content;
-    height: fit-content;
+    width: 70%;
+    height: 100%;
     margin:auto;
+    /* justify-items: center; */
+    justify-content: center;
+    /* align-items: center; */
     background-color: rgba(137, 43, 226, 0.212);
 } 
 .lottery-container h2{
@@ -11,7 +20,7 @@
     margin-left: 80px;
 }
 #heading2{
-    margin-left:120px;
+    margin-left:80px;
 }
 .spin-btns{
     display: flex;
@@ -42,7 +51,15 @@
 .spinning{  
     animation: spin 2s linear infinite;
 }
-#arrow{
+/* #arrow{
     position: absolute;
-    left: 400px;
-}
+    /* left: 400px; */
+    /* justify-self: center; */
+    /* width: 100%; */
+    /* right: 37vw; */
+ 
+/* #wheel{
+    position:absolute;
+    width:300px;
+    height:200px;
+} */
