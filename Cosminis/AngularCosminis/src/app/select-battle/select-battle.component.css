@@ -1,0 +1,31 @@
+.container1 {
+   display: flex;
+   justify-content: space-around;
+}
+
+h1 {
+   color: plum;
+}
+
+.container2 {
+   display: flex;
+   justify-content: space-around;
+}
+
+.battle-button2 {
+   height: 150x;
+   width: 300px;
+}
+
+.title {
+   text-align: center;
+   color: mistyrose;
+   font-size: 40px;
+   font-weight: bold;
+}
+
+ul {
+	color: mistyrose;
+	font-size: 25px;
+}
+
