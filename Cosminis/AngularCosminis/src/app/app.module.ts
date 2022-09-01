@@ -20,6 +20,7 @@ import { GemSpendingMenuComponent } from './gem-spending-menu/gem-spending-menu.
 import { LotteryComponent } from './lottery/lottery.component'; 
 import { PaymentComponent } from './payment/payment.component';
 import { SelectBattleComponent } from './select-battle/select-battle.component'; 
+import { BattleMenuComponent } from './battle-menu/battle-menu.component'; 
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SelectBattleComponent } from './select-battle/select-battle.component';
     GemSpendingMenuComponent, 
     LotteryComponent,
     PaymentComponent,
-    SelectBattleComponent 
+    SelectBattleComponent, 
+    BattleMenuComponent 
     //AppLoginComponent
   ],
   imports: [

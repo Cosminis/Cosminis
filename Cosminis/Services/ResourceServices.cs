@@ -64,5 +64,16 @@ public class ResourceServices
     {
         List<Order> receipts = _resourceRepo.GetReceiptsByUserId(userId);
         return receipts; 
-    }    
+    }
+    public bool AddEgg(User User, int Amount)
+    {
+        try
+        {
+            return _resourceRepo.AddEgg(User, Amount);
+        }
+        catch (ResourceNotFound)
+        {
+            throw;
+        }
+    }
 }

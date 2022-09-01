@@ -12,17 +12,17 @@ namespace Controllers;
 [ApiController]
 public class CompanionController : ControllerBase
 {
-    private readonly CompanionServices _service;
-    //private readonly UserServices _userService;
-    //private readonly CompanionRepo _companionRepo;
-    //private readonly ResourceRepo _resourceRepo;
+    private readonly CompanionServices _service; 
+    private readonly UserServices _userService;
+    private readonly CompanionServices _companionRepo;
+    private readonly ResourceServices _resourceRepo;
 
-    public CompanionController(CompanionServices service)//, CompanionRepo companionRepo, ResourceRepo resourceRepo, UserServices userServices)
+    public CompanionController(CompanionServices service, CompanionServices companionRepo, ResourceServices resourceRepo, UserServices userServices)
     {
         _service = service;
-        //_userService = userServices;
-        //_companionRepo = companionRepo;
-        //_resourceRepo = resourceRepo;
+        _companionRepo = companionRepo;
+        _resourceRepo = resourceRepo;
+        _userService = userServices;
     }
 
     [Route("/companions/GetAll")]
@@ -73,19 +73,25 @@ public class CompanionController : ControllerBase
         {
             return NotFound("Something went wrong with this request.");
         }         
-    } 
-    /*
+    }
+
     [Route("companions/generate")]
     [HttpPost()]
     public ActionResult<Companion> GenerateFreeCompanion(int userId)
     {
-        try{
+        try
+        {
             User user = _userService.SearchUserById(userId);
             _resourceRepo.AddEgg(user, 1);
             return _companionRepo.GenerateCompanion(userId);
         }
-        catch(Exception){
-            throw;
+        catch (TooFewResources)
+        {
+            return BadRequest("Brokey");
         }
-    }*/
+        catch (UserNotFound)
+        {
+            return NotFound("How you are you here? Why no exist?");
+        }
+    }
 }
