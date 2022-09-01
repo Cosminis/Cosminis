@@ -216,6 +216,7 @@ export class UserprofileComponent implements OnInit {
           console.log(postUser);
           this.posts[i].posterNickname = postUser.password;
         })
+        this.posts.splice(10, this.posts.length-10);
       }
     })
   }
