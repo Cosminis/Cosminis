@@ -162,7 +162,7 @@ public class BattleServices
         }
     }
 
-    public int JudgingDiffcult(int[] RosterOne, int[] RosterTwo) //returns [-100,100] -100 means you are guaranteed to win and you get no reward from doing so, 100 means you are guaranteed to lose but if you somehow win you get double the reward
+    public int JudgingDiffculty(int[] RosterOne, int[] RosterTwo) //returns [-100,100] -100 means you are guaranteed to win and you get no reward from doing so, 100 means you are guaranteed to lose but if you somehow win you get double the reward
     {
         int returnValue = 0;
 
