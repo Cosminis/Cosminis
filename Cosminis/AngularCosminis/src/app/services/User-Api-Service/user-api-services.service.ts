@@ -17,7 +17,7 @@ export class UserApiServicesService {
   } 
 
   Find(ID : number) : Observable<Users> {
-    return this.http.get(this.url + `Users/Find?user2Find=${ID}`) as Observable<Users>;
+    return this.http.get(this.url + `Users/Find?user2Check=${ID}`) as Observable<Users>;
   } 
 
   searchFriend(username : string) : Observable<Users> {
