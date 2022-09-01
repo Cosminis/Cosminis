@@ -12,7 +12,7 @@ namespace Controllers;
 [ApiController]
 public class CompanionController : ControllerBase
 {
-    private readonly CompanionServices _service;
+    private readonly CompanionServices _service; 
     private readonly UserServices _userService;
     private readonly CompanionServices _companionRepo;
     private readonly ResourceServices _resourceRepo;
@@ -20,9 +20,9 @@ public class CompanionController : ControllerBase
     public CompanionController(CompanionServices service, CompanionServices companionRepo, ResourceServices resourceRepo, UserServices userServices)
     {
         _service = service;
-        _userService = userServices;
         _companionRepo = companionRepo;
         _resourceRepo = resourceRepo;
+        _userService = userServices;
     }
 
     [Route("/companions/GetAll")]
@@ -73,17 +73,20 @@ public class CompanionController : ControllerBase
         {
             return NotFound("Something went wrong with this request.");
         }         
-    } 
+    }
+
     [Route("companions/generate")]
     [HttpPost()]
     public ActionResult<Companion> GenerateFreeCompanion(int userId)
     {
-        try{
+        try
+        {
             User user = _userService.SearchUserById(userId);
             _resourceRepo.AddEgg(user, 1);
             return _companionRepo.GenerateCompanion(userId);
         }
-        catch(TooFewResources){
+        catch (TooFewResources)
+        {
             return BadRequest("Brokey");
         }
         catch (UserNotFound)

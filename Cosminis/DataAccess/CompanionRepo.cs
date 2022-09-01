@@ -174,4 +174,9 @@ public class CompanionRepo : ICompanionDAO
 
         return true;
     }
+
+    public Species FindSpeciesByID(int SpeciesID)
+    {
+        return _context.Species.Find(SpeciesID) ?? throw new ResourceNotFound();
+    }
 }

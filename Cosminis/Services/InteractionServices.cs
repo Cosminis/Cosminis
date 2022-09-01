@@ -46,7 +46,7 @@ public class InteractionService
 
             double totalMinutes = minuteDifference.TotalMinutes;  //converting minutes to a double
 
-            if(totalMinutes <= 5)                  //if 0 we can end the function because in theory we already changed the mood?
+            if(totalMinutes <= 1)                  //if 0 we can end the function because in theory we already changed the mood?
             {
                 throw new TooSoon();               //maybe not good? lol
             }
@@ -186,11 +186,11 @@ public class InteractionService
             double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes;  //converting minutes to a double
             if(isDisplay)//determine the amount
             {
-                amount = (int)Math.Floor(totalMinutes * 0.0347 * 1.3); //SOMEONE PLEASE NORMALIZED THE NUMBERS
+                amount = (int)Math.Floor(totalMinutes * 1 * 1.3); //SOMEONE PLEASE NORMALIZED THE NUMBERS
             }
             else
             {
-                amount = (int)Math.Floor(totalMinutes * 0.0347); 
+                amount = (int)Math.Floor(totalMinutes * 1); 
             }
 
             amount = amount * -1;
@@ -348,10 +348,12 @@ public class InteractionService
 
         if(checkingComp.UserFk != feederID) //If friend or stranger, make post [Companions user_FK]; if it is your own, pat yourself on the back.
         {
+            User feedingUser = _userRepo.GetUserByUserId(feederID);
+
             Post Post = new Post()//define post properties (This person came up and feed my companion!).
             {
                 UserIdFk = checkingComp.UserFk,
-                Content = "Someone fed my companion while I was away, thank you!"
+                Content = feedingUser.Password + " fed my companion while I was away, thank you!"
             };
 
             try
@@ -373,10 +375,12 @@ public class InteractionService
     {
         try
         {
-            Companion companionInstance = _interRepo.PetCompanion(userID, companionID);
-
+            Companion companionInstance = _compRepo.GetCompanionByCompanionId(companionID);
+            Console.WriteLine(companionInstance.TimeSinceLastPet);
             DateTime notNullableDate = companionInstance.TimeSinceLastPet ?? DateTime.Now;
             double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
+
+            Console.WriteLine(totalMinutes);
 
             if(totalMinutes < 5)
             {
@@ -392,6 +396,9 @@ public class InteractionService
                 throw new CompNotFound();
             }           
             Console.WriteLine(companionInstance); 
+
+            companionInstance = _interRepo.PetCompanion(userID, companionID);
+
             return companionInstance;
         }
         catch (ResourceNotFound)

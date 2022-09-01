@@ -94,11 +94,11 @@ public class FriendsController : ControllerBase
 
     [Route("/Friends/RelationshipStatusByUserId")]
     [HttpGet]
-    public ActionResult<List<Friends>> GetRelationshipStatusByUserId(int userId, string status)
+    public ActionResult<List<Friends>> GetRelationshipStatusByUserId(int searchingId, string status)
     {
         try
         {
-            List<Friends> friendsList = _friendServices.CheckRelationshipStatusByUserId(userId, status); 
+            List<Friends> friendsList = _friendServices.CheckRelationshipStatusByUserId(searchingId, status); 
             return Ok(friendsList);
     	}
         catch(UserNotFound)
