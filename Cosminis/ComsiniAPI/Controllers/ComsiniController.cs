@@ -14,10 +14,10 @@ public class CompanionController : ControllerBase
 {
     private readonly CompanionServices _service;
     private readonly UserServices _userService;
-    private readonly CompanionRepo _companionRepo;
-    private readonly ResourceRepo _resourceRepo;
+    private readonly CompanionServices _companionRepo;
+    private readonly ResourceServices _resourceRepo;
 
-    public CompanionController(CompanionServices service, CompanionRepo companionRepo, ResourceRepo resourceRepo, UserServices userServices)
+    public CompanionController(CompanionServices service, CompanionServices companionRepo, ResourceServices resourceRepo, UserServices userServices)
     {
         _service = service;
         _userService = userServices;
@@ -83,8 +83,12 @@ public class CompanionController : ControllerBase
             _resourceRepo.AddEgg(user, 1);
             return _companionRepo.GenerateCompanion(userId);
         }
-        catch(Exception){
-            throw;
+        catch(TooFewResources){
+            return BadRequest("Brokey");
+        }
+        catch (UserNotFound)
+        {
+            return NotFound("How you are you here? Why no exist?");
         }
     }
 }
