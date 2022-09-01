@@ -67,13 +67,19 @@ public class BattleController : ControllerBase
     
     [Route("/Battle/Scalar")]
     [HttpPut()]
-    public ActionResult<int> JudgingDiffcult(int[] Roster, int SizeOne)
+    public ActionResult<int> JudgingDiffcult(Companion[] Roster, int SizeOne)
     {
         try
         {
-            int[] RosterOne = Roster.Take(SizeOne).ToArray();
-            int[] RosterTwo = Roster.Skip(SizeOne).ToArray();
-            int ReturnCompIDs = _service.JudgingDiffcult(RosterOne, RosterTwo);
+            List<int> TempList = new List<int>();
+            foreach(Companion com in Roster)
+            {
+                TempList.Add(com.CompanionId);
+            }
+            int[] tempArray = TempList.ToArray();
+            int[] RosterOne = tempArray.Take(SizeOne).ToArray();
+            int[] RosterTwo = tempArray.Skip(SizeOne).ToArray();
+            int ReturnCompIDs = _service.JudgingDiffculty(RosterOne, RosterTwo);
             return Ok(ReturnCompIDs);
         }
         catch(Exception e)
