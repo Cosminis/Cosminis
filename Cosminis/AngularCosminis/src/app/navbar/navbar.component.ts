@@ -55,7 +55,7 @@ export class NavbarComponent implements OnInit {
           console.log(res);
           window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
         })
-    } ,300000);
+    } ,150000);
   }
 
   needyCompanion():void
