@@ -6,6 +6,7 @@ import { Friends } from 'src/app/Models/Friends';
 import { environment } from 'src/environments/environment';
 import { FriendsService } from '../Friends-api-service/friends.service';
 import { Cosminis } from 'src/app/Models/Cosminis';
+import { ResourceApiServicesService } from '../Resource-Api-Service/resource-api-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ import { Cosminis } from 'src/app/Models/Cosminis';
 export class BattleService {
   
   constructor(private http: HttpClient,
-    private friend: FriendsService
+    private friend: FriendsService,
+    private resourceAPI : ResourceApiServicesService
   ) { }
 
   apiUrl: string = environment.api + 'Battle/';
@@ -40,7 +42,7 @@ export class BattleService {
   }
   
   //the length of the match is determined by the roster with the smallest amount of cosminis
-  BattleLength(RosterOne: number[], RosterTwo: number[]): number {
+  BattleLength(RosterOne: Cosminis[], RosterTwo: Cosminis[]): number {
     if (RosterOne.length > RosterTwo.length) {
       return RosterTwo.length;
     } else {
@@ -79,8 +81,13 @@ export class BattleService {
     
     NewGoldPayout = NewGoldPayout + (NewGoldPayout * (Difficulty / 100));
 
+    this.resourceAPI.AddGold(UserId,NewGoldPayout);
+
     return NewGoldPayout;
   }
 
-
+  PlaceBet(UserId: number, GoldBet: number)
+  {
+    this.resourceAPI.AddGold(UserId,-1*GoldBet);
+  }
 }
