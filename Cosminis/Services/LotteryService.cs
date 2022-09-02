@@ -56,7 +56,7 @@ namespace Services
         /// <summary>
         /// Random Number Generator for the Lottery
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Random number</returns>
         public int Prize()
         {
             Random num = new();
@@ -66,9 +66,9 @@ namespace Services
         /// <summary>
         /// States how many spins are available
         /// </summary>
-        /// <param name="gemsPaid"></param>
-        /// <param name="user"></param>
-        /// <returns></returns>
+        /// <param name="gemsPaid">Gems paid provided from buttons</param>
+        /// <param name="user">Current user playing</param>
+        /// <returns>Number of times they can spin the wheel</returns>
         public int CanPlay(int gemsPaid, User user)
         {
             int yes = gemsPaid % 5 != 0 ? 0 : gemsPaid / 5;
@@ -84,25 +84,20 @@ namespace Services
         /// <summary>
         /// Reward player 
         /// </summary>
-        /// <param name="spins"></param>
-        /// <param name="user"></param>
-        /// <returns></returns>
+        /// <param name="spins">Number of spins being played</param>
+        /// <param name="user">Current User gambling</param>
+        /// <returns>List of rewards</returns>
         public List<int> GiveRewards(int spins, User user)
         {
-            List<int> wins = Winnings(spins);
-            //Add food 
+            List<int> wins = Winnings(spins); 
             int win1 = wins[0] == 0 ? 1 : wins[0] * 10;
             int win2 = wins[2] == 0 ? 1 : wins[2]*10;
             int win3 = wins[3] == 0 ? 1 : wins[3] * 10;
             wins.Add(_resource.WinFood(user, win1));
             wins.Add(_resource.WinFood(user, win2));
-            wins.Add(_resource.WinFood(user, win3));
-
-            //Add Gold
-            _resource.AddGold(user, wins[1]);
-            //Add Gems
-            _resource.UpdateGems((int)user.UserId!, wins[4]);
-            //Add Egg
+            wins.Add(_resource.WinFood(user, win3)); 
+            _resource.AddGold(user, wins[1]); 
+            _resource.UpdateGems((int)user.UserId!, wins[4]); 
             _resource.AddEgg(user, wins[5]);
             return wins;
         }
