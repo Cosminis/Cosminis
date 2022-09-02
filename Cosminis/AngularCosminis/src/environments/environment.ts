@@ -5,7 +5,7 @@
 export const environment = 
 {
   production: false, 
-  api: 'https://localhost:60150/',
+  api: 'https://cosminis.azurewebsites.net/',
   auth:
   {
     domain: "cosminis.us.auth0.com",
