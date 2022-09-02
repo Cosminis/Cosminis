@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GemSpendingMenuComponent } from './gem-spending-menu/gem-spending-menu.component';
 import { LotteryComponent } from './lottery/lottery.component';
 import { SelectBattleComponent } from './select-battle/select-battle.component'; 
+import { BattleMenuComponent } from './battle-menu/battle-menu.component'; 
 
 const routes: Routes = [
   { 
@@ -44,8 +45,12 @@ const routes: Routes = [
     component: GemSpendingMenuComponent
   },
   {
-    path: 'BattleSelection', 
+    path: 'Battle/Selection', 
     component: SelectBattleComponent
+  },
+  {
+    path: 'Battle/Menu', 
+    component: BattleMenuComponent
   },
   {
     path: '',
