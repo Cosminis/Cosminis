@@ -59,7 +59,7 @@ public interface IResourceGen
     public User UpdateGems(int userId, int Amount);
     public bool AddEgg(User User, int Amount);
     public bool AddFood(User User, int Weight);
-    public bool WinFood(User User, int amount);
+    public int WinFood(User User, int amount);
     public Order createOrder(int userId, decimal cost);
     public bool RemoveFood(int userId, int foodId);
     public List<Order> GetReceiptsByUserId(int userId);
