@@ -9,7 +9,9 @@ import { ShopMenuComponent } from './shop-menu/shop-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GemSpendingMenuComponent } from './gem-spending-menu/gem-spending-menu.component';
 import { PaymentComponent } from './payment/payment.component';
-
+import { LotteryComponent } from './lottery/lottery.component';
+import { SelectBattleComponent } from './select-battle/select-battle.component'; 
+import { BattleMenuComponent } from './battle-menu/battle-menu.component'; 
 
 const routes: Routes = [
   { 
@@ -18,27 +20,38 @@ const routes: Routes = [
   },  // you must add your component here
   {
     path: 'userprofile', 
-    component:UserprofileComponent
+    component: UserprofileComponent
   },
   {
     path: 'login', 
-    component:LoginComponent
+    component: LoginComponent
   },
   {
     path: 'Go', 
-    component:CosminisGoComponent
+    component: CosminisGoComponent
   },
   {
     path: 'MyBabies', 
-    component:AllCosminisComponent
+    component: AllCosminisComponent
   },
   {
     path: 'shop', 
-    component:ShopMenuComponent
+    component: ShopMenuComponent
+  },{
+    path: 'lottery',
+    component: LotteryComponent
   },
   {
     path: 'GemSpendingShop',
-    component:GemSpendingMenuComponent
+    component: GemSpendingMenuComponent
+  },
+  {
+    path: 'Battle/Selection', 
+    component: SelectBattleComponent
+  },
+  {
+    path: 'Battle/Menu', 
+    component: BattleMenuComponent
   },
   {
     path: 'GemPurchaseShop',

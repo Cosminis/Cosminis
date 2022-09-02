@@ -73,6 +73,10 @@ export class HomepageComponent implements OnInit {
     audio.play();
   }
 
+  gotoBattleSelect(){
+    this.router.navigateByUrl('/Battle/Selection');  // goes to the battle selection screen
+  }
+
   GoAway(){
     this.router.navigateByUrl('/Go');  // define your component where you want to go
   }
@@ -81,6 +85,9 @@ export class HomepageComponent implements OnInit {
     this.router.navigateByUrl('/MyBabies');  // define your component where you want to go
   }
 
+  gotoLottery(){
+    this.router.navigateByUrl('/lottery');  // Goes to lottey roulette wheel
+  }
   gotoUserProfile(){
     this.router.navigateByUrl('/userprofile');  // define your component where you want to go
   }
@@ -93,11 +100,14 @@ export class HomepageComponent implements OnInit {
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
-
+    this.comsiniApi.getCosminiByUserID(currentUser.userId as number).subscribe({
+      next: (res)=>{}, 
+      error:(err)=>{ if(err.stauts===404){this.comsiniApi.free(currentUser.userId as number).subscribe();}}})
     this.comsiniApi.getCosminiByID(currentUser.showcaseCompanionFk as number).subscribe((res) =>
         {
           res.image = this.imageLib.get(res.speciesFk);
           this.displayCosmini = res;
         })
+        
   } 
 }

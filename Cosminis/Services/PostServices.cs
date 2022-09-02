@@ -127,6 +127,9 @@ public class PostServices
                     //Concat stiches the two Lists together
                 }
             }
+
+            friendsPosts = friendsPosts.OrderBy(o=>o.PostId).ToList();
+
             return friendsPosts;
         }
         catch(ResourceNotFound)

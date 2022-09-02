@@ -131,7 +131,7 @@ export class UserprofileComponent implements OnInit {
       res.reverse();
       this.ownersPosts = res;
       let postUser:Users;
-      let userID:number;
+      let userID:number;   
       for(let i=0; i<this.ownersPosts.length; i++)
       {
         userID = this.ownersPosts[i].userIdFk;
@@ -141,6 +141,7 @@ export class UserprofileComponent implements OnInit {
           console.log(postUser);
           this.ownersPosts[i].posterNickname = postUser.password;
         })
+        this.posts.splice(6, this.posts.length-6);
       }  
     })
   }
@@ -217,6 +218,7 @@ export class UserprofileComponent implements OnInit {
           console.log(postUser);
           this.posts[i].posterNickname = postUser.password;
         })
+        this.posts.splice(10, this.posts.length-10);
       }
     })
   }

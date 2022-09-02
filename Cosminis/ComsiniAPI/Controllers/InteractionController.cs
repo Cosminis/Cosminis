@@ -27,7 +27,7 @@ public class InteractionController : ControllerBase
         {
             if(_interactionService.SetShowcaseCompanion(userId, companionId))
             {
-                return Ok("Showcase companion has been set");
+                return Ok(true);
             }
             return Conflict("You cannot set your showcase companion to a companion you do not own.");
         }

@@ -24,4 +24,7 @@ export class ComsinisApiServiceService {
   {
     return this.http.get(this.url + `companions/SearchByUserId?userId=${ID}`) as Observable<Cosminis[]>;
   }
+  free(ID:number): Observable<Cosminis>{
+    return this.http.get(this.url+'/companions/generate?userId='+ID) as Observable<Cosminis>;
+  }
 }

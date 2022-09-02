@@ -17,10 +17,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ShopMenuComponent } from './shop-menu/shop-menu.component';
 import { InteractionsComponent } from './interactions/interactions.component';
 import { GemSpendingMenuComponent } from './gem-spending-menu/gem-spending-menu.component';
+import { LotteryComponent } from './lottery/lottery.component'; 
 import { PaymentComponent } from './payment/payment.component';
 import { CcformComponent } from './payment/ccform/ccform.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
+import { SelectBattleComponent } from './select-battle/select-battle.component'; 
+import { BattleMenuComponent } from './battle-menu/battle-menu.component'; 
 
 @NgModule({
   declarations: [
@@ -36,6 +37,11 @@ import {MatSelectModule} from '@angular/material/select';
     GemSpendingMenuComponent,
     PaymentComponent,
     CcformComponent
+    GemSpendingMenuComponent, 
+    LotteryComponent,
+    PaymentComponent,
+    SelectBattleComponent, 
+    BattleMenuComponent 
     //AppLoginComponent
   ],
   imports: [

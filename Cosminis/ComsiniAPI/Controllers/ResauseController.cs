@@ -128,5 +128,20 @@ public class ResourceController : ControllerBase
         {
             return NotFound("This user doesn't exist!"); 
         }
-    }            
+
+    }   
+    [Route("/Resources/AddGold")]
+    [HttpPut()]      
+    public ActionResult<bool> AddGold(int UserId, int Amount)
+    {
+        try
+        {
+             bool returnValue = _resourceServices.AddGold(UserId, Amount);
+             return Ok(returnValue);
+        }
+        catch(Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

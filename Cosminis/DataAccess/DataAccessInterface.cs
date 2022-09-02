@@ -13,6 +13,7 @@ public interface ICompanionDAO
     public List<Companion> GetCompanionByUser(int userId);
     public Companion GetCompanionByCompanionId(int companionId);
     public bool DeleteCompanion(int companionId);
+    public Species FindSpeciesByID(int SpeciesID);
 }
 
 public interface IFriendsDAO
@@ -58,6 +59,7 @@ public interface IResourceGen
     public User UpdateGems(int userId, int Amount);
     public bool AddEgg(User User, int Amount);
     public bool AddFood(User User, int Weight);
+    public int WinFood(User User, int amount);
     public Order createOrder(int userId, decimal cost);
     public bool RemoveFood(int userId, int foodId);
     public List<Order> GetReceiptsByUserId(int userId);

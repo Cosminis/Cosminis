@@ -43,6 +43,11 @@ public class InteractionRepo : Interactions
             companionToDepress.Mood = 0; //preventing negative numbers
         }
 
+        if(companionToDepress.Mood >= 100)
+        {
+            companionToDepress.Mood = 100; //preventing negative numbers
+        }
+
         companionToDepress.TimeSinceLastChangedMood = DateTime.Now;              //resetting the mood timer on the companion
 
         _context.SaveChanges();
@@ -116,11 +121,25 @@ public class InteractionRepo : Interactions
         DateTime notNullableDate = companionToStarve.TimeSinceLastFed ?? DateTime.Now;
         double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
 
+        companionToStarve.TimeSinceLastFed = DateTime.Now;
+
+        if(companionToStarve.TimeSinceLastFed == null)
+        {
+            companionToStarve.TimeSinceLastFed = DateTime.Now;
+            
+            _context.SaveChanges();
+
+            _context.ChangeTracker.Clear();
+
+            throw new TooSoon();
+        }
+
+        companionToStarve.TimeSinceLastFed = DateTime.Now;
+
         if(totalMinutes < 5)
         {
             throw new TooSoon();
         }
-
 
         User user2Check = _context.Users.Find(feederID); //Retrieve user object from database by the given FeederID
         FoodStat food2Feed = _context.FoodStats.Find(foodID); //Retrieve foodStats object from database by the given CompanionID
@@ -130,11 +149,14 @@ public class InteractionRepo : Interactions
         {
             throw new ResourceNotFound();
         }
+
         if(companionToStarve.Hunger>90)
         {
             throw new TooSoon("Your buddy ain't hungy yet!");
         }
-        
+
+        companionToStarve.TimeSinceLastFed = DateTime.Now;
+
         bool love = (species2check.FoodElementIdFk == food2Feed.FoodStatsId);
         bool hate = (species2check.OpposingEle == food2Feed.FoodStatsId);
         int baseAmountHunger = 0; //neither of these numbers make any damm sense
@@ -154,6 +176,9 @@ public class InteractionRepo : Interactions
             baseAmountHunger = RNGjesusManifested.Next(-15,31);
             baseAmountMood = RNGjesusManifested.Next(-15,31);
         }
+
+        companionToStarve.TimeSinceLastFed = DateTime.Now;
+        Console.WriteLine(companionToStarve.TimeSinceLastFed + "5");
 
         double HungerModifier = 1;
         double MoodModifier = 1;
@@ -194,6 +219,8 @@ public class InteractionRepo : Interactions
             }
         }
 
+        companionToStarve.TimeSinceLastFed = DateTime.Now;
+
         int moodAmount = 0;
         int hungerAmount = 0;
         if(love) //I know all of these can be compress into the if else block above, I am keeping them seperated for my own sanity sake, STFU
@@ -211,16 +238,9 @@ public class InteractionRepo : Interactions
         {
             SetCompanionHungerValue(companionID,hungerAmount);
             SetCompanionMoodValue(companionID,moodAmount);
-        }
-        catch(Exception)
-        {
-            throw;
-        }
 
-        try
-        {
             _ResourceRepo.RemoveFood(feederID,foodID); //last step
-
+            
             companionToStarve.TimeSinceLastFed = DateTime.Now;
 
             _context.SaveChanges();
@@ -252,6 +272,25 @@ public class InteractionRepo : Interactions
             throw new CompNotFound();
         }
 
+        if(companionToPet.TimeSinceLastPet == null)
+        {    
+            companionToPet.TimeSinceLastPet = DateTime.Now;
+           
+            _context.SaveChanges();
+
+            _context.ChangeTracker.Clear();
+
+            throw new TooSoon();
+        }
+
+        DateTime notNullableDate = companionToPet.TimeSinceLastPet ?? DateTime.Now;
+        double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
+
+        if(totalMinutes < 5)
+        {
+            throw new TooSoon();
+        }                
+
         User userToPet = _userRepo.GetUserByUserId(userID);  //grabbing the user
         if(userToPet == null)                                //checking null
         {
@@ -263,23 +302,23 @@ public class InteractionRepo : Interactions
         int hungerMod = 0;       //this value will modify the chance for companion agitation based on hunger
         if(companionToPet.Hunger <= 15)
         {
-            hungerMod = -30;        //"roll a agitation threshold based on hunger (if the pet is hungry, the agitation threshold should be weighted to roll high)"
+            hungerMod = -20;        //"roll a agitation threshold based on hunger (if the pet is hungry, the agitation threshold should be weighted to roll high)"
         }
         else if(companionToPet.Hunger <= 30)
         {
-            hungerMod = -20;
+            hungerMod = -10;
         }
         else if(companionToPet.Hunger <= 50)
         {
-            hungerMod = -10;
+            hungerMod = -5;
         }        
         else if(companionToPet.Hunger <= 74)
         {
-            hungerMod = -5;
+            hungerMod = -1;
         }
         else if(companionToPet.Hunger >= 75)
         {
-            hungerMod = 0;
+            hungerMod = 10;
         }                  
 
         int moodMod = 0;       //this value will modify the chance for companion agitation based on mood
@@ -316,11 +355,11 @@ public class InteractionRepo : Interactions
             showcaseMod = 10;
         }
 
-        int agitationBaseRoll = agitationRoll.Next(15, 35);//Rolling base roll with previously set random number generator
+        int agitationBaseRoll = agitationRoll.Next(15, 25);//Rolling base roll with previously set random number generator
 
-        int totalRoll = agitationBaseRoll + hungerMod + moodMod + showcaseMod;
+        int hostilityRoll = agitationBaseRoll + hungerMod + moodMod + showcaseMod;
 
-        if(totalRoll < 44)
+        if(hostilityRoll < 30)
         {
             if(companionToPet.Mood <= 15)
             {
@@ -336,14 +375,14 @@ public class InteractionRepo : Interactions
             }        
             else if(companionToPet.Mood <= 74)
             {
-                moodToOffset = 0;       //These numbers are pretty harsh but also I weighed it very likely for petting to be a positive result.
+                moodToOffset = 1;       //These numbers are pretty harsh but also I weighed it very likely for petting to be a positive result.
             }
             else if(companionToPet.Mood >= 75)
             {
                 moodToOffset = 5;       //I mean does it really need to be much happier?
             }  
         }
-        else if(totalRoll >= 45)
+        else if(hostilityRoll >= 31)
         {
             if(companionToPet.Mood <= 15)
             {
@@ -367,14 +406,14 @@ public class InteractionRepo : Interactions
             } 
         }
 
-        /*
+        
         Console.WriteLine(showcaseMod);
         Console.WriteLine(moodMod);
         Console.WriteLine(hungerMod);
         Console.WriteLine(agitationBaseRoll);
-        Console.WriteLine(totalRoll);
+        Console.WriteLine(hostilityRoll);
         Console.WriteLine(moodToOffset);
-        */
+        
         
         companionToPet.Mood = companionToPet.Mood + moodToOffset; //I think rolling for agitation is good, but the actual numbers may wanna be changed in the end.
 

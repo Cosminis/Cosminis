@@ -1,10 +1,12 @@
 <app-navbar></app-navbar>
 <section class="Container1">
     <div class="row1 CosminisGo InvisibleBox">
-        <img src="https://cdn.discordapp.com/attachments/1004455177165754508/1008558278587990046/go4.png" (click)="GoAway()" class="GoButton" type="button">
+        <img src="../../assets/Pics/fittedcosmini-meteor.png" (click)="gotoBattleSelect()" class="GoButton" type="button">
+        <img src="../../assets/Pics/fittedcosmini-meteor.png" (click)="GoAway()" class="GoButton" type="button">
     </div>
     <div class="row1 Shop InvisibleBox">
         <button type="button" (click)="gotoShop()" class="btn btn-light">ShopTillYaDrop</button>
+        <button type="button" (click)="gotoLottery()" class="btn btn-light" id="lotto-btn">Roulette</button>
     </div>
     <div class="row1 UserProfilePortal InvisibleBox">
         <img src="../../assets/Pics/userprofile.png"  type="button" (click)="gotoUserProfile()" class="userprof">

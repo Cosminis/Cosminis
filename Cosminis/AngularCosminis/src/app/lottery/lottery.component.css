@@ -1,0 +1,65 @@
+#arrow,#canvas{
+    position:absolute;
+    /* justify-content: center; */
+    margin-left: 50px;
+}
+.lottery-container{
+    /* position:absolute; */
+    border: 10px solid rgba(0, 0, 0, 0.456);
+    border-radius: 25px;
+    width: 600px;
+    height: 650px;
+    margin:auto;
+    /* justify-items: center; */
+    justify-content: center;
+    /* align-items: center; */
+    background-color: rgba(137, 43, 226, 0.212);
+} 
+.lottery-container h2{
+    color:rgb(9, 255, 0);
+    margin-left: 80px;
+}
+#heading2{
+    margin-left:80px;
+}
+.spin-btns{
+    display: flex;
+    justify-content: center;
+}
+.spin-btns button{
+    background-color: blue;
+    color: aliceblue;
+    border: 2px solid red;
+}
+.spin-btns button:hover{
+    background-color: rgb(0, 123, 255);
+    color: aliceblue;
+}
+.spin-btns button:first-child{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+.spin-btns button:last-child{
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+@keyframes spin {
+    0% {rotate:0deg} 
+    100% {rotate: 360deg;}
+}
+    
+.spinning{  
+    animation: spin 2s linear infinite;
+}
+/* #arrow{
+    position: absolute;
+    /* left: 400px; */
+    /* justify-self: center; */
+    /* width: 100%; */
+    /* right: 37vw; */
+ 
+/* #wheel{
+    position:absolute;
+    width:300px;
+    height:200px;
+} */

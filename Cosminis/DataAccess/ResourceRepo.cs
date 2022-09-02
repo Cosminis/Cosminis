@@ -22,6 +22,7 @@ public class ResourceRepo : IResourceGen
     /// <exception cref="ResourceNotFound">Occurs if no user exist matching the given User object</exception>*/
     public bool AddGold(User User, int Amount)
     {
+        
         User User2Add2 = _context.Users.Find(User.UserId); //let us hope this works
         if(User2Add2 == null) //such user does not exist
         {
@@ -121,7 +122,40 @@ public class ResourceRepo : IResourceGen
         _context.ChangeTracker.Clear(); //clear the tracker for the next person
         return true;
     }
+    public int WinFood(User User, int amount) //remember to check for input validation in the services layer
+    {
+        Random randomStat = new Random(); //I didn't copy homework from Lor's methods I swear
+         
+        FoodStat Food2Add = _context.FoodStats.Find(randomStat.Next(1, 9)); //Our foodstat table has non consecutive IDs, so this will work weird
+        while (Food2Add == null) //Hopefully this fixes above issue
+        {
+            Food2Add = _context.FoodStats.Find(randomStat.Next(1, 9));
+        } 
 
+        FoodInventory Inventory2Add2 =
+        (from IV in _context.FoodInventories
+         where (IV.UserIdFk == User.UserId) && (IV.FoodStatsIdFk == Food2Add.FoodStatsId)
+         select IV).FirstOrDefault(); //this whole thing returns either a foodInvertory or null
+
+        if (Inventory2Add2 == null) //if user does not have this kind of food yet
+        {
+            Inventory2Add2 = new FoodInventory
+            {
+                UserIdFk = (int)User.UserId,
+                FoodStatsIdFk = Food2Add.FoodStatsId,
+                FoodCount = amount
+            };
+            _context.Add(Inventory2Add2); //Add a new item onto the table
+            _context.SaveChanges(); //persist the change
+            _context.ChangeTracker.Clear(); //clear the tracker for the next person
+            return Food2Add.FoodStatsId;
+        }
+
+        Inventory2Add2.FoodCount = Inventory2Add2.FoodCount + amount; //if the user already own this kind of food
+        _context.SaveChanges(); //persist the change
+        _context.ChangeTracker.Clear(); //clear the tracker for the next person
+        return Food2Add.FoodStatsId;
+    }
     /*/// <summary>
     /// Remove a certain amount of food from the food inventory attached to the user
     /// </summary>

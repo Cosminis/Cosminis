@@ -111,5 +111,20 @@ public class CompanionServices
         }        
 
         return false;
-    }            
+    }
+    public Companion GenerateCompanion(int userIdInput)
+    {
+        try
+        {
+           return _CompanionRepo.GenerateCompanion(userIdInput);
+        }
+        catch (TooFewResources)
+        {
+            throw;
+        }
+        catch (UserNotFound)
+        {
+            throw;
+        }
+    }
 }

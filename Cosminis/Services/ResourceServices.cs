@@ -17,7 +17,18 @@ public class ResourceServices
         _resourceRepo = resourceRepo;
         _userRepo = userRepo;        
     }
-  
+    public bool AddGold(int UserId, int Amount)
+    {
+         User user = new User(){
+            UserId = UserId
+         };
+         try{
+              return _resourceRepo.AddGold(user, Amount);
+         }
+         catch{
+              throw;
+         }
+    }
     public List<FoodInventory> GetFoodInventoryByUserId(int userId)
     {
         List<FoodInventory> food = _resourceRepo.GetFoodInventoryByUserId(userId);
@@ -64,5 +75,16 @@ public class ResourceServices
     {
         List<Order> receipts = _resourceRepo.GetReceiptsByUserId(userId);
         return receipts; 
-    }    
+    }
+    public bool AddEgg(User User, int Amount)
+    {
+        try
+        {
+            return _resourceRepo.AddEgg(User, Amount);
+        }
+        catch (ResourceNotFound)
+        {
+            throw;
+        }
+    }
 }

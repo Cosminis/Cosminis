@@ -21,7 +21,7 @@ export class InteractionService {
   } 
 
   DecrementCompanionHungerValue(companionID : number) : Observable<Cosminis> {
-    return this.http.put(this.url + `/interactions/ModifyHunger?companionID=${companionID}`, companionID) as Observable<Cosminis>;
+    return this.http.put(this.url + `/Interactions/DecrementCompanionHungerValue?companionID=${companionID}`, companionID) as Observable<Cosminis>;
   } 
 
   PetCompanion(UserID : number, CompanionID : number) : Observable<Cosminis> {
@@ -29,6 +29,6 @@ export class InteractionService {
   } 
 
   FeedCompanion(UserID : number, CompanionID : number, foodID : number) : Observable<Cosminis> {
-    return this.http.put(this.url + `/interactions/Feed?feederId=${UserID}&companionId=${CompanionID}&foodID=${foodID}`, CompanionID) as Observable<Cosminis>;
+    return this.http.put(this.url + `/Interactions/FeedCompanion?feederId=${UserID}&companionId=${CompanionID}&foodID=${foodID}`, CompanionID) as Observable<Cosminis>;
   } 
 }

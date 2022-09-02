@@ -60,7 +60,7 @@ export class NavbarComponent implements OnInit {
           console.log(res);
           window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
         })
-    } ,300000);
+    } ,150000);
   }
 
   needyCompanion():void
@@ -100,7 +100,7 @@ export class NavbarComponent implements OnInit {
     this.ColdFoodCount = sessionStorage.getItem('ColdFoodCount') as unknown as number;
     this.FluffyFoodCount = sessionStorage.getItem('FluffyFoodCount') as unknown as number;
     this.BlessedFoodCount = sessionStorage.getItem('BlessedFoodCount') as unknown as number;
-    this.CursedFoodCount = sessionStorage.getItem('CursedFoodCount') as unknown as number;
+    this.CursedFoodCount = sessionStorage.getItem('CursedFoodCount') as unknown as number; //Comment here
     
     this.userEgg = currentUser.eggCount;
     this.userGold = currentUser.goldCount;
