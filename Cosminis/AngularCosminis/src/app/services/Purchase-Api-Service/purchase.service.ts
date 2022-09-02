@@ -31,7 +31,7 @@ export class PurchaseService {
   }*/
 
   BuyGems(userId : number, Amount : number, cost : number) : Observable<Order> {
-    return this.http.put(this.url + `Resources/Purchase/GemAdds?userId=${userId}&Amount=${Amount}&cost=${cost}`, userId) as unknown as Observable<Order>;
+    return this.http.put(this.url + `Resources/PurchaseGems?userId=${userId}&Amount=${Amount}&cost=${cost}`, userId) as unknown as Observable<Order>;
   } 
 
   GetReceiptByUserId(userId : number) : Observable<Order[]> {
