@@ -19,16 +19,47 @@ export class BattleService {
     private resourceAPI : ResourceApiServicesService
   ) { }
 
+  DisplayName = new Map<number, string>();
+  currentEmotion = new Map<number, string>();
+  imageLib = new Map<number, string>();
+
+  OnGameStartUp() {
+    this.DisplayName.set(3, "Infernog");
+    this.DisplayName.set(4, "Pluto");
+    this.DisplayName.set(5, "Buds");
+    this.DisplayName.set(6, "Cosmo");
+    this.DisplayName.set(7, "Librian");
+    this.DisplayName.set(8, "Cancer");
+
+    this.imageLib.set(3, "InfernogFire.png");
+    this.imageLib.set(4, "plutofinal.png");
+    this.imageLib.set(5, "15.png");
+    this.imageLib.set(6, "cosmofinal.png");
+    this.imageLib.set(7, "librianfinall.png");
+    this.imageLib.set(8, "cancerfinal.png");
+
+    this.currentEmotion.set(1, "Hopeless");
+    this.currentEmotion.set(2, "hostile");
+    this.currentEmotion.set(3, "Distant");
+    this.currentEmotion.set(4, "Inadequate");
+    this.currentEmotion.set(5, "Calm");
+    this.currentEmotion.set(6, "Thankful");
+    this.currentEmotion.set(7, "Happy");
+    this.currentEmotion.set(8, "Playful");
+    this.currentEmotion.set(9, "Inspired");
+    this.currentEmotion.set(10, "Blissful");
+  }
+
   apiUrl: string = environment.api + 'Battle/';
 
   //this generate a roster from a rando user
   CreateRoster(): Observable<Cosminis[]> {
-    return this.http.get(this.apiUrl) as unknown as Observable<Cosminis[]>;
+    return this.http.get(this.apiUrl + "Roster") as unknown as Observable<Cosminis[]>;
   }
   
   //this generates a roster from a given userId
   CreateRosterWithId(UserId: number): Observable<Cosminis[]> {
-    return this.http.get(this.apiUrl + UserId) as unknown as Observable<Cosminis[]>;
+    return this.http.get(this.apiUrl + "Opponent?OpponentID=" + UserId) as unknown as Observable<Cosminis[]>;
   }
   
   //this will give who one!
