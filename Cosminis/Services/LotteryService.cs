@@ -74,7 +74,7 @@ namespace Services
             int yes = gemsPaid % 5 != 0 ? 0 : gemsPaid / 5;
             //Remove Gems
             gemsPaid *= -1;
-            if (user.GemCount - gemsPaid < 0)
+            if (user.GemCount <gemsPaid)
             {
                 return 0;
             }
