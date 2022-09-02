@@ -1,5 +1,5 @@
 <h2>Opponent Name:{{Opponent}}</h2>
-<section class="container1">
+<section class="container1" *ngIf="!betting">
 	<div class="card-wrapper" *ngFor="let com of OpponentRoster">
         <div class="cardhead">
             <img class="all-cosminis" src="../assets/Pics/mystery-opponent.png">
@@ -44,3 +44,7 @@
     </div>
 </section>
 <h2>Your Team</h2>
+
+
+<input type="text" [(ngModel)]="PlayerGoldBet"> 
+<button type="button" class="btn btn-light" (click) = "ConfirmBet()">Place Bet</button>

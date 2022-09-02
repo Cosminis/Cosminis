@@ -16,10 +16,7 @@ import { tick } from '@angular/core/testing';
   
 export class BattleMenuComponent implements OnInit {
 
-  constructor(private battle: BattleService,
-    private user: UserApiServicesService,
-    private friend: FriendsService,
-    private router: Router) { }
+  constructor(private battle: BattleService) { }
   
   OpponentRoster: Cosminis[] = [];
   PlayerRoster: Cosminis[] = [];
@@ -27,6 +24,7 @@ export class BattleMenuComponent implements OnInit {
   PlayerRisk: number = 0;
   WinStreak: number = 0;
   LoseStreak: number = 0;
+  ConfirmedGold:number = 0;
   fightingChoice: Cosminis = {
     companionId : 0,
     trainerId : 0,
@@ -64,39 +62,32 @@ export class BattleMenuComponent implements OnInit {
   maxRoundCount: number = 0;
   Opponent: string = "placeholdername for id or something";
 
-  
-
   BattleMode: string = "Random"; //this need to be gathered from session storage, setting a default for now
   
-  Starting: boolean = true;
-  Picking: boolean = true;
+  betting: boolean = true;
+  Starting: boolean = false;
+  Picking: boolean = false;
   MadeOpponentRoster: boolean = false;
-  Battling: boolean = true;
-  Lost: boolean = true;
-  Won: boolean = true;
-
-  /*
-    starting
-    --> roster will be name for opponent and player
-    --> cutroster
-    --> risk factor
-    --> place bet
-----picking
-|   --> choosing cosminis to fight
-----battling
-    --> obtain victor
-    --> increment lose or win
-    Won
-    --> cash out
-    --> play again?
-    Lost
-    --> play again?
-  */
+  Battling: boolean = false;
+  Lost: boolean = false;
+  Won: boolean = false;
 
   GamePlayLoop()
   {
     while (true) //infinite loop incoming
     {
+      if(this.betting)
+      {
+        if(this.ConfirmedGold)
+        {
+          tick(500);
+        }
+        if(!this.ConfirmedGold)
+        {
+          this.betting = false;
+          this.Starting = true;
+        }
+      }
       if(this.Starting)
       {
         this.battle.OnGameStartUp();
@@ -192,7 +183,6 @@ export class BattleMenuComponent implements OnInit {
         this.OpponentRoster[i].speciesNickname = this.battle.DisplayName.get(this.OpponentRoster[i].speciesFk);
         this.OpponentRoster[i].emotionString = this.battle.currentEmotion.get(this.OpponentRoster[i].emotion);
         this.OpponentRoster[i].image = this.battle.imageLib.get(this.OpponentRoster[i].speciesFk);
-
       }
       this.MadeOpponentRoster = true;
       this.CutRosters();
@@ -286,7 +276,10 @@ export class BattleMenuComponent implements OnInit {
     this.battle.Payout(currentUser.userId as number, this.PlayerGoldBet, this.PlayerRisk, this.WinStreak);
   }
 
-
+  ConfirmBet()
+  {
+    this.ConfirmedGold = this.PlayerGoldBet;
+  }
 
   ngOnInit(): void
   {
