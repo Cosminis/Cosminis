@@ -22,6 +22,7 @@ public class ResourceRepo : IResourceGen
     /// <exception cref="ResourceNotFound">Occurs if no user exist matching the given User object</exception>*/
     public bool AddGold(User User, int Amount)
     {
+        
         User User2Add2 = _context.Users.Find(User.UserId); //let us hope this works
         if(User2Add2 == null) //such user does not exist
         {
