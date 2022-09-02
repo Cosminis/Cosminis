@@ -103,9 +103,6 @@ export class HomepageComponent implements OnInit {
     this.comsiniApi.getCosminiByUserID(currentUser.userId as number).subscribe({
       next: (res)=>{}, 
       error:(err)=>{ if(err.stauts===404){this.comsiniApi.free(currentUser.userId as number).subscribe();}}})
-    if(!currentUser.showcaseCompanionFk){
-      this.comsiniApi.free(currentUser.userId as number).subscribe();
-    }
     this.comsiniApi.getCosminiByID(currentUser.showcaseCompanionFk as number).subscribe((res) =>
         {
           res.image = this.imageLib.get(res.speciesFk);
