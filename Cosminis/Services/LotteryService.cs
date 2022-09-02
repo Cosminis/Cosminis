@@ -74,7 +74,11 @@ namespace Services
             int yes = gemsPaid % 5 != 0 ? 0 : gemsPaid / 5;
             //Remove Gems
             gemsPaid *= -1;
-            _resource.UpdateGems((int)user.UserId!, gemsPaid);
+            if (user.GemCount - gemsPaid < 0)
+            {
+                return 0;
+            }
+            user = _resource.UpdateGems((int)user.UserId!, gemsPaid);
             return yes;
         }
         /// <summary>
@@ -83,7 +87,7 @@ namespace Services
         /// <param name="spins"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public User GiveRewards(int spins, User user)
+        public List<int> GiveRewards(int spins, User user)
         {
             List<int> wins = Winnings(spins);
             //Add food
@@ -95,7 +99,7 @@ namespace Services
             _resource.UpdateGems((int)user.UserId!, wins[4]);
             //Add Egg
             _resource.AddEgg(user, wins[5]);
-            return user;
+            return wins;
         }
     }
 }

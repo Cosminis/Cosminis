@@ -131,6 +131,7 @@ export class LotteryComponent implements OnInit {
     // this.rotateWheel();
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser = JSON.parse(stringUser);
+    console.log(currentUser);
     const canvas = document.getElementById('canvas')
     canvas?.classList.remove('spinning');
     if(canvas){
@@ -139,6 +140,7 @@ export class LotteryComponent implements OnInit {
     this.lottery.CanPlay(spins*5,currentUser.userId).subscribe((res) => this.lottery.GiveRewards(res,JSON.parse(stringUser)).subscribe({next: (res) => {
       console.log(res);
       if (res){
+        console.log(res);
         alert('Congradulations')
         if(canvas){
           canvas.style.display ='none';

@@ -33,7 +33,7 @@ namespace Controllers
         }
 
         [HttpPut()]
-        public ActionResult<User> Put(int spins, [FromBody] User user)
+        public ActionResult<List<int>> Put(int spins, [FromBody] User user)
         {
             if (spins == 0)
             {
