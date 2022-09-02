@@ -39,7 +39,7 @@ namespace Controllers
             {
                 return BadRequest("You Broke!");
             }
-            return Accepted(user);
+            return Accepted(_service.GiveRewards(spins,user));
         }
     }
 }

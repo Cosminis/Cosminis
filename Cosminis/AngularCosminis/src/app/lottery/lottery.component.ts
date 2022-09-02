@@ -137,11 +137,23 @@ export class LotteryComponent implements OnInit {
     if(canvas){
       canvas.classList.add('spinning');
     }
-    this.lottery.CanPlay(spins*5,currentUser.userId).subscribe((res) => this.lottery.GiveRewards(res,JSON.parse(stringUser)).subscribe({next: (res) => {
-      console.log(res);
+    this.lottery.CanPlay(spins*5,currentUser.userId).subscribe((res) => this.lottery.GiveRewards(res,JSON.parse(stringUser)).subscribe({next: (res) => { 
       if (res){
-        console.log(res);
-        alert('Congradulations')
+        let win:number[] = res;
+        let yerp:string = '';
+        if(win[0]||win[2]||win[3]){
+          yerp= 'food';
+        }if (win[1]){
+          yerp = win[0]?yerp+', gold':'gold';
+        }
+        if(win[4]){
+          yerp = win[1]||win[0]?yerp+', gems':'gems';
+        }
+        if (win[5]){
+          yerp= win[1]||win[0]||win[4]?yerp+', and eggs.':'eggs';
+        }
+        
+        alert('you won: '+ yerp);
         if(canvas){
           canvas.style.display ='none';
         }

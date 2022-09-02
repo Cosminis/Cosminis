@@ -24,7 +24,7 @@ namespace Services
         /// <returns>List of indexed rewards</returns>
         public List<int> Winnings(int spins)
         {
-            List<int> list = new List<int>();
+            int[] list = new int[6];
             while (spins > 0)
             {
                 int num = Prize();
@@ -51,7 +51,7 @@ namespace Services
                 }
                 spins--;
             }
-            return list;
+            return list.ToList();
         }
         /// <summary>
         /// Random Number Generator for the Lottery
