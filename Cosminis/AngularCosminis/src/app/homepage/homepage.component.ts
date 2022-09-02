@@ -74,7 +74,7 @@ export class HomepageComponent implements OnInit {
   }
 
   gotoBattleSelect(){
-    this.router.navigateByUrl('/BattleSelection');  // goes to the battle selection screen
+    this.router.navigateByUrl('/Battle/Selection');  // goes to the battle selection screen
   }
 
   GoAway(){

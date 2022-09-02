@@ -4,26 +4,12 @@
 	<h1>Battle a Random Stranger!</h1>
 </section>
 <section class="container2">
-	<img src="../../assets/Pics/friend-opponent.png" class="battle-button1" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
-    <img src="../../assets/Pics/mystery-opponent.png" class="battle-button2" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Companion Interactions!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Pet or feed your companion here!
-                       
-                    </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Pet</button>    
-                        <button type="button" class="btn btn-primary">Feed</button>
-                    </div>
-                </div>
-            </div>
-     </div>
+    <div class="image-container1">
+	   <img src="../../assets/Pics/friend-opponent.png" class="battle-button1" (click)="gotoBattleMenu()" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
+    </div>
+    <div class="image-container2">
+       <img src="../../assets/Pics/mystery-opponent.png" class="battle-button2" (click)="gotoBattleMenu()" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
+    </div>
 </section>
 <div class="title">How to Play</div>
 <ul>
