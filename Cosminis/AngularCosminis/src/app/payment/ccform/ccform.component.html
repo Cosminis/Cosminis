@@ -11,7 +11,6 @@
               <input class="form-control" type="text" id="adr" name="address" placeholder="542 W. 15th Street">
               <label for="city"><i class="fa fa-institution"></i> City</label>
               <input class="form-control" type="text" id="city" name="city" placeholder="New York">
-  
               <div class="row">
                 <div class="col-50">
                   <label for="state">State</label>
@@ -23,7 +22,6 @@
                 </div>
               </div>
             </div>
-  
             <div class="col-50">
               <h3>Payment</h3>
               <label for="cname">Name on Card</label>
@@ -60,17 +58,14 @@
                                 <option>2027</option>
                             </select>
                         </div>
-                        
                     </div>
-
                     <div class="form-group">
                         <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
                         <input class="form-control" required="" type="text" style="width:40%">
                     </div> <!-- form-group.// -->
- 
                 </div>
                </div> <!-- row.// -->
-             <input type="submit" value="Continue to checkout" class="btn"><!--(click)="purchaseGems(amount, cost)""-->
+             <input type="submit" value="Confirm Payment" class="btn" (click)="purchaseGems(amount, cost)">
            </div>
          </div>
        </form>

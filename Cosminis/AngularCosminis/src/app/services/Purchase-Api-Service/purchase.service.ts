@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Order } from '../../Models/Orders';
+import { Bundle } from 'src/app/Models/Bundle';
 
 
 @Injectable({
@@ -13,8 +14,24 @@ export class PurchaseService {
 
   constructor(private http: HttpClient) { }
 
+  /*
+  cartItems: PurchaseTotals[] = [];
+
+  bundleType: Subject<string> = new Subject<string>();
+  bundleQuantity: Subject<number> = new Subject<number>();
+  subTotal: Subject<number> = new Subject<number>(); 
+  total: Subject<number> = new Subject<number>();
+  */
+ 
+  /*
+  updateTotal() : void {
+    //this.purchaseName = this.DisplayTitle.get(this.enteredString);
+    this.subTotal = this.selectedCost;
+    this.purchaseTotal = this.bundleQty * this.subTotal;
+  }*/
+
   BuyGems(userId : number, Amount : number, cost : number) : Observable<Order> {
-    return this.http.put(this.url + `Resources/Purchase/GemAdds?userId=${userId}&Amount=${Amount}&Cost=${cost}`, userId) as unknown as Observable<Order>;
+    return this.http.put(this.url + `Resources/Purchase/GemAdds?userId=${userId}&Amount=${Amount}&cost=${cost}`, userId) as unknown as Observable<Order>;
   } 
 
   GetReceiptByUserId(userId : number) : Observable<Order[]> {

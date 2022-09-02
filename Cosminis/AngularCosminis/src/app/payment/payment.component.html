@@ -3,57 +3,57 @@
     <div class="column one">
         <h2>Buy Some Gems!</h2>
         <div class="separator">
-            <div class="card gem-bundles2 mb-3" type="button" (click)="updateTotal()">
+            <div class="card gem-bundles2 mb-3" type="button" (click)="getBundleCost(bundle0.bundleType, bundle0.bundleCost, bundle0.gemQuantity)">
                 <div class="card-body">
-                    <h3 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle0}}</h3>
+                    <h3 class="owner-title">{{bundle0.bundleType}}</h3>
                     <div class="gem-info">  
-                        <div class="owner-content">Gem Quantity: {{weeklySpecialQty}}</div>
-                        <div class="owner-content"  [(ngModel)]="selectedCost">Gem Cost: ${{weeklySpecialCost}}0</div>
+                        <div class="owner-content">Gem Quantity: {{bundle0.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost: {{bundle0.bundleCost | currency}}</div>
                     </div>     
                 </div>
             </div> 
-            <div class="card gem-bundles mb-3" type="button" (click)="updateTotal()">
+            <div class="card gem-bundles mb-3" type="button" (click)="getBundleCost(bundle1.bundleType, bundle1.bundleCost, bundle1.gemQuantity)">
                 <div class="card-body">
-                    <h5 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle1}}</h5>
+                    <h5 class="owner-title">{{bundle1.bundleType}}</h5>
                     <div class="gem-info">
-                        <div class="owner-content">Gem Quantity: {{bundleQty1}}</div>
-                        <div class="owner-content" [(ngModel)]="selectedCost">Gem Cost: ${{bundleCost1}}</div>
+                        <div class="owner-content">Gem Quantity: {{bundle1.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost: {{bundle1.bundleCost | currency}}</div>
                     </div>
                 </div>
             </div>
-            <div class="card gem-bundles mb-3" type="button" (click)="updateTotal()">
+            <div class="card gem-bundles mb-3" type="button" (click)="getBundleCost(bundle2.bundleType, bundle2.bundleCost, bundle2.gemQuantity)">
                 <div class="card-body">
-                    <h5 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle2}}</h5>
+                    <h5 class="owner-title">{{bundle2.bundleType}}</h5>
                     <div class="gem-info">
-                        <div class="owner-content">Gem Quantity: {{bundleQty2}}</div>
-                        <div class="owner-content" [(ngModel)]="selectedCost">Gem Cost: ${{bundleCost2}}</div>
+                        <div class="owner-content">Gem Quantity: {{bundle2.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost: {{bundle2.bundleCost | currency}}</div>
                     </div>
                 </div>
             </div>
-            <div class="card gem-bundles mb-3" type="button" (click)="updateTotal()">
+            <div class="card gem-bundles mb-3" type="button" (click)="getBundleCost(bundle3.bundleType, bundle3.bundleCost, bundle3.gemQuantity)">
                 <div class="card-body">
-                    <h5 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle3}}</h5>
+                    <h5 class="owner-title">{{bundle3.bundleType}}</h5>
                     <div class="gem-info">
-                        <div class="owner-content">Gem Quantity: {{bundleQty3}}</div>
-                        <div class="owner-content" [(ngModel)]="selectedCost">Gem Cost: ${{bundleCost3}}</div>
+                        <div class="owner-content">Gem Quantity: {{bundle3.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost: {{bundle3.bundleCost | currency}}</div>
                     </div>
                 </div>
             </div>
-            <div class="card gem-bundles mb-3" type="button" (click)="updateTotal()">
+            <div class="card gem-bundles mb-3" type="button" (click)="getBundleCost(bundle4.bundleType, bundle4.bundleCost, bundle4.gemQuantity)">
                 <div class="card-body">
-                    <h5 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle4}}</h5>
+                    <h5 class="owner-title">{{bundle4.bundleType}}</h5>
                     <div class="gem-info">
-                        <div class="owner-content">Gem Quantity: {{bundleQty4}}</div>
-                        <div class="owner-content" [(ngModel)]="selectedCost">Gem Cost: ${{bundleCost4}}</div>
+                        <div class="owner-content">Gem Quantity: {{bundle4.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost: {{bundle4.bundleCost | currency}}</div>
                     </div>
                 </div>
             </div>
-            <div class="card gem-bundles mb-3" type="button" (click)="updateTotal()">
+            <div class="card gem-bundles mb-3" type="button" (click)="getBundleCost(bundle5.bundleType, bundle5.bundleCost, bundle5.gemQuantity)">
                 <div class="card-body">
-                    <h5 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle5}}</h5>
+                    <h5 class="owner-title">{{bundle5.bundleType}}</h5>
                     <div class="gem-info">
-                        <div class="owner-content">Gem Quantity: {{bundleQty5}}</div>
-                        <div class="owner-content" [(ngModel)]="selectedCost">Gem Cost : ${{bundleCost5}}</div>
+                        <div class="owner-content">Gem Quantity: {{bundle5.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost : {{bundle5.bundleCost | currency}}</div>
                     </div>
                 </div>
             </div> 
@@ -76,8 +76,8 @@
                             <tr *ngFor="let order of orderArr">
                             <td>&emsp;{{order.orderId}}&emsp;</td>
                             
-                            <td>{{order.cost}}&emsp;</td>
-                            <td #dateTmpl>{{order.timeOrdered | date: 'yyyy-MM-dd HH:mm'}}</td></tr>
+                            <td>{{order.cost | currency}}&emsp;</td>
+                            <td #dateTmpl>{{order.timeOrdered | date: 'MM-dd-yyyy HH:mm'}}</td></tr>
                             </table>
                         </div>   
                     </div>
@@ -96,9 +96,9 @@
                     <h5 class="item4">Total</h5>   
                 </div> 
                 <div class="flex-container2">
-                    <div class="item5"> {{purchaseName}}</div>
+                    <div class="item5"> {{enteredString}}</div>
                     <div class="item6">
-                        <select class="form-control qty" [(ngModel)]="bundleQty" id="Choice-number" (change)="updateTotal()">
+                        <select class="form-control qty" [(ngModel)]="totalQty" id="Choice-number" (change)="updateSubTotal(subTotal, totalQty)">
                             <option>Qty</option>
                             <option value="1" id="Choice-1">01</option>
                             <option value="2" id="Choice-1">02</option>
@@ -115,7 +115,7 @@
                     <div class="item8">{{purchaseTotal}}</div>
                 </div>
             </div>                  
-            <app-ccform></app-ccform>
+            <app-ccform [amount]="gemTotal" [cost]="purchaseTotal"></app-ccform>
         </div>
     </div>      
 </section>
