@@ -143,15 +143,15 @@ export class LotteryComponent implements OnInit {
         let win:number[] = res;
         let yerp:string = '';
         if(win[0]||win[2]||win[3]){
-          yerp= 'food';
+          yerp= win[0]+win[2]+win[3]+' food';
         }if (win[1]){
-          yerp = win[0]?yerp+', gold':'gold';
+          yerp = win[0]||win[2]||win[3]?yerp+', '+ win[1]+' gold':win[1]+' gold';
         }
         if(win[4]){
-          yerp = win[1]||win[0]?yerp+', gems':'gems';
+          yerp = win[1]||win[0]||win[2]||win[3]?yerp+', '+win[4]+' gems':'gems';
         }
         if (win[5]){
-          yerp= win[1]||win[0]||win[4]?yerp+', and eggs.':'eggs';
+          yerp= win[1]||win[0]||win[2]||win[3]||win[4]?yerp+', and '+win[5]+' eggs.': win[5]+'eggs';
         }
         
         alert('you won: '+ yerp);
