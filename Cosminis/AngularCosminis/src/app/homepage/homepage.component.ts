@@ -100,6 +100,9 @@ export class HomepageComponent implements OnInit {
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
+    this.comsiniApi.getCosminiByUserID(currentUser.userId as number).subscribe({
+      next: (res)=>{}, 
+      error:(err)=>{ if(err.stauts===404){this.comsiniApi.free(currentUser.userId as number).subscribe();}}})
     if(!currentUser.showcaseCompanionFk){
       this.comsiniApi.free(currentUser.userId as number).subscribe();
     }
@@ -108,5 +111,6 @@ export class HomepageComponent implements OnInit {
           res.image = this.imageLib.get(res.speciesFk);
           this.displayCosmini = res;
         })
+        
   } 
 }
