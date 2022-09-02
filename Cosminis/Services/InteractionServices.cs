@@ -37,6 +37,9 @@ public class InteractionService
         if(companionMoodToShift.TimeSinceLastChangedMood == null)
         {
             companionMoodToShift.TimeSinceLastChangedMood = DateTime.Now;
+
+            _interRepo.SetCompanionMoodValue(companionID, 0);
+
             throw new TooSoon();
         }
 
@@ -145,6 +148,8 @@ public class InteractionService
                     }
                 }                
 
+                Console.WriteLine(moodDecrementAmount);
+
                 _interRepo.SetCompanionMoodValue(companionID, moodDecrementAmount);
 
                 ReRollCompanionEmotion(companionID); //idk if we want to do this EVERY time but it's kinda cool.
@@ -177,7 +182,11 @@ public class InteractionService
         }
         if(companionHungerToShift.TimeSinceLastChangedHunger == null)//if this is the first instance, set it to now
         {
-            companionHungerToShift.TimeSinceLastChangedHunger = DateTime.Now;     
+            companionHungerToShift.TimeSinceLastChangedHunger = DateTime.Now;
+
+            _interRepo.SetCompanionHungerValue(companionID, 0);
+
+            throw new TooSoon();     
         }
 
         try
@@ -376,16 +385,6 @@ public class InteractionService
         try
         {
             Companion companionInstance = _compRepo.GetCompanionByCompanionId(companionID);
-            Console.WriteLine(companionInstance.TimeSinceLastPet);
-            DateTime notNullableDate = companionInstance.TimeSinceLastPet ?? DateTime.Now;
-            double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
-
-            Console.WriteLine(totalMinutes);
-
-            if(totalMinutes < 5)
-            {
-                throw new TooSoon();
-            }
 
             if(userID == null)
             {
@@ -398,6 +397,27 @@ public class InteractionService
             Console.WriteLine(companionInstance); 
 
             companionInstance = _interRepo.PetCompanion(userID, companionID);
+
+            if(companionInstance.UserFk != userID) //If friend or stranger, make post [Companions user_FK]; if it is your own, pat yourself on the back.
+            {
+                User feedingUser = _userRepo.GetUserByUserId(userID);
+
+                Post Post = new Post()//define post properties (This person came up and feed my companion!).
+                {
+                    UserIdFk = companionInstance.UserFk,
+                    Content = feedingUser.Password + " pet my companion while I was away, thank you!"
+                };
+
+                try
+                {
+                    _PostRepo.SubmitPost(Post);
+                    return companionInstance;
+                }
+                catch(Exception)
+                {
+                    throw;
+                }
+            }            
 
             return companionInstance;
         }
