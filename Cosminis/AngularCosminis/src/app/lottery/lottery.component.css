@@ -1,14 +1,14 @@
 #arrow,#canvas{
     position:absolute;
     /* justify-content: center; */
-    margin-left: 5%;
+    margin-left: 50px;
 }
 .lottery-container{
     /* position:absolute; */
     border: 10px solid rgba(0, 0, 0, 0.456);
     border-radius: 25px;
-    width: 70%;
-    height: 100%;
+    width: 600px;
+    height: 650px;
     margin:auto;
     /* justify-items: center; */
     justify-content: center;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LotteryService } from '../services/LotteryService/lottery.service';
 import { Users } from '../Models/User';
+import { UserApiServicesService } from '../services/User-Api-Service/user-api-services.service';
 @Component({
   selector: 'app-lottery',
   templateUrl: './lottery.component.html',
@@ -17,7 +18,7 @@ export class LotteryComponent implements OnInit {
   spinTimeTotal : number = 0;
   ctx : any;
   ctxa :any;
-  constructor(private route:Router, private lottery:LotteryService) { }
+  constructor(private route:Router, private lottery:LotteryService,private userApi:UserApiServicesService) { }
 
   byte2Hex(n:number): string {
     let nybHexString: string = "0123456789ABCDEF";
@@ -131,15 +132,35 @@ export class LotteryComponent implements OnInit {
     // this.rotateWheel();
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser = JSON.parse(stringUser);
+    console.log(currentUser);
     const canvas = document.getElementById('canvas')
     canvas?.classList.remove('spinning');
     if(canvas){
       canvas.classList.add('spinning');
     }
-    this.lottery.CanPlay(spins*5,currentUser.userId).subscribe((res) => this.lottery.GiveRewards(res,JSON.parse(stringUser)).subscribe({next: (res) => {
-      console.log(res);
+    this.lottery.CanPlay(spins*5,currentUser.userId).subscribe((res) => this.lottery.GiveRewards(res,JSON.parse(stringUser)).subscribe({next: (res) => { 
       if (res){
-        alert('Congradulations')
+        let win:number[] = res;
+        let yerp:string = '';
+        if(win[0]||win[2]||win[3]){
+          yerp= win[0]+win[2]+win[3]+' food';
+        }if (win[1]){
+          yerp = win[0]||win[2]||win[3]?yerp+', '+ win[1]+' gold':win[1]+' gold';
+        }
+        if(win[4]){
+          yerp = win[1]||win[0]||win[2]||win[3]?yerp+', '+win[4]+' gems':'gems';
+        }
+        if (win[5]){
+          yerp= win[1]||win[0]||win[2]||win[3]||win[4]?yerp+', and '+win[5]+' eggs.': win[5]+'eggs';
+        }
+        
+        alert('you won: '+ yerp);
+        this.userApi.LoginOrReggi(currentUser).subscribe((res) =>
+        {
+          currentUser = res;
+          console.log(currentUser);
+          window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); 
+        })
         if(canvas){
           canvas.style.display ='none';
         }

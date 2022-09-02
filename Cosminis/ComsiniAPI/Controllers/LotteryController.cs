@@ -33,13 +33,13 @@ namespace Controllers
         }
 
         [HttpPut()]
-        public ActionResult<User> Put(int spins, [FromBody] User user)
+        public ActionResult<List<int>> Put(int spins, [FromBody] User user)
         {
             if (spins == 0)
             {
                 return BadRequest("You Broke!");
             }
-            return Accepted(user);
+            return Accepted(_service.GiveRewards(spins,user));
         }
     }
 }
