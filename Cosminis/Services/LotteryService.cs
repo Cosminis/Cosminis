@@ -90,9 +90,14 @@ namespace Services
         public List<int> GiveRewards(int spins, User user)
         {
             List<int> wins = Winnings(spins);
-            //Add food
-            int weight = wins[0] + wins[2] + wins[3];
-            _resource.AddFood(user, weight);
+            //Add food 
+            int win1 = wins[0] == 0 ? 1 : wins[0] * 10;
+            int win2 = wins[2] == 0 ? 1 : wins[2]*10;
+            int win3 = wins[3] == 0 ? 1 : wins[3] * 10;
+            _resource.WinFood(user, win1);
+            _resource.WinFood(user, win2);
+            _resource.WinFood(user, win3);
+
             //Add Gold
             _resource.AddGold(user, wins[1]);
             //Add Gems
