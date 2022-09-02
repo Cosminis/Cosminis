@@ -122,7 +122,7 @@ public class ResourceRepo : IResourceGen
         _context.ChangeTracker.Clear(); //clear the tracker for the next person
         return true;
     }
-    public bool WinFood(User User, int amount) //remember to check for input validation in the services layer
+    public int WinFood(User User, int amount) //remember to check for input validation in the services layer
     {
         Random randomStat = new Random(); //I didn't copy homework from Lor's methods I swear
          
@@ -130,11 +130,7 @@ public class ResourceRepo : IResourceGen
         while (Food2Add == null) //Hopefully this fixes above issue
         {
             Food2Add = _context.FoodStats.Find(randomStat.Next(1, 9));
-        }
-        if (Food2Add == null)
-        {
-            return false; //if somehow the while loop failed, return exit failure
-        }
+        } 
 
         FoodInventory Inventory2Add2 =
         (from IV in _context.FoodInventories
@@ -152,13 +148,13 @@ public class ResourceRepo : IResourceGen
             _context.Add(Inventory2Add2); //Add a new item onto the table
             _context.SaveChanges(); //persist the change
             _context.ChangeTracker.Clear(); //clear the tracker for the next person
-            return true;
+            return Food2Add.FoodStatsId;
         }
 
         Inventory2Add2.FoodCount = Inventory2Add2.FoodCount + amount; //if the user already own this kind of food
         _context.SaveChanges(); //persist the change
         _context.ChangeTracker.Clear(); //clear the tracker for the next person
-        return true;
+        return Food2Add.FoodStatsId;
     }
     /*/// <summary>
     /// Remove a certain amount of food from the food inventory attached to the user

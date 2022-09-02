@@ -94,9 +94,9 @@ namespace Services
             int win1 = wins[0] == 0 ? 1 : wins[0] * 10;
             int win2 = wins[2] == 0 ? 1 : wins[2]*10;
             int win3 = wins[3] == 0 ? 1 : wins[3] * 10;
-            _resource.WinFood(user, win1);
-            _resource.WinFood(user, win2);
-            _resource.WinFood(user, win3);
+            wins.Add(_resource.WinFood(user, win1));
+            wins.Add(_resource.WinFood(user, win2));
+            wins.Add(_resource.WinFood(user, win3));
 
             //Add Gold
             _resource.AddGold(user, wins[1]);
