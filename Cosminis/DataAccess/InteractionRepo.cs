@@ -43,6 +43,11 @@ public class InteractionRepo : Interactions
             companionToDepress.Mood = 0; //preventing negative numbers
         }
 
+        if(companionToDepress.Mood >= 100)
+        {
+            companionToDepress.Mood = 100; //preventing negative numbers
+        }
+
         companionToDepress.TimeSinceLastChangedMood = DateTime.Now;              //resetting the mood timer on the companion
 
         _context.SaveChanges();
@@ -116,11 +121,25 @@ public class InteractionRepo : Interactions
         DateTime notNullableDate = companionToStarve.TimeSinceLastFed ?? DateTime.Now;
         double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
 
+        companionToStarve.TimeSinceLastFed = DateTime.Now;
+
+        if(companionToStarve.TimeSinceLastFed == null)
+        {
+            companionToStarve.TimeSinceLastFed = DateTime.Now;
+            
+            _context.SaveChanges();
+
+            _context.ChangeTracker.Clear();
+
+            throw new TooSoon();
+        }
+
+        companionToStarve.TimeSinceLastFed = DateTime.Now;
+
         if(totalMinutes < 5)
         {
             throw new TooSoon();
         }
-
 
         User user2Check = _context.Users.Find(feederID); //Retrieve user object from database by the given FeederID
         FoodStat food2Feed = _context.FoodStats.Find(foodID); //Retrieve foodStats object from database by the given CompanionID
@@ -130,11 +149,14 @@ public class InteractionRepo : Interactions
         {
             throw new ResourceNotFound();
         }
+
         if(companionToStarve.Hunger>90)
         {
             throw new TooSoon("Your buddy ain't hungy yet!");
         }
-        
+
+        companionToStarve.TimeSinceLastFed = DateTime.Now;
+
         bool love = (species2check.FoodElementIdFk == food2Feed.FoodStatsId);
         bool hate = (species2check.OpposingEle == food2Feed.FoodStatsId);
         int baseAmountHunger = 0; //neither of these numbers make any damm sense
@@ -154,6 +176,9 @@ public class InteractionRepo : Interactions
             baseAmountHunger = RNGjesusManifested.Next(-15,31);
             baseAmountMood = RNGjesusManifested.Next(-15,31);
         }
+
+        companionToStarve.TimeSinceLastFed = DateTime.Now;
+        Console.WriteLine(companionToStarve.TimeSinceLastFed + "5");
 
         double HungerModifier = 1;
         double MoodModifier = 1;
@@ -194,6 +219,8 @@ public class InteractionRepo : Interactions
             }
         }
 
+        companionToStarve.TimeSinceLastFed = DateTime.Now;
+
         int moodAmount = 0;
         int hungerAmount = 0;
         if(love) //I know all of these can be compress into the if else block above, I am keeping them seperated for my own sanity sake, STFU
@@ -213,7 +240,7 @@ public class InteractionRepo : Interactions
             SetCompanionMoodValue(companionID,moodAmount);
 
             _ResourceRepo.RemoveFood(feederID,foodID); //last step
-
+            
             companionToStarve.TimeSinceLastFed = DateTime.Now;
 
             _context.SaveChanges();
@@ -244,6 +271,25 @@ public class InteractionRepo : Interactions
         {
             throw new CompNotFound();
         }
+
+        if(companionToPet.TimeSinceLastPet == null)
+        {    
+            companionToPet.TimeSinceLastPet = DateTime.Now;
+           
+            _context.SaveChanges();
+
+            _context.ChangeTracker.Clear();
+
+            throw new TooSoon();
+        }
+
+        DateTime notNullableDate = companionToPet.TimeSinceLastPet ?? DateTime.Now;
+        double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes; 
+
+        if(totalMinutes < 5)
+        {
+            throw new TooSoon();
+        }                
 
         User userToPet = _userRepo.GetUserByUserId(userID);  //grabbing the user
         if(userToPet == null)                                //checking null
