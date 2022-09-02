@@ -36,7 +36,7 @@ import { BattleMenuComponent } from './battle-menu/battle-menu.component';
     InteractionsComponent,
     GemSpendingMenuComponent,
     PaymentComponent,
-    CcformComponent
+    CcformComponent,
     GemSpendingMenuComponent, 
     LotteryComponent,
     PaymentComponent,
