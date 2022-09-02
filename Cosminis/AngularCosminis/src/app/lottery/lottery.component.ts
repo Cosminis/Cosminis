@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LotteryService } from '../services/LotteryService/lottery.service';
 import { Users } from '../Models/User';
+import { UserApiServicesService } from '../services/User-Api-Service/user-api-services.service';
 @Component({
   selector: 'app-lottery',
   templateUrl: './lottery.component.html',
@@ -17,7 +18,7 @@ export class LotteryComponent implements OnInit {
   spinTimeTotal : number = 0;
   ctx : any;
   ctxa :any;
-  constructor(private route:Router, private lottery:LotteryService) { }
+  constructor(private route:Router, private lottery:LotteryService,private userApi:UserApiServicesService) { }
 
   byte2Hex(n:number): string {
     let nybHexString: string = "0123456789ABCDEF";
@@ -154,6 +155,12 @@ export class LotteryComponent implements OnInit {
         }
         
         alert('you won: '+ yerp);
+        this.userApi.LoginOrReggi(currentUser).subscribe((res) =>
+        {
+          currentUser = res;
+          console.log(currentUser);
+          window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); 
+        })
         if(canvas){
           canvas.style.display ='none';
         }
