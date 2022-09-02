@@ -1,4 +1,4 @@
-<h2>Opponent Name:{{Opponent}}</h2>
+<h2 *ngIf="!betting">Opponent Name:{{Opponent}}</h2>
 <section class="container1" *ngIf="!betting">
 	<div class="card-wrapper" *ngFor="let com of OpponentRoster">
         <div class="cardhead">
@@ -14,7 +14,7 @@
         </div>
     </div> 
 </section>
-<section class="container2">
+<section class="container2" *ngIf="!betting">
 	<div class="column one">
 		<h1>Your Cosmini</h1>
 		<img class="battle-cosmini" src="../assets/Pics/{{PlayerCosmini2Battle.image}}" *ngIf="PlayerCosmini2Battle.image">
@@ -29,7 +29,7 @@
 		<img class="battle-cosmini" src="../assets/Pics/mystery-opponent.png">
 	</div>
 </section>
-<section class="container3">
+<section class="container3" *ngIf="!betting">
 	<div class="card-wrapper" type="button" *ngFor="let com of PlayerRoster" (click)="PlayerChoosesCosmini(com)">
         <div class="cardhead">
             <img class="all-cosminis" src="../assets/Pics/{{com.image}}">
@@ -43,8 +43,8 @@
         </div>
     </div>
 </section>
-<h2>Your Team</h2>
+<h2 *ngIf="!betting">Your Team</h2>
 
 
-<input type="text" [(ngModel)]="PlayerGoldBet"> 
-<button type="button" class="btn btn-light" (click) = "ConfirmBet()">Place Bet</button>
+<input *ngIf="betting" type="text" [(ngModel)]="PlayerGoldBet"> 
+<button *ngIf="betting" type="button" class="btn btn-light" (click) = "ConfirmBet()">Place Bet</button>

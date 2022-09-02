@@ -78,28 +78,32 @@ export class BattleMenuComponent implements OnInit {
     {
       if(this.betting)
       {
-        if(this.ConfirmedGold)
-        {
-          tick(500);
-        }
         if(!this.ConfirmedGold)
+        {
+          console.log(this.betting);
+          console.log(this.betting);
+          break;
+        }
+        if(this.ConfirmedGold)
         {
           this.betting = false;
           this.Starting = true;
+
+          console.log(this.betting);
+          console.log(this.Starting);
+          break;
         }
       }
-      if(this.Starting)
+      else if(this.Starting)
       {
         this.battle.OnGameStartUp();
+        console.log(this.ConfirmedGold);
 
         //gathering appropriate roster determined by player preference
         if (this.MadeOpponentRoster == false) {
           if (this.BattleMode === "Random")
           {
-            console.log(this.MadeOpponentRoster);
             this.CreateARandoRoster();
-            console.log("randoroster2");
-            console.log(this.MadeOpponentRoster)
           }
           else if (this.BattleMode === "Friend")
           {
@@ -132,10 +136,11 @@ export class BattleMenuComponent implements OnInit {
           console.log(this.PlayerRoster);
           this.Starting = false;
           this.Picking = true;
+          break;
         }
-
+        break;
       }
-      if(this.Picking)
+      else if(this.Picking)
       {
         //may both side of the combatant get ready please
         this.OpponentChoosesCosmini();
@@ -144,8 +149,9 @@ export class BattleMenuComponent implements OnInit {
         //state transition
         this.Picking = false;
         this.Battling = true;
+        break;
       }
-      if(this.Battling)
+      else if(this.Battling)
       {
         //and our champion is...
         this.ObtainBattleResult(); //apparently this already increments the appropriate count
@@ -159,15 +165,18 @@ export class BattleMenuComponent implements OnInit {
           this.Battling = false;
           this.Won = true;
         }
+        break;
       }
-      if(this.Lost)
+      else if(this.Lost)
       {
         //you stink, click a button to either route you back to the picking page to play again or back to home
+        break;
       }
-      if(this.Won)
+      else if(this.Won)
       {
         //payout
         this.Payout();
+        break;
 
         //you stink, click a button to either route you back to the picking page to play again or back to home
       }
@@ -279,12 +288,12 @@ export class BattleMenuComponent implements OnInit {
   ConfirmBet()
   {
     this.ConfirmedGold = this.PlayerGoldBet;
+    this.GamePlayLoop();
   }
 
   ngOnInit(): void
   {
     this.GamePlayLoop()
-
   }
 
 }
