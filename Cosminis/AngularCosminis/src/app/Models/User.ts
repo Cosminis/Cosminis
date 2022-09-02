@@ -7,6 +7,7 @@ export interface Users
     eggTimer : Date ;
     goldCount : number;
     eggCount : number;
+    gemCount : number;
     showcaseCompanion_fk:number;
     showcaseCompanionFk?:number;
     aboutMe:string;

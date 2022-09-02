@@ -41,6 +41,7 @@ export class AllCosminisComponent implements OnInit
     eggTimer : new Date(),
     goldCount : 1,
     eggCount : 1,
+    gemCount : 1,
     showcaseCompanion_fk:1,
     showcaseCompanionFk:1,
     aboutMe:"I am Boring... zzzz snoringgg",

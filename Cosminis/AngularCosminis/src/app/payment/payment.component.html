@@ -1,1 +1,121 @@
-<p>payment works!</p>
+<app-navbar></app-navbar>
+<section class="Container1">
+    <div class="column one">
+        <h2>Buy Some Gems!</h2>
+        <div class="separator">
+            <div class="card gem-bundles2 mb-3" type="button" (click)="getBundleCost(bundle0.bundleType, bundle0.bundleCost, bundle0.gemQuantity)">
+                <div class="card-body">
+                    <h3 class="owner-title">{{bundle0.bundleType}}</h3>
+                    <div class="gem-info">  
+                        <div class="owner-content">Gem Quantity: {{bundle0.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost: {{bundle0.bundleCost | currency}}</div>
+                    </div>     
+                </div>
+            </div> 
+            <div class="card gem-bundles mb-3" type="button" (click)="getBundleCost(bundle1.bundleType, bundle1.bundleCost, bundle1.gemQuantity)">
+                <div class="card-body">
+                    <h5 class="owner-title">{{bundle1.bundleType}}</h5>
+                    <div class="gem-info">
+                        <div class="owner-content">Gem Quantity: {{bundle1.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost: {{bundle1.bundleCost | currency}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card gem-bundles mb-3" type="button" (click)="getBundleCost(bundle2.bundleType, bundle2.bundleCost, bundle2.gemQuantity)">
+                <div class="card-body">
+                    <h5 class="owner-title">{{bundle2.bundleType}}</h5>
+                    <div class="gem-info">
+                        <div class="owner-content">Gem Quantity: {{bundle2.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost: {{bundle2.bundleCost | currency}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card gem-bundles mb-3" type="button" (click)="getBundleCost(bundle3.bundleType, bundle3.bundleCost, bundle3.gemQuantity)">
+                <div class="card-body">
+                    <h5 class="owner-title">{{bundle3.bundleType}}</h5>
+                    <div class="gem-info">
+                        <div class="owner-content">Gem Quantity: {{bundle3.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost: {{bundle3.bundleCost | currency}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card gem-bundles mb-3" type="button" (click)="getBundleCost(bundle4.bundleType, bundle4.bundleCost, bundle4.gemQuantity)">
+                <div class="card-body">
+                    <h5 class="owner-title">{{bundle4.bundleType}}</h5>
+                    <div class="gem-info">
+                        <div class="owner-content">Gem Quantity: {{bundle4.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost: {{bundle4.bundleCost | currency}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card gem-bundles mb-3" type="button" (click)="getBundleCost(bundle5.bundleType, bundle5.bundleCost, bundle5.gemQuantity)">
+                <div class="card-body">
+                    <h5 class="owner-title">{{bundle5.bundleType}}</h5>
+                    <div class="gem-info">
+                        <div class="owner-content">Gem Quantity: {{bundle5.gemQuantity}}</div>
+                        <div class="owner-content">Gem Cost : {{bundle5.bundleCost | currency}}</div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="column two">
+        
+        <div class="getorderhistory">
+            <button class="orderhistorybutton" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getOrderHistory()">Click here to view your order history</button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Your past orders:</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                        <div class="modal-body">
+                        <h6 class="table-heading">Order ID Number &emsp; Cost &emsp; Time Ordered</h6>    
+                            <table cellpadding="0">
+                            <tr *ngFor="let order of orderArr">
+                            <td>&emsp;{{order.orderId}}&emsp;</td>
+                            
+                            <td>{{order.cost | currency}}&emsp;</td>
+                            <td #dateTmpl>{{order.timeOrdered | date: 'MM-dd-yyyy HH:mm'}}</td></tr>
+                            </table>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divider">
+            <div class="grid-container">
+                <div class="item0">
+                    <h2 class="order-header">Order Information</h2>
+                </div>
+                <div class="flex-container1">
+                    <h5 class="item1">Bundle Type</h5>    
+                    <h5 class="item2">Quantity.</h5>    
+                    <h5 class="item3">Subtotal</h5>    
+                    <h5 class="item4">Total</h5>   
+                </div> 
+                <div class="flex-container2">
+                    <div class="item5"> {{enteredString}}</div>
+                    <div class="item6">
+                        <select class="form-control qty" [(ngModel)]="totalQty" id="Choice-number" (change)="updateSubTotal(subTotal, totalQty)">
+                            <option>Qty</option>
+                            <option value="1" id="Choice-1">01</option>
+                            <option value="2" id="Choice-1">02</option>
+                            <option value="3" id="Choice-1">03</option>
+                            <option value="4" id="Choice-1">04</option>
+                            <option value="5" id="Choice-1">05</option>
+                            <option value="6" id="Choice-1">06</option>
+                            <option value="7" id="Choice-1">07</option>
+                            <option value="8" id="Choice-1">08</option>
+                            <option value="9" id="Choice-1">09</option>
+                            <option value="10" id="Choice-1">10</option>
+                        </select></div>
+                    <div class="item7">{{subTotal}}</div>
+                    <div class="item8">{{purchaseTotal}}</div>
+                </div>
+            </div>                  
+            <app-ccform [amount]="gemTotal" [cost]="purchaseTotal"></app-ccform>
+        </div>
+    </div>      
+</section>
