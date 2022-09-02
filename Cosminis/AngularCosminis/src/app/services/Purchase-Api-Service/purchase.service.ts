@@ -13,7 +13,7 @@ export class PurchaseService {
 
   constructor(private http: HttpClient) { }
 
-  PurchaseWithGems(userId : number, Amount : number, cost : number) : Observable<Order> {
+  BuyGems(userId : number, Amount : number, cost : number) : Observable<Order> {
     return this.http.put(this.url + `Resources/Purchase/GemAdds?userId=${userId}&Amount=${Amount}&Cost=${cost}`, userId) as unknown as Observable<Order>;
   } 
 

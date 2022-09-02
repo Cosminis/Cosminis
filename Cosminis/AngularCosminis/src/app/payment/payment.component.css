@@ -29,6 +29,8 @@ h2 {
 
 .card-body {
     color: mistyrose;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-title {
@@ -52,6 +54,17 @@ h2 {
 .gem-bundles {
     background-color: rgba(87, 69, 138, 0.75);
     border-radius: 25px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(63, 31, 67, 0.75);
+}
+
+.gem-bundles2 {
+    background-color: rgba(138, 95, 69, 0.75);
+    border-radius: 25px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: rgba(255, 233, 106, 0.75);
 }
 
 .divider {
@@ -88,3 +101,88 @@ h2 {
     background-color: rgba(87, 69, 138, 0.75);
     border-radius: 20px;
 }
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table {
+    counter-reset: rowNumber;
+  }
+
+table tr::before {
+    display: table-cell;
+    counter-increment: rowNumber;
+    content: counter(rowNumber) ".";
+    padding-right: 0.3em;
+    text-align: right;
+  }
+
+  .gem-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .owner-title {
+    margin-bottom: 20px;
+  }
+
+  .gem-bundles:hover {
+    background-color: rgb(176, 124, 160, .9);
+    color: rgba(112, 63, 95, 0.9);
+    border-color: rgba(159, 89, 134, 0.7);
+    border-style: solid;
+    border-radius: 25px;
+    border-width: 2px; 
+  }
+
+  .gem-bundles2:hover {
+    background-color: rgba(255, 222, 73, 0.9);
+    color: rgba(112, 63, 95, 0.9);
+    border-color: rgba(163, 86, 10, 0.7);
+    border-style: solid;
+    border-radius: 25px;
+    border-width: 3px;
+  }
+
+  .divider {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .grid-container {
+    background-color: rgb(242, 242, 242, .7);
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-top: 150px;
+    color: rgba(87, 69, 138, 0.95);
+    width: 800px;
+  }
+
+  .flex-container1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-decoration: underline;
+  }
+
+  .flex-container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+  }
+
+  .order-header {
+    color: rgba(87, 69, 138, 0.95);
+  }
+
+  .form-control {
+    color: rgb(87, 69, 138, 0.95);
+    border-radius: 10px;
+    text-align: center;
+  }

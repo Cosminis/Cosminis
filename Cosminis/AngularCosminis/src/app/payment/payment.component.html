@@ -3,16 +3,58 @@
     <div class="column one">
         <h2>Buy Some Gems!</h2>
         <div class="separator">
-            <div class="card gem-bundles mb-3" type="button">
+            <div class="card gem-bundles2 mb-3" type="button" (click)="updateTotal()">
                 <div class="card-body">
-                    <h5 class="owner-title">Gem Special!</h5>
-                    <div class="owner-content">Gem Quantity: {{weeklySpecialQty}}</div>
+                    <h3 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle0}}</h3>
+                    <div class="gem-info">  
+                        <div class="owner-content">Gem Quantity: {{weeklySpecialQty}}</div>
+                        <div class="owner-content"  [(ngModel)]="selectedCost">Gem Cost: ${{weeklySpecialCost}}0</div>
+                    </div>     
                 </div>
             </div> 
-            <div class="card gem-bundles mb-3" type="button" *ngFor="let gem of gemQty">
+            <div class="card gem-bundles mb-3" type="button" (click)="updateTotal()">
                 <div class="card-body">
-                    <h5 class="owner-title">Gem Bundles</h5>
-                    <div class="owner-content">Gem Quantity: {{gemQty}}</div>
+                    <h5 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle1}}</h5>
+                    <div class="gem-info">
+                        <div class="owner-content">Gem Quantity: {{bundleQty1}}</div>
+                        <div class="owner-content" [(ngModel)]="selectedCost">Gem Cost: ${{bundleCost1}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card gem-bundles mb-3" type="button" (click)="updateTotal()">
+                <div class="card-body">
+                    <h5 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle2}}</h5>
+                    <div class="gem-info">
+                        <div class="owner-content">Gem Quantity: {{bundleQty2}}</div>
+                        <div class="owner-content" [(ngModel)]="selectedCost">Gem Cost: ${{bundleCost2}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card gem-bundles mb-3" type="button" (click)="updateTotal()">
+                <div class="card-body">
+                    <h5 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle3}}</h5>
+                    <div class="gem-info">
+                        <div class="owner-content">Gem Quantity: {{bundleQty3}}</div>
+                        <div class="owner-content" [(ngModel)]="selectedCost">Gem Cost: ${{bundleCost3}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card gem-bundles mb-3" type="button" (click)="updateTotal()">
+                <div class="card-body">
+                    <h5 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle4}}</h5>
+                    <div class="gem-info">
+                        <div class="owner-content">Gem Quantity: {{bundleQty4}}</div>
+                        <div class="owner-content" [(ngModel)]="selectedCost">Gem Cost: ${{bundleCost4}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card gem-bundles mb-3" type="button" (click)="updateTotal()">
+                <div class="card-body">
+                    <h5 class="owner-title" [(ngModel)]="enteredString">{{bundleTitle5}}</h5>
+                    <div class="gem-info">
+                        <div class="owner-content">Gem Quantity: {{bundleQty5}}</div>
+                        <div class="owner-content" [(ngModel)]="selectedCost">Gem Cost : ${{bundleCost5}}</div>
+                    </div>
                 </div>
             </div> 
         </div>
@@ -29,17 +71,50 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                         <div class="modal-body">
+                        <h6 class="table-heading">Order ID Number &emsp; Cost &emsp; Time Ordered</h6>    
+                            <table cellpadding="0">
                             <tr *ngFor="let order of orderArr">
-                            <td>{{order.orderId}}</td>
-                            <td>{{order.userIdFk}}</td>
-                            <td>{{order.cost}}</td>
-                            <td>{{order.TimeOrdered}</td>
+                            <td>&emsp;{{order.orderId}}&emsp;</td>
+                            
+                            <td>{{order.cost}}&emsp;</td>
+                            <td #dateTmpl>{{order.timeOrdered | date: 'yyyy-MM-dd HH:mm'}}</td></tr>
+                            </table>
                         </div>   
                     </div>
                 </div>
             </div>
         </div>
         <div class="divider">
+            <div class="grid-container">
+                <div class="item0">
+                    <h2 class="order-header">Order Information</h2>
+                </div>
+                <div class="flex-container1">
+                    <h5 class="item1">Bundle Type</h5>    
+                    <h5 class="item2">Quantity.</h5>    
+                    <h5 class="item3">Subtotal</h5>    
+                    <h5 class="item4">Total</h5>   
+                </div> 
+                <div class="flex-container2">
+                    <div class="item5"> {{purchaseName}}</div>
+                    <div class="item6">
+                        <select class="form-control qty" [(ngModel)]="bundleQty" id="Choice-number" (change)="updateTotal()">
+                            <option>Qty</option>
+                            <option value="1" id="Choice-1">01</option>
+                            <option value="2" id="Choice-1">02</option>
+                            <option value="3" id="Choice-1">03</option>
+                            <option value="4" id="Choice-1">04</option>
+                            <option value="5" id="Choice-1">05</option>
+                            <option value="6" id="Choice-1">06</option>
+                            <option value="7" id="Choice-1">07</option>
+                            <option value="8" id="Choice-1">08</option>
+                            <option value="9" id="Choice-1">09</option>
+                            <option value="10" id="Choice-1">10</option>
+                        </select></div>
+                    <div class="item7">{{subTotal}}</div>
+                    <div class="item8">{{purchaseTotal}}</div>
+                </div>
+            </div>                  
             <app-ccform></app-ccform>
         </div>
     </div>      
