@@ -26,6 +26,11 @@ export class BattleMenuComponent implements OnInit {
   PlayerRisk: number = 0;
   WinStreak: number = 0;
   LoseStreak: number = 0;
+  fightingChoice:number = 0;
+  roundCount:number = 0;
+  maxRoundCount:number = 0;
+
+  BattleMode: string = "Random"; //this need to be gathered from session storage, setting a default for now
   
   Starting: boolean = true;
   Picking: boolean = true;
@@ -51,6 +56,80 @@ export class BattleMenuComponent implements OnInit {
     --> play again?
   */
 
+  GamePlayLoop()
+  {
+    while (true) //infinite loop incoming
+    {
+      if(this.Starting)
+      {
+        //gathering appropriate roster determined by player preference
+        if(this.BattleMode === "Random") 
+        {
+          this.CreateARandoRoster();
+        }
+        else if(this.BattleMode === "Friend")
+        {
+          this.CreateAFriendRoster();
+        }
+        else
+        {
+          this.CreateARandoRoster();
+        }
+
+        //gather player's roster
+        this.CreatePlayerRoster();
+
+        //Determine the maximum game length
+        this.maxRoundCount = this.battle.BattleLength(this.OpponentRoster, this.PlayerRoster);
+
+        //determine risk factor
+        this.CalculateRiskFactor();
+
+        //lock in the bet
+        this.PlaceBet();
+
+        //state transition
+        this.Starting = false;
+        this.Picking = true;
+      }
+      if(this.Picking)
+      {
+        //may both side of the combatant get ready please
+        this.OpponentChoosesCosmini();
+        this.PlayerChoosesCosmini(this.fightingChoice);
+
+        //state transition
+        this.Picking = false;
+        this.Battling = true;
+      }
+      if(this.Battling)
+      {
+        //and our champion is...
+        this.ObtainBattleResult(); //apparently this already increments the appropriate count
+        if(this.LoseStreak>=2) //you have lost
+        {
+          this.Battling = false;
+          this.Lost = true;
+        }
+        else if(this.roundCount >= this.maxRoundCount) //proceed to the payout screen
+        {
+          this.Battling = false;
+          this.Won = true;
+        }
+      }
+      if(this.Lost)
+      {
+        //you stink, click a button to either route you back to the picking page to play again or back to home
+      }
+      if(this.Won)
+      {
+        //payout
+        this.Payout();
+
+        //you stink, click a button to either route you back to the picking page to play again or back to home
+      }
+    }
+  }
 
   OpponentCosmini2Battle: Cosminis = {
     companionId: 0,
@@ -130,18 +209,19 @@ export class BattleMenuComponent implements OnInit {
     })
   }
 
-  StartGame()
+  PlaceBet()
   {
-    while (this.Starting)
-    {
-      this.CreatePlayerRoster();
-      this.CutRosters();
-      this.CalculateRiskFactor
-      
-    }
+    let stringUser: string = sessionStorage.getItem('currentUser') as string;
+    let currentUser: Users = JSON.parse(stringUser);
+    this.battle.PlaceBet(currentUser.userId as number, this.PlayerGoldBet);
   }
 
-
+  Payout()
+  {
+    let stringUser: string = sessionStorage.getItem('currentUser') as string;
+    let currentUser: Users = JSON.parse(stringUser);
+    this.battle.Payout(currentUser.userId as number, this.PlayerGoldBet, this.PlayerRisk, this.WinStreak);
+  }
 
   ngOnInit(): void {
   }
