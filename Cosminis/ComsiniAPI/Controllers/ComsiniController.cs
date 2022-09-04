@@ -94,4 +94,22 @@ public class CompanionController : ControllerBase
             return NotFound("How you are you here? Why no exist?");
         }
     }
+
+    [Route("companions/setNickname")]
+    [HttpPut]
+    public ActionResult<Companion> SetCompanionNickname(int companionId, string? nickname)
+    {
+        try
+        {
+            return _companionRepo.SetCompanionNickname(companionId, nickname);
+        }
+        catch (CompNotFound)
+        {
+            return NotFound("This companion is a mystery to me");
+        }
+        catch (ResourceNotFound)
+        {
+            return NotFound("How you are you here? Why no exist?");
+        }
+    }    
 }

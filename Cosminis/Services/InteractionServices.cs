@@ -117,34 +117,34 @@ public class InteractionService
 
                 if(moodAdjust <= 10)                   //Completely original numbers (this is "chance")
                 {
-                    moodDecrementAmount = -1;           //Actually original numbers (this is "static amt")
-                    if(companionShowcase == true)
-                    {
-                        moodDecrementAmount = 0;
-                    }
-                }
-                else if(moodAdjust <= 30)
-                {
-                    moodDecrementAmount = -2;
+                    moodDecrementAmount = -3;           //Actually original numbers (this is "static amt")
                     if(companionShowcase == true)
                     {
                         moodDecrementAmount = -1;
                     }
                 }
-                else if(moodAdjust <= 90)
+                else if(moodAdjust <= 30)
                 {
-                    moodDecrementAmount = -5;
+                    moodDecrementAmount = -7;
                     if(companionShowcase == true)
                     {
-                        moodDecrementAmount = -3;
+                        moodDecrementAmount = -5;
+                    }
+                }
+                else if(moodAdjust <= 90)
+                {
+                    moodDecrementAmount = -13;
+                    if(companionShowcase == true)
+                    {
+                        moodDecrementAmount = -10;
                     }
                 }
                 else if(moodAdjust <= 270)
                 {
-                    moodDecrementAmount = -10;
+                    moodDecrementAmount = -20;
                     if(companionShowcase == true)
                     {
-                        moodDecrementAmount = -5;
+                        moodDecrementAmount = -15;
                     }
                 }                
 
@@ -195,11 +195,11 @@ public class InteractionService
             double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes;  //converting minutes to a double
             if(isDisplay)//determine the amount
             {
-                amount = (int)Math.Floor(totalMinutes * 1 * 1.3); //SOMEONE PLEASE NORMALIZED THE NUMBERS
+                amount = (int)Math.Floor(totalMinutes * .5 * 1.3); //SOMEONE PLEASE NORMALIZED THE NUMBERS
             }
             else
             {
-                amount = (int)Math.Floor(totalMinutes * 1); 
+                amount = (int)Math.Floor(totalMinutes * .5); 
             }
 
             amount = amount * -1;
