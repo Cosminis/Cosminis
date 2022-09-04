@@ -64,19 +64,22 @@ export class BattleService {
   
   //this will give who one!
   BattleResult(OpponentZero: number, OpponentOne: number): Observable<number> {
-    return this.http.get(this.apiUrl + "Result/" + OpponentZero + "/" + OpponentOne) as unknown as Observable<number>;
+    return this.http.get(this.apiUrl + "Result?CombatantZero=" + OpponentZero + "&CombatantOne=" + OpponentOne) as unknown as Observable<number>;
   }
   
   //this obtains the difficult of the battle
   DifficultyScale(CompleteRoster: Cosminis[], SizeOfPlayerRoster: number): Observable<number> {
-    return this.http.get(this.apiUrl + "Scalar"  + CompleteRoster + "/" + SizeOfPlayerRoster) as unknown  as Observable<number>;
+    return this.http.put(this.apiUrl + "Scalar?SizeOne="+ SizeOfPlayerRoster, CompleteRoster) as unknown  as Observable<number>;
   }
   
   //the length of the match is determined by the roster with the smallest amount of cosminis
   BattleLength(RosterOne: Cosminis[], RosterTwo: Cosminis[]): number {
-    if (RosterOne.length > RosterTwo.length) {
+    if (RosterOne.length > RosterTwo.length) 
+    {
       return RosterTwo.length;
-    } else {
+    } 
+    else 
+    {
       return RosterOne.length;
     }
   }
@@ -119,6 +122,6 @@ export class BattleService {
 
   PlaceBet(UserId: number, GoldBet: number)
   {
-    this.resourceAPI.AddGold(UserId,-1*GoldBet);
+    this.resourceAPI.AddGold(UserId,-1*GoldBet).subscribe();
   }
 }

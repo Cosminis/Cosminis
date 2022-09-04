@@ -8,8 +8,8 @@
         <div class="cardbody bg-dark">
             <h5 *ngIf="com.nickname" class="card-title">Nickname: {{com.nickname}}</h5>
             <h5 *ngIf="!com.nickname" class="card-title">Species: {{com.speciesNickname}}</h5>
-            <h6 class="card-title" *ngIf="com.mood"> Mood: {{com.mood}}</h6>
-            <h6 class="card-title" *ngIf="com.hunger"> Hunger: {{com.hunger}}</h6>
+            <h6 class="card-title"> Mood: {{com.mood}}</h6>
+            <h6 class="card-title"> Hunger: {{com.hunger}}</h6>
             
         </div>
     </div> 
@@ -22,7 +22,7 @@
 	</div>  
 	<div class="column two">
 		<h1>VS</h1>
-		<button type="button" class="btn battle-button btn-light">BATTLE</button>
+		<button type="button" class="btn battle-button btn-light" (click)="ConfirmingPick()">BATTLE</button>
 	</div>
 	<div class="column three">
 		<h1>Opponent Cosmini</h1>
@@ -38,8 +38,8 @@
         <div class="cardbody bg-dark">
             <h5 *ngIf="com.nickname" class="card-title">{{com.nickname}}</h5>
             <h5 *ngIf="!com.nickname" class="card-title">{{com.speciesNickname}}</h5>
-            <h6 class="card-title" *ngIf="com.mood"> Mood: {{com.mood}}</h6>
-            <h6 class="card-title" *ngIf="com.hunger"> Hunger: {{com.hunger}}</h6>
+            <h6 class="card-title"> Mood: {{com.mood}}</h6>
+            <h6 class="card-title"> Hunger: {{com.hunger}}</h6>
         </div>
     </div>
 </section>
@@ -48,3 +48,8 @@
 
 <input *ngIf="betting" type="text" [(ngModel)]="PlayerGoldBet"> 
 <button *ngIf="betting" type="button" class="btn btn-light" (click) = "ConfirmBet()">Place Bet</button>
+
+<div class="PlayerStats"> MatchLength: {{maxRoundCount}}</div>
+<div class="PlayerStats"> RoundCount: {{roundCount}}</div>
+<div class="PlayerStats"> LoseStreak: {{LoseStreak}}</div>
+<div class="PlayerStats"> WindCount: {{WinStreak}}</div>

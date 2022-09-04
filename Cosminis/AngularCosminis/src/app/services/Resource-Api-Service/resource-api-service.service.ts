@@ -30,6 +30,6 @@ export class ResourceApiServicesService {
 
   AddGold(userID: number, amount: number):Observable<boolean>
   {
-    return this.http.put(this.url + `AddGold?userId=${userID}&Amount=${amount}`, amount) as unknown as Observable<boolean>;
+    return this.http.put(this.url + `Resources/AddGold?UserId=${userID}&Amount=${amount}`, amount) as unknown as Observable<boolean>;
   }
 }
