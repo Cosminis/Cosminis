@@ -51,13 +51,11 @@ export class NavbarComponent implements OnInit {
   
         this.interApi.DecrementCompanionMoodValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
         {
-          console.log(res);
           window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
         })
   
         this.interApi.DecrementCompanionHungerValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
         {
-          console.log(res);
           window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
         })
     } ,150000);
@@ -70,22 +68,19 @@ export class NavbarComponent implements OnInit {
 
     this.interApi.DecrementCompanionMoodValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
       {
-        console.log(res);
         window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
       })
 
     this.interApi.DecrementCompanionHungerValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
       {
-        console.log(res);
         window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
       })
   }
 
   Logout():void{
-    this.auth0.logout()
     this.router.navigateByUrl('/login');
-    console.log(this.currentUsername);
-    sessionStorage.clear();
+    window.sessionStorage.clear();    
+    this.auth0.logout()
   }
 
   Loggedin():boolean
