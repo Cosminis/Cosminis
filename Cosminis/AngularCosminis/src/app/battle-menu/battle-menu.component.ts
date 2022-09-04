@@ -141,6 +141,7 @@ export class BattleMenuComponent implements OnInit {
     else if(this.Lost)
     {
       console.log("Lost...");
+      alert("You Have Lost All of Your Money, Have You Tried Betting More?");
       //you stink, click a button to either route you back to the picking page to play again or back to home
     }
     else if(this.Won)
@@ -148,6 +149,7 @@ export class BattleMenuComponent implements OnInit {
       console.log("Won...");
       //payout
       this.Payout();
+      console.log("Paid");
 
       //you stink, click a button to either route you back to the picking page to play again or back to home
     }
@@ -217,8 +219,15 @@ export class BattleMenuComponent implements OnInit {
   CalculateRiskFactor()
   {
     let CompleteRoster = [];
+    let RosterID :number[] = [];
     CompleteRoster = this.PlayerRoster.concat(this.OpponentRoster);
-    this.battle.DifficultyScale(CompleteRoster, this.PlayerRoster.length).subscribe((res) => this.PlayerRisk = res);
+
+    CompleteRoster.forEach(function (value)
+    {
+      RosterID.push(value.companionId);
+    });
+    
+    this.battle.DifficultyScale(RosterID, this.PlayerRoster.length).subscribe((res) => this.PlayerRisk = res);
   }
 
   OpponentChoosesCosmini() {
@@ -243,6 +252,10 @@ export class BattleMenuComponent implements OnInit {
       else if (BattleResult == 1)
       {
         this.LoseStreak++;
+        this.roundCount++;
+      }
+      else
+      {
         this.roundCount++;
       }
 
@@ -282,6 +295,7 @@ export class BattleMenuComponent implements OnInit {
 
   ConfirmingPick()
   {
+    //this.LoseStreak ++;
     this.Picked = true;
     this.GamePlayLoop();
   }

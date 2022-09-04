@@ -68,7 +68,7 @@ export class BattleService {
   }
   
   //this obtains the difficult of the battle
-  DifficultyScale(CompleteRoster: Cosminis[], SizeOfPlayerRoster: number): Observable<number> {
+  DifficultyScale(CompleteRoster: number[], SizeOfPlayerRoster: number): Observable<number> {
     return this.http.put(this.apiUrl + "Scalar?SizeOne="+ SizeOfPlayerRoster, CompleteRoster) as unknown  as Observable<number>;
   }
   
@@ -111,9 +111,11 @@ export class BattleService {
       return 0;
     }
     
-    let NewGoldPayout: number = Math.pow(GoldBet * (1 + (.1)), .1 * WinStreak);
+    let NewGoldPayout: number = GoldBet + Math.pow(GoldBet * (1.1), .2 * WinStreak);
     
     NewGoldPayout = NewGoldPayout + (NewGoldPayout * (Difficulty / 100));
+    NewGoldPayout = Math.round(NewGoldPayout);
+    console.log(NewGoldPayout);
 
     this.resourceAPI.AddGold(UserId,NewGoldPayout);
 
