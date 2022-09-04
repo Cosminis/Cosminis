@@ -14,6 +14,8 @@ export class HomepageComponent implements OnInit {
 
   constructor(private router: Router, private comsiniApi:ComsinisApiServiceService, private interApi:InteractionService) { }
 
+  enteredName : string = "FluffyCloud69"
+
   displayCosmini : Cosminis = 
   {
     companionId : 1,
@@ -42,26 +44,7 @@ export class HomepageComponent implements OnInit {
     this.imageLib.set(7, "librianfinall.png");
     this.imageLib.set(8, "cancerfinal.png");
 
-    console.log(this.displayCosmini);
-
-    let stringUser : string = sessionStorage.getItem('currentUser') as string;
-    let currentUser : Users = JSON.parse(stringUser);
-
-    do 
-    {
-      stringUser = sessionStorage.getItem('currentUser') as string;
-
-      currentUser = JSON.parse(stringUser);
-      
-      console.log(currentUser)
-
-      this.cosminiDisplay();
-    }
-    while(!currentUser);
-
     this.cosminiDisplay();
-    console.log(this.cosminiLoader);
-
     //setInterval(this.smellingHandler, 5000, "my text");
   }
 
@@ -119,24 +102,25 @@ export class HomepageComponent implements OnInit {
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
-    
-    console.log(currentUser);
     this.comsiniApi.getCosminiByUserID(currentUser.userId as number).subscribe({
       next: (res)=>{}, 
       error:(err)=>{ if(err.stauts===404){this.comsiniApi.free(currentUser.userId as number).subscribe();}}})
     this.comsiniApi.getCosminiByID(currentUser.showcaseCompanionFk as number).subscribe((res) =>
         {
           this.cosminiLoader = true;
-          console.log(this.cosminiLoader);
           res.image = this.imageLib.get(res.speciesFk);
           this.displayCosmini = res;
         })
-        
   } 
 
-  display() : boolean
+  setNickname(enteredName : string) : void
   {
-    return this.cosminiLoader;
-    console.log(this.displayCosmini);
-  }
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser : Users = JSON.parse(stringUser);
+
+    this.comsiniApi.setCompanionNickname(currentUser.showcaseCompanionFk as number, enteredName).subscribe((res) =>
+    {
+      console.log(res);
+    })
+  }  
 }

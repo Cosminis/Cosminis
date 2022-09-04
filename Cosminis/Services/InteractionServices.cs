@@ -342,7 +342,8 @@ public class InteractionService
         int offSet = RNGjesusManifested.Next(-10,11);
         double compMood = checkingComp.Mood ?? 75; //whoever set the mood and hunger to be nullable in the database needs to be condemned 
         double chanceRR = (100 * Math.Exp(-0.05*compMood)) + offSet; //Maths
-        bool RR = (RNGjesusManifested.Next(100) < chanceRR); //see of the emotion gets re rolled
+        Console.WriteLine(100 * Math.Exp(-0.05*compMood));
+        bool RR = (RNGjesusManifested.Next(010) < chanceRR); //see of the emotion gets re rolled
         if(RR)
         {
             try
@@ -393,10 +394,28 @@ public class InteractionService
             if(companionID == null)
             {
                 throw new CompNotFound();
-            }           
-            Console.WriteLine(companionInstance); 
+            }                       
 
             companionInstance = _interRepo.PetCompanion(userID, companionID);
+
+            Random RNGjesusManifested = new Random();
+
+            int offSet = RNGjesusManifested.Next(-10,11);
+            double compHung = companionInstance.Hunger ?? 75; //whoever set the mood and hunger to be nullable in the database needs to be condemned 
+            double chanceRR = (100 * Math.Exp(-0.05*compHung)) + offSet; //Maths
+            Console.WriteLine(100 * Math.Exp(-0.05*compHung));
+            bool RR = (RNGjesusManifested.Next(010) < chanceRR); //see of the emotion gets re rolled
+            if(RR)
+            {
+                try
+                {
+                    ReRollCompanionEmotion(companionID);
+                }
+                catch(Exception)
+                {
+                    throw;
+                }
+            }
 
             if(companionInstance.UserFk != userID) //If friend or stranger, make post [Companions user_FK]; if it is your own, pat yourself on the back.
             {
