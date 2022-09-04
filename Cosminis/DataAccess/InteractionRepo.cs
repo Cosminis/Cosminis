@@ -417,7 +417,7 @@ public class InteractionRepo : Interactions
         
         companionToPet.Mood = companionToPet.Mood + moodToOffset; //I think rolling for agitation is good, but the actual numbers may wanna be changed in the end.
 
-        if(companionToPet.Mood <= 0) //preventing negatives and values over 100
+        if(companionToPet.Mood < 0) //preventing negatives and values over 100
         {
             companionToPet.Mood = 0;
         }

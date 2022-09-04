@@ -30,6 +30,6 @@ export class ComsinisApiServiceService {
   }
 
   setCompanionNickname(companionId : number, nickname : string) : Observable<Cosminis> {
-    return this.http.get(this.url + `companions/setNickname?companionId=${companionId}&nickname=${nickname}`) as Observable<Cosminis>;
+    return this.http.put(this.url + `companions/setNickname?companionId=${companionId}&nickname=${nickname}`, companionId) as Observable<Cosminis>;
   }
 }

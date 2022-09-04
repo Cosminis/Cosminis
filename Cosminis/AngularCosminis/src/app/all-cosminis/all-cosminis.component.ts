@@ -140,15 +140,16 @@ showCards = false;
     this.imageLib.set(8, "cancerfinal.png");
 
     this.currentEmotion.set(1, "Hopeless");
-    this.currentEmotion.set(2, "hostile");
-    this.currentEmotion.set(3, "Distant");
-    this.currentEmotion.set(4, "Inadequate");
-    this.currentEmotion.set(5, "Calm");
-    this.currentEmotion.set(6, "Thankful");
-    this.currentEmotion.set(7, "Happy");
-    this.currentEmotion.set(8, "Playful");
-    this.currentEmotion.set(9, "Inspired");
-    this.currentEmotion.set(10, "Blissful");
+    this.currentEmotion.set(2, "Hostile");
+    this.currentEmotion.set(3, "Angry");
+    this.currentEmotion.set(4, "Distant");
+    this.currentEmotion.set(5, "Inadequate");
+    this.currentEmotion.set(6, "Calm");
+    this.currentEmotion.set(7, "Thankful");
+    this.currentEmotion.set(8, "Happy");
+    this.currentEmotion.set(9, "Playful");
+    this.currentEmotion.set(10, "Inspired");
+    this.currentEmotion.set(11, "Blissful");
 
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
