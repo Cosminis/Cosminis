@@ -23,8 +23,11 @@ export class HomepageComponent implements OnInit {
     nickname : "Shrek",
     emotion : 100,
     mood : 100,
-    hunger : 100
+    hunger : 100,
+    image : "mystery-opponent.png"
   }
+
+  cosminiLoader : boolean = false;
 
   foodChoice : number = 0;
 
@@ -39,9 +42,27 @@ export class HomepageComponent implements OnInit {
     this.imageLib.set(7, "librianfinall.png");
     this.imageLib.set(8, "cancerfinal.png");
 
-    this.cosminiDisplay();
+    console.log(this.displayCosmini);
 
-    //setInterval(this.smellingHandler, 2500, "my text");
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser : Users = JSON.parse(stringUser);
+
+    do 
+    {
+      stringUser = sessionStorage.getItem('currentUser') as string;
+
+      currentUser = JSON.parse(stringUser);
+      
+      console.log(currentUser)
+
+      this.cosminiDisplay();
+    }
+    while(!currentUser);
+
+    this.cosminiDisplay();
+    console.log(this.cosminiLoader);
+
+    //setInterval(this.smellingHandler, 5000, "my text");
   }
 
   feedingOurBaby(foodId : number){
@@ -50,7 +71,6 @@ export class HomepageComponent implements OnInit {
 
     this.interApi.FeedCompanion(currentUser.userId, currentUser.showcaseCompanionFk, foodId).subscribe((res) =>
       {
-        console.log(res);
         window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
       })    
   }
@@ -61,7 +81,6 @@ export class HomepageComponent implements OnInit {
 
     this.interApi.PetCompanion(currentUser.userId, currentUser.showcaseCompanionFk).subscribe((res) =>
       {
-        console.log(res);
         window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
       })
   }
@@ -100,14 +119,24 @@ export class HomepageComponent implements OnInit {
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
+    
+    console.log(currentUser);
     this.comsiniApi.getCosminiByUserID(currentUser.userId as number).subscribe({
       next: (res)=>{}, 
       error:(err)=>{ if(err.stauts===404){this.comsiniApi.free(currentUser.userId as number).subscribe();}}})
     this.comsiniApi.getCosminiByID(currentUser.showcaseCompanionFk as number).subscribe((res) =>
         {
+          this.cosminiLoader = true;
+          console.log(this.cosminiLoader);
           res.image = this.imageLib.get(res.speciesFk);
           this.displayCosmini = res;
         })
         
   } 
+
+  display() : boolean
+  {
+    return this.cosminiLoader;
+    console.log(this.displayCosmini);
+  }
 }

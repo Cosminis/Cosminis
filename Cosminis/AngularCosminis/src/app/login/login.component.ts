@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
     {
       this.currentUser = res;
       window.sessionStorage.setItem('currentUserNickname', this.currentUser.password as string);
-      console.log(this.currentUser);
       window.sessionStorage.setItem('currentUser', JSON.stringify(this.currentUser));
       this.CheckFood();
       this.cosminiDisplay();
@@ -65,11 +64,9 @@ export class LoginComponent implements OnInit {
   CheckFood():boolean
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
-    console.log(stringUser);
     let currentUser : Users = JSON.parse(stringUser);
     this.resourceApi.CheckFood(currentUser.userId as number).subscribe((res) =>
     {
-      console.log(this.foodDisplay);
       this.foodDisplay= res;
       if(this.foodDisplay.length>0)
       {
@@ -105,7 +102,6 @@ export class LoginComponent implements OnInit {
       this.currentUser.password = userInfo?.nickname as string;
       if(userInfo)
       {
-        console.log(userInfo);
         window.sessionStorage.setItem('currentUserNickname', userInfo.nickname as string);
         this.userLogin(this.currentUser);
         this.gotoHome();
