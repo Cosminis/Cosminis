@@ -284,7 +284,9 @@ export class BattleMenuComponent implements OnInit {
   {
     let stringUser: string = sessionStorage.getItem('currentUser') as string;
     let currentUser: Users = JSON.parse(stringUser);
-    this.battle.Payout(currentUser.userId as number, this.PlayerGoldBet, this.PlayerRisk, this.WinStreak);
+    console.log("Paying");
+    let amount:number = this.battle.Payout(currentUser.userId as number, this.PlayerGoldBet, this.PlayerRisk, this.WinStreak);
+    console.log(amount);
   }
 
   ConfirmBet()

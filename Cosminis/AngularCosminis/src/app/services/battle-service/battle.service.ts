@@ -104,20 +104,20 @@ export class BattleService {
   }
 
   Payout(UserId: number, GoldBet: number, Difficulty: number, WinStreak: number): number {
-    let stringUser: string = sessionStorage.getItem('currentUser') as string;
-    let currentUser: Users = JSON.parse(stringUser);
-
     if (WinStreak == 0 || Difficulty == -100) {
       return 0;
     }
     
     let NewGoldPayout: number = GoldBet + Math.pow(GoldBet * (1.1), .2 * WinStreak);
     
-    NewGoldPayout = NewGoldPayout + (NewGoldPayout * (Difficulty / 100));
-    NewGoldPayout = Math.round(NewGoldPayout);
-    console.log(NewGoldPayout);
+    NewGoldPayout = GoldBet * 1.5 * WinStreak;
 
-    this.resourceAPI.AddGold(UserId,NewGoldPayout);
+    this.resourceAPI.AddGold(UserId,NewGoldPayout).subscribe((res)=>
+    {
+      console.log(res);
+      alert("You've won, here is your payout: " + NewGoldPayout);
+    });
+
 
     return NewGoldPayout;
   }
