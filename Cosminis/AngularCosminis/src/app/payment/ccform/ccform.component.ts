@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ResourceApiServicesService } from '../../services/Resource-Api-Service/resource-api-service.service';
+import { UserApiServicesService } from '../../services/User-Api-Service/user-api-services.service';
 import { PurchaseService } from '../../services/Purchase-Api-Service/purchase.service';
 import { Router } from '@angular/router';
 import {ChangeDetectorRef} from '@angular/core';
@@ -13,7 +14,7 @@ import { Bundle } from '../../Models/Bundle';
 })
 export class CcformComponent implements OnInit {
 
-  constructor(private router: Router, private api:ResourceApiServicesService, private purchaseApi:PurchaseService, private ref:ChangeDetectorRef) { }
+  constructor(private router: Router, private api:ResourceApiServicesService, private purchaseApi:PurchaseService, private userApi:UserApiServicesService) { }
 
   @Input() amount = 0;
 
@@ -38,10 +39,12 @@ export class CcformComponent implements OnInit {
     this.purchaseApi.BuyGems(currentUser.userId, amount, cost).subscribe((res) =>
     {
       this.order = res;
-      console.log(currentUser);
-      window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-      alert("Congratulations, you just spent a lot of REAL money");
-      console.log(res);
+      this.userApi.LoginOrReggi(currentUser).subscribe((res) =>
+      {
+        currentUser = res;
+        window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        alert("Congratulations, you just spent a lot of REAL money");
+      })
     })
   }
 }

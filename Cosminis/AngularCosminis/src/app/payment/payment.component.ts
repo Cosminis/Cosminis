@@ -102,7 +102,6 @@ export class PaymentComponent implements OnInit {
 
     this.purchaseApi.GetReceiptByUserId(currentUser.userId).subscribe((res) =>
       {
-        console.log(res);
         this.orderArr = res;
 
         for(let i=0;i<this.orderArr.length;i++)
@@ -121,13 +120,10 @@ export class PaymentComponent implements OnInit {
     this.purchaseApi.BuyGems(currentUser.userId, amount, cost).subscribe((res) =>
     {
       this.order = res;
-      console.log(currentUser);
       window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
       alert("Congratulations, you just spent a lot of REAL money");
-      console.log(res);
     })
   }
-  
   
   getBundleCost(bundleType : string, bundleCost : number, bundleGemQty : number)
   {   
@@ -155,6 +151,7 @@ export class PaymentComponent implements OnInit {
       this.costsEntered = true;
     }
 
+    this.gemTotal = this.gemQty * this.totalQty;
     this.purchaseTotal = this.totalQty * this.subTotal;   
   }
 
