@@ -1,4 +1,13 @@
+h2 {
+	color: mistyrose;
+	margin-left: 30px;
+}
+h1 {
+	color: mistyrose;
+}
+
 .container1 {
+	margin-left: 30px;
 	display: flex;
 	flex-wrap: wrap;
 	row-gap: 95px;
@@ -62,8 +71,15 @@
 }
 
 .container3 {
+	margin-top: 30px;
+	margin-left: 30px;
 	display: flex;
 	flex-wrap: wrap;
 	row-gap: 95px;
 	column-gap: 40px;
+}
+
+.PlayerStats
+{
+	color:mistyrose;
 }

@@ -6,6 +6,7 @@ import { UserApiServicesService } from '../services/User-Api-Service/user-api-se
 import { FriendsService } from '../services/Friends-api-service/friends.service'
 import { Users } from '../Models/User';
 import { Cosminis } from '../Models/Cosminis';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-battle-menu',
@@ -15,10 +16,7 @@ import { Cosminis } from '../Models/Cosminis';
   
 export class BattleMenuComponent implements OnInit {
 
-  constructor(private battle: BattleService,
-    private user: UserApiServicesService,
-    private friend: FriendsService,
-    private router: Router) { }
+  constructor(private battle: BattleService) { }
   
   OpponentRoster: Cosminis[] = [];
   PlayerRoster: Cosminis[] = [];
@@ -26,110 +24,9 @@ export class BattleMenuComponent implements OnInit {
   PlayerRisk: number = 0;
   WinStreak: number = 0;
   LoseStreak: number = 0;
-  fightingChoice:number = 0;
-  roundCount:number = 0;
-  maxRoundCount:number = 0;
-
-  BattleMode: string = "Random"; //this need to be gathered from session storage, setting a default for now
-  
-  Starting: boolean = true;
-  Picking: boolean = true;
-  Battling: boolean = true;
-  Lost: boolean = true;
-  Won: boolean = true;
-
-  /*
-    starting
-    --> roster will be name for opponent and player
-    --> cutroster
-    --> risk factor
-    --> place bet
-----picking
-|   --> choosing cosminis to fight
-----battling
-    --> obtain victor
-    --> increment lose or win
-    Won
-    --> cash out
-    --> play again?
-    Lost
-    --> play again?
-  */
-
-  GamePlayLoop()
-  {
-    while (true) //infinite loop incoming
-    {
-      if(this.Starting)
-      {
-        //gathering appropriate roster determined by player preference
-        if(this.BattleMode === "Random") 
-        {
-          this.CreateARandoRoster();
-        }
-        else if(this.BattleMode === "Friend")
-        {
-          this.CreateAFriendRoster();
-        }
-        else
-        {
-          this.CreateARandoRoster();
-        }
-
-        //gather player's roster
-        this.CreatePlayerRoster();
-
-        //Determine the maximum game length
-        this.maxRoundCount = this.battle.BattleLength(this.OpponentRoster, this.PlayerRoster);
-
-        //determine risk factor
-        this.CalculateRiskFactor();
-
-        //lock in the bet
-        this.PlaceBet();
-
-        //state transition
-        this.Starting = false;
-        this.Picking = true;
-      }
-      if(this.Picking)
-      {
-        //may both side of the combatant get ready please
-        this.OpponentChoosesCosmini();
-        this.PlayerChoosesCosmini(this.fightingChoice);
-
-        //state transition
-        this.Picking = false;
-        this.Battling = true;
-      }
-      if(this.Battling)
-      {
-        //and our champion is...
-        this.ObtainBattleResult(); //apparently this already increments the appropriate count
-        if(this.LoseStreak>=2) //you have lost
-        {
-          this.Battling = false;
-          this.Lost = true;
-        }
-        else if(this.roundCount >= this.maxRoundCount) //proceed to the payout screen
-        {
-          this.Battling = false;
-          this.Won = true;
-        }
-      }
-      if(this.Lost)
-      {
-        //you stink, click a button to either route you back to the picking page to play again or back to home
-      }
-      if(this.Won)
-      {
-        //payout
-        this.Payout();
-
-        //you stink, click a button to either route you back to the picking page to play again or back to home
-      }
-    }
-  }
+  roundCount: number = 0;
+  maxRoundCount: number = 0;
+  ConfirmedGold:number = 0;
 
   OpponentCosmini2Battle: Cosminis = {
     companionId: 0,
@@ -139,7 +36,7 @@ export class BattleMenuComponent implements OnInit {
     nickname : "OpponentCosmini",
     emotion : 0,
     mood : 0,
-    hunger : 0,
+    hunger: 0,
   };
 
   PlayerCosmini2Battle: Cosminis = {
@@ -150,32 +47,171 @@ export class BattleMenuComponent implements OnInit {
     nickname : "PlayerCosmini",
     emotion : 0,
     mood : 0,
-    hunger : 0,
+    hunger: 0,
   };
+
+  Opponent: string = "placeholdername for id or something";
+
+  BattleMode: string = "Random"; //this need to be gathered from session storage, setting a default for now
+
+  Picked:boolean = false;
+  betting: boolean = true;
+  Starting: boolean = false;
+  Picking: boolean = false;
+  MadeOpponentRoster: boolean = false;
+  MadePlayerRoster:boolean = false;
+  Battling: boolean = false;
+  Lost: boolean = false;
+  Won: boolean = false;
+
+  GamePlayLoop()
+  {
+    if(this.betting)
+    {
+      console.log("Betting...");
+      if(this.ConfirmedGold)
+      {
+        this.betting = false;
+        this.Starting = true;
+        this.GamePlayLoop();
+      }
+    }
+    else if(this.Starting)
+    {
+      console.log("Starting...");
+      this.battle.OnGameStartUp();
+
+      //gathering appropriate roster determined by player preference
+      if (this.MadeOpponentRoster == false) {
+        if (this.BattleMode === "Random")
+        {
+          this.CreateARandoRoster();
+        }
+        else if (this.BattleMode === "Friend")
+        {
+          this.CreateAFriendRoster();
+        }
+        else
+        {
+          this.CreateARandoRoster();
+        }
+      }
+      //gather player's roster
+      this.CreatePlayerRoster();
+
+      //Determine the maximum game length
+
+      //determine risk factor
+      if(this.MadeOpponentRoster && this.MadePlayerRoster)
+      {
+        this.CalculateRiskFactor();
+      }
+
+      //lock in the bet
+      
+      //state transition
+      if (this.MadeOpponentRoster == true)
+      {
+        this.PlaceBet();
+        this.Starting = false;
+        this.Picking = true;
+      }
+    }
+    else if(this.Picking)
+    {
+      console.log("Picking...");
+      //may both side of the combatant get ready please
+      if(this.Picked)
+      {
+        this.OpponentChoosesCosmini();
   
-  CreateARandoRoster() {
-    this.battle.CreateRoster().subscribe((res) => this.OpponentRoster = res);
+        //state transition
+        this.Picked = false;
+        this.Picking = false;
+        this.Battling = true;
+        this.GamePlayLoop();
+      }
+    }
+    else if(this.Battling)
+    {
+      console.log("Battling...");
+      //and our champion is...
+      this.ObtainBattleResult(); //apparently this already increments the appropriate count
+    }
+    else if(this.Lost)
+    {
+      console.log("Lost...");
+      //you stink, click a button to either route you back to the picking page to play again or back to home
+    }
+    else if(this.Won)
+    {
+      console.log("Won...");
+      //payout
+      this.Payout();
+
+      //you stink, click a button to either route you back to the picking page to play again or back to home
+    }
+  }
+  
+  CreateARandoRoster()
+  {
+    this.battle.CreateRoster().subscribe((res) => {
+      this.OpponentRoster = res;
+      for(let i=0;i<this.OpponentRoster.length;i++)
+      {
+        this.OpponentRoster[i].speciesNickname = this.battle.DisplayName.get(this.OpponentRoster[i].speciesFk);
+        this.OpponentRoster[i].emotionString = this.battle.currentEmotion.get(this.OpponentRoster[i].emotion);
+        this.OpponentRoster[i].image = this.battle.imageLib.get(this.OpponentRoster[i].speciesFk);
+      }
+      this.MadeOpponentRoster = true;
+      this.CutRosters();
+      this.GamePlayLoop();
+    })
   }
 
   CreateAFriendRoster() {
-    this.battle.CreateRosterWithId(this.battle.GetRandomFriendsUserId()).subscribe((res) => this.OpponentRoster = res);
+    this.battle.CreateRosterWithId(this.battle.GetRandomFriendsUserId()).subscribe((res) => {
+      this.OpponentRoster = res;
+      for(let i=0;i<this.OpponentRoster.length;i++)
+      {
+        this.OpponentRoster[i].speciesNickname = this.battle.DisplayName.get(this.OpponentRoster[i].speciesFk);
+        this.OpponentRoster[i].emotionString = this.battle.currentEmotion.get(this.OpponentRoster[i].emotion);
+        this.OpponentRoster[i].image = this.battle.imageLib.get(this.OpponentRoster[i].speciesFk);
+        
+      }
+      this.MadeOpponentRoster = true;
+      this.CutRosters();
+    });
   }
 
   CreatePlayerRoster() {
     let stringUser: string = sessionStorage.getItem('currentUser') as string;
     let currentUser: Users = JSON.parse(stringUser);
-    this.battle.CreateRosterWithId(currentUser.userId as number).subscribe((res) => this.PlayerRoster = res);
+    this.battle.CreateRosterWithId(currentUser.userId as number).subscribe((res) => {
+      this.PlayerRoster = res;
+      for(let i=0;i<this.PlayerRoster.length;i++)
+      {
+        this.PlayerRoster[i].speciesNickname = this.battle.DisplayName.get(this.PlayerRoster[i].speciesFk);
+        this.PlayerRoster[i].emotionString = this.battle.currentEmotion.get(this.PlayerRoster[i].emotion);
+        this.PlayerRoster[i].image = this.battle.imageLib.get(this.PlayerRoster[i].speciesFk);
+        
+      }
+      this.MadePlayerRoster = true;
+      this.CutRosters();
+      this.GamePlayLoop();
+    });
 
   }
 
   CutRosters() {
     if (this.OpponentRoster.length > 6) {
-      this.OpponentRoster.splice(6, this.OpponentRoster.length - 6); //id like this to be random
+      this.OpponentRoster.splice(5, this.OpponentRoster.length - 6); //id like this to be random
     }
 
     if (this.PlayerRoster.length > 6) {
-      this.PlayerRoster.splice(6, this.PlayerRoster.length - 6); //id like this to be random
+      this.PlayerRoster.splice(5, this.PlayerRoster.length - 6); //id like this to be random
     }
+    this.maxRoundCount = this.battle.BattleLength(this.OpponentRoster, this.PlayerRoster);
   }
 
   CalculateRiskFactor()
@@ -186,26 +222,41 @@ export class BattleMenuComponent implements OnInit {
   }
 
   OpponentChoosesCosmini() {
-    this.OpponentCosmini2Battle = this.OpponentRoster[Math.floor(Math.random() * 7)];
+    this.OpponentCosmini2Battle = this.OpponentRoster[Math.floor(Math.random() * this.OpponentRoster.length)];
   }
 
-  PlayerChoosesCosmini(Choice: number) {
-    this.PlayerCosmini2Battle = this.PlayerRoster[Choice];
+  PlayerChoosesCosmini(Choice: Cosminis) {
+    this.PlayerCosmini2Battle = Choice;
   }
 
   ObtainBattleResult()
   {
     let BattleResult: number;
-    this.battle.BattleResult(this.PlayerCosmini2Battle.companionId, this.OpponentCosmini2Battle.companionId).subscribe((res) => {
+    this.battle.BattleResult(this.PlayerCosmini2Battle.companionId, this.OpponentCosmini2Battle.companionId).subscribe((res) => 
+    {
       BattleResult = res;
       if (BattleResult == 0)
       {
         this.WinStreak++;
+        this.roundCount++;
       }
       else if (BattleResult == 1)
       {
         this.LoseStreak++;
+        this.roundCount++;
       }
+
+      if(this.LoseStreak>=2) //you have lost
+      {
+        this.Battling = false;
+        this.Lost = true;
+      }
+      else if(this.roundCount >= this.maxRoundCount) //proceed to the payout screen
+      {
+        this.Battling = false;
+        this.Won = true;
+      }
+      this.GamePlayLoop();
     })
   }
 
@@ -223,7 +274,21 @@ export class BattleMenuComponent implements OnInit {
     this.battle.Payout(currentUser.userId as number, this.PlayerGoldBet, this.PlayerRisk, this.WinStreak);
   }
 
-  ngOnInit(): void {
+  ConfirmBet()
+  {
+    this.ConfirmedGold = this.PlayerGoldBet;
+    this.GamePlayLoop();
+  }
+
+  ConfirmingPick()
+  {
+    this.Picked = true;
+    this.GamePlayLoop();
+  }
+
+  ngOnInit(): void
+  {
+    this.GamePlayLoop()
   }
 
 }

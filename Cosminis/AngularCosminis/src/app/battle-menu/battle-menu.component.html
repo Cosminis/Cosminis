@@ -1,38 +1,55 @@
-<section class="container1">
-	<div class="card-wrapper"> <!-- *ngFor="let com of cosminis"> -->
+<h2 *ngIf="!betting">Opponent Name:{{Opponent}}</h2>
+<section class="container1" *ngIf="!betting">
+	<div class="card-wrapper" *ngFor="let com of OpponentRoster">
         <div class="cardhead">
-            <img class="all-cosminis" src="../assets/Pics/15.png">
+            <img class="all-cosminis" src="../assets/Pics/mystery-opponent.png">
         </div>
 
         <div class="cardbody bg-dark">
-            <h5 class="card-title">placeholder</h5>
-            <div>placeholder</div>
+            <h5 *ngIf="com.nickname" class="card-title">Nickname: {{com.nickname}}</h5>
+            <h5 *ngIf="!com.nickname" class="card-title">Species: {{com.speciesNickname}}</h5>
+            <h6 class="card-title"> Mood: {{com.mood}}</h6>
+            <h6 class="card-title"> Hunger: {{com.hunger}}</h6>
+            
         </div>
     </div> 
 </section>
-<section class="container2">
+<section class="container2" *ngIf="!betting">
 	<div class="column one">
 		<h1>Your Cosmini</h1>
-		<img class="battle-cosmini" src="../assets/Pics/InfernogFire.png">
-	</div>
+		<img class="battle-cosmini" src="../assets/Pics/{{PlayerCosmini2Battle.image}}" *ngIf="PlayerCosmini2Battle.image">
+        <img class="battle-cosmini" src="../assets/Pics/mystery-opponent.png" *ngIf="!PlayerCosmini2Battle.image">
+	</div>  
 	<div class="column two">
 		<h1>VS</h1>
-		<button type="button" class="btn battle-button btn-light">BATTLE</button>
+		<button type="button" class="btn battle-button btn-light" (click)="ConfirmingPick()">BATTLE</button>
 	</div>
 	<div class="column three">
 		<h1>Opponent Cosmini</h1>
-		<img class="battle-cosmini" src="../assets/Pics/cosmofinal.png">
+		<img class="battle-cosmini" src="../assets/Pics/mystery-opponent.png">
 	</div>
 </section>
-<section class="container3">
-	<div class="card-wrapper"> <!-- *ngFor="let com of cosminis"> -->
+<section class="container3" *ngIf="!betting">
+	<div class="card-wrapper" type="button" *ngFor="let com of PlayerRoster" (click)="PlayerChoosesCosmini(com)">
         <div class="cardhead">
-            <img class="all-cosminis" src="../assets/Pics/15.png">
+            <img class="all-cosminis" src="../assets/Pics/{{com.image}}">
         </div>
 
         <div class="cardbody bg-dark">
-            <h5 class="card-title">placeholder</h5>
-            <div>placeholder</div>
+            <h5 *ngIf="com.nickname" class="card-title">{{com.nickname}}</h5>
+            <h5 *ngIf="!com.nickname" class="card-title">{{com.speciesNickname}}</h5>
+            <h6 class="card-title"> Mood: {{com.mood}}</h6>
+            <h6 class="card-title"> Hunger: {{com.hunger}}</h6>
         </div>
-    </div> 
+    </div>
 </section>
+<h2 *ngIf="!betting">Your Team</h2>
+
+
+<input *ngIf="betting" type="text" [(ngModel)]="PlayerGoldBet"> 
+<button *ngIf="betting" type="button" class="btn btn-light" (click) = "ConfirmBet()">Place Bet</button>
+
+<div class="PlayerStats"> MatchLength: {{maxRoundCount}}</div>
+<div class="PlayerStats"> RoundCount: {{roundCount}}</div>
+<div class="PlayerStats"> LoseStreak: {{LoseStreak}}</div>
+<div class="PlayerStats"> WindCount: {{WinStreak}}</div>
