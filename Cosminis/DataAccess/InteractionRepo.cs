@@ -98,7 +98,12 @@ public class InteractionRepo : Interactions
             throw new CompNotFound();
         }
 
-        companionEmotionToSet.Emotion = emotionId; //You can get less than 0 and greater than 10 but I figure we will figure this out together
+        IEnumerable<EmotionChart> emotionToSet =                   
+            from EmotionCharts in _context.EmotionCharts                 //(Logic the same in below cases)
+            where EmotionCharts.Quality == emotionId
+            select EmotionCharts;      
+
+        companionEmotionToSet.Emotion = emotionToSet.FirstOrDefault().EmotionId; //You can get less than 0 and greater than 10 but I figure we will figure this out together
 
         _context.SaveChanges();
 

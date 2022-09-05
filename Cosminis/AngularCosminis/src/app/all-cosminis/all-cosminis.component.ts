@@ -116,6 +116,16 @@ export class AllCosminisComponent implements OnInit
         this.cosminis[i].emotionString = this.currentEmotion.get(this.cosminis[i].emotion);
         this.cosminis[i].image = this.imageLib.get(this.cosminis[i].speciesFk);
         console.log(this.cosminis[i].image);
+
+        this.interapi.DecrementCompanionMoodValue(this.cosminis[i].companionId as number).subscribe((res) =>
+        {
+          window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+        })
+  
+      this.interapi.DecrementCompanionHungerValue(this.cosminis[i].companionId as number).subscribe((res) =>
+        {
+          window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
+        })
       }
 
       this.showCosminis=Promise.resolve(true);
