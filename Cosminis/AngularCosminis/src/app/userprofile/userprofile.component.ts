@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { PostSpiServicesService } from '../services/Post-api-services/post-spi-services.service';
 import { UserApiServicesService } from '../services/User-Api-Service/user-api-services.service';
 import { FriendsService } from '../services/Friends-api-service/friends.service';
@@ -21,6 +22,8 @@ export class UserprofileComponent implements OnInit {
   constructor(private api:PostSpiServicesService, private router: Router, private comsiniApi:ComsinisApiServiceService, private userApi:UserApiServicesService, private friendApi:FriendsService, private resourceApi: ResourceApiServicesService) { }
 
   imageLib = new Map<number, string>();
+
+  comsiniArr : Cosminis[] = [];
 
   friendshipInstance : Friends =
   {
@@ -50,7 +53,7 @@ export class UserprofileComponent implements OnInit {
 
   displayCosmini : Cosminis = 
   {
-    companionId : 1,
+    companionId : 0,
     trainerId : 1,
     userFk : 1,
     speciesFk : 1,
@@ -256,6 +259,7 @@ export class UserprofileComponent implements OnInit {
           {
             this.users[i] = res;
             console.log(this.users[i].password);
+            this.cosminiDisplay(this.users[i].username);
           })
         }
         else
@@ -264,6 +268,7 @@ export class UserprofileComponent implements OnInit {
           {
             this.users[i] = res;
             console.log(this.users[i].password);
+            this.cosminiDisplay(this.users[i].username);
           })
         }
       }
@@ -395,20 +400,29 @@ export class UserprofileComponent implements OnInit {
     this.doesExist = false;
   }
 
-  cosminiDisplay():void
+  cosminiDisplay(searchedUser : string)
   {
-    let stringUser : string = sessionStorage.getItem('currentUser') as string;
-    let currentUser : Users = JSON.parse(stringUser);
-
-    this.comsiniApi.getCosminiByUserID(currentUser.userId as number).subscribe({
-      next: (res)=>{}, 
-     })
-    this.comsiniApi.getCosminiByID(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+    this.userApi.searchFriend(searchedUser).subscribe((res) => 
+    {
+      this.userInstance = res;
+      if(this.userInstance.showcaseCompanionFk == null)
+      {
+        this.comsiniArr.push(this.displayCosmini);
+        console.log("this worked");
+      }
+      else
+      {
+        this.comsiniApi.getCosminiByID(this.userInstance.showcaseCompanionFk as number).subscribe((res) =>
         {
-          res.image = this.imageLib.get(res.speciesFk);
-          this.displayCosmini = res;
+            this.displayCosmini = res; 
+            res.image = this.imageLib.get(res.speciesFk);
+            this.comsiniArr.push(res);
+            console.log(this.comsiniArr);
         })
-  }   
+      }
+    })
+  }
+    
 
   ngOnInit(): void 
   {
