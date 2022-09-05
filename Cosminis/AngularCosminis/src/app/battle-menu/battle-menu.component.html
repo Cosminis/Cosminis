@@ -23,7 +23,7 @@
 	<div class="column two">
 		<h1>VS</h1>
 		<button type="button" class="btn battle-button btn-light" (click)="ConfirmingPick()" *ngIf="Picking">BATTLE</button>
-        <button type="button" class="btn battle-button btn-light" (click)="ICanStopAnyTimeIWant()" *ngIf="Lost || Won">Go Back Home</button>
+    <button type="button" class="btn battle-button btn-light" (click)="ICanStopAnyTimeIWant()" *ngIf="Lost || Won">Go Back Home</button>
 	</div>
 	<div class="column three">
 		<h1>Opponent Cosmini</h1>
@@ -44,13 +44,21 @@
         </div>
     </div>
 </section>
-<h2 *ngIf="!betting">Your Team</h2>
-
-
-<input *ngIf="betting" type="text" [(ngModel)]="PlayerGoldBet"> 
-<button *ngIf="betting" type="button" class="btn btn-light" (click) = "ConfirmBet()">Place Bet</button>
-
-<div class="PlayerStats"> MatchLength: {{maxRoundCount}}</div>
-<div class="PlayerStats"> RoundCount: {{roundCount}}</div>
-<div class="PlayerStats"> LoseStreak: {{LoseStreak}}</div>
-<div class="PlayerStats"> WindCount: {{WinStreak}}</div>
+<section class="container4" *ngIf="!betting">
+    <h2>Your Team</h2>
+    <div class="stats-container">
+        <div class="player-stats"> MatchLength: {{maxRoundCount}}</div>
+        <div class="player-stats"> RoundCount: {{roundCount}}</div>
+        <div class="player-stats"> LoseStreak: {{LoseStreak}}</div>
+        <div class="player-stats"> Win Count: {{WinStreak}}</div>
+    </div>
+</section>
+<section class="container5" *ngIf="betting">
+    <div class="mini-background">
+        <h1>Betting Phase</h1>
+        <div class="betting-container">
+            <input type="text" [(ngModel)]="PlayerGoldBet"> 
+            <button type="button" class="btn game-button btn-light" (click) = "ConfirmBet()">Place Bet</button>
+        </div>
+    </div>
+</section>

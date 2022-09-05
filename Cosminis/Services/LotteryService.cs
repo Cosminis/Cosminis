@@ -24,7 +24,7 @@ namespace Services
         /// <returns>List of indexed rewards</returns>
         public List<int> Winnings(int spins)
         {
-            List<int> list = new List<int>();
+            int[] list = new int[6];
             while (spins > 0)
             {
                 int num = Prize();
@@ -51,7 +51,7 @@ namespace Services
                 }
                 spins--;
             }
-            return list;
+            return list.ToList();
         }
         /// <summary>
         /// Random Number Generator for the Lottery
@@ -74,7 +74,11 @@ namespace Services
             int yes = gemsPaid % 5 != 0 ? 0 : gemsPaid / 5;
             //Remove Gems
             gemsPaid *= -1;
-            _resource.UpdateGems((int)user.UserId!, gemsPaid);
+            if (user.GemCount <gemsPaid)
+            {
+                return 0;
+            }
+            user = _resource.UpdateGems((int)user.UserId!, gemsPaid);
             return yes;
         }
         /// <summary>
@@ -83,19 +87,24 @@ namespace Services
         /// <param name="spins"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        public User GiveRewards(int spins, User user)
+        public List<int> GiveRewards(int spins, User user)
         {
             List<int> wins = Winnings(spins);
-            //Add food
-            int weight = wins[0] + wins[2] + wins[3];
-            _resource.AddFood(user, weight);
+            //Add food 
+            int win1 = wins[0] == 0 ? 1 : wins[0] * 10;
+            int win2 = wins[2] == 0 ? 1 : wins[2]*10;
+            int win3 = wins[3] == 0 ? 1 : wins[3] * 10;
+            wins.Add(_resource.WinFood(user, win1));
+            wins.Add(_resource.WinFood(user, win2));
+            wins.Add(_resource.WinFood(user, win3));
+
             //Add Gold
             _resource.AddGold(user, wins[1]);
             //Add Gems
             _resource.UpdateGems((int)user.UserId!, wins[4]);
             //Add Egg
             _resource.AddEgg(user, wins[5]);
-            return user;
+            return wins;
         }
     }
 }

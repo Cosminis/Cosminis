@@ -71,6 +71,12 @@
     width: 150px;
 }
 
+.BButton
+{
+    height: 100%;
+    width: 50%;
+}
+
 .SeeAllCosminis
 {
     height: 400px;
@@ -89,6 +95,7 @@
 }
 
 .userprof {
+    margin-top: 30px;
     height: 100%;
     width: 100%;
 }

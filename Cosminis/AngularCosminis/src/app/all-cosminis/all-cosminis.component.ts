@@ -41,6 +41,7 @@ export class AllCosminisComponent implements OnInit
     eggTimer : new Date(),
     goldCount : 1,
     eggCount : 1,
+    gemCount : 1,
     showcaseCompanion_fk:1,
     showcaseCompanionFk:1,
     aboutMe:"I am Boring... zzzz snoringgg",
@@ -115,6 +116,16 @@ export class AllCosminisComponent implements OnInit
         this.cosminis[i].emotionString = this.currentEmotion.get(this.cosminis[i].emotion);
         this.cosminis[i].image = this.imageLib.get(this.cosminis[i].speciesFk);
         console.log(this.cosminis[i].image);
+
+        this.interapi.DecrementCompanionMoodValue(this.cosminis[i].companionId as number).subscribe((res) =>
+        {
+          window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+        })
+  
+      this.interapi.DecrementCompanionHungerValue(this.cosminis[i].companionId as number).subscribe((res) =>
+        {
+          window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
+        })
       }
 
       this.showCosminis=Promise.resolve(true);
@@ -139,15 +150,16 @@ showCards = false;
     this.imageLib.set(8, "cancerfinal.png");
 
     this.currentEmotion.set(1, "Hopeless");
-    this.currentEmotion.set(2, "hostile");
-    this.currentEmotion.set(3, "Distant");
-    this.currentEmotion.set(4, "Inadequate");
-    this.currentEmotion.set(5, "Calm");
-    this.currentEmotion.set(6, "Thankful");
-    this.currentEmotion.set(7, "Happy");
-    this.currentEmotion.set(8, "Playful");
-    this.currentEmotion.set(9, "Inspired");
-    this.currentEmotion.set(10, "Blissful");
+    this.currentEmotion.set(2, "Hostile");
+    this.currentEmotion.set(3, "Angry");
+    this.currentEmotion.set(4, "Distant");
+    this.currentEmotion.set(5, "Inadequate");
+    this.currentEmotion.set(6, "Calm");
+    this.currentEmotion.set(7, "Thankful");
+    this.currentEmotion.set(8, "Happy");
+    this.currentEmotion.set(9, "Playful");
+    this.currentEmotion.set(10, "Inspired");
+    this.currentEmotion.set(11, "Blissful");
 
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);

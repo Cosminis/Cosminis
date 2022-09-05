@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LotteryService } from '../services/LotteryService/lottery.service';
 import { Users } from '../Models/User';
+import { FoodElement } from '../Models/FoodInventory';
+import { UserApiServicesService } from '../services/User-Api-Service/user-api-services.service';
+import { ResourceApiServicesService } from '../services/Resource-Api-Service/resource-api-service.service';
 @Component({
   selector: 'app-lottery',
   templateUrl: './lottery.component.html',
@@ -17,7 +20,7 @@ export class LotteryComponent implements OnInit {
   spinTimeTotal : number = 0;
   ctx : any;
   ctxa :any;
-  constructor(private route:Router, private lottery:LotteryService) { }
+  constructor(private route:Router, private lottery:LotteryService,private resourceApi:ResourceApiServicesService,private userApi:UserApiServicesService) { }
 
   byte2Hex(n:number): string {
     let nybHexString: string = "0123456789ABCDEF";
@@ -124,6 +127,8 @@ export class LotteryComponent implements OnInit {
     let tc: number = ts*t;
     return b+c*(tc + -3*ts + 3*t);
   }
+  
+  foodDisplay : FoodElement[] = []
   spin(spins:number): void {
     // this.spinAngleStart = Math.random() * 10 + 10;
     // this.spinTime = 0;
@@ -131,15 +136,61 @@ export class LotteryComponent implements OnInit {
     // this.rotateWheel();
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser = JSON.parse(stringUser);
+    console.log(currentUser);
     const canvas = document.getElementById('canvas')
     canvas?.classList.remove('spinning');
     if(canvas){
       canvas.classList.add('spinning');
     }
-    this.lottery.CanPlay(spins*5,currentUser.userId).subscribe((res) => this.lottery.GiveRewards(res,JSON.parse(stringUser)).subscribe({next: (res) => {
-      console.log(res);
+    this.lottery.CanPlay(spins*5,currentUser.userId).subscribe((res) => this.lottery.GiveRewards(res,JSON.parse(stringUser)).subscribe({next: (res) => { 
       if (res){
-        alert('Congradulations')
+        let win:number[] = res;
+        let yerp:string = '';
+        if(win[0]||win[2]||win[3]){
+          yerp= win[0]+win[2]+win[3]+' food';
+        }if (win[1]){
+          yerp = win[0]||win[2]||win[3]?yerp+', '+ win[1]+' gold':win[1]+' gold';
+        }
+        if(win[4]){
+          yerp = win[1]||win[0]||win[2]||win[3]?yerp+', '+win[4]+' gems':'gems';
+        }
+        if (win[5]){
+          yerp= win[1]||win[0]||win[2]||win[3]||win[4]?yerp+', and '+win[5]+' eggs.': win[5]+'eggs';
+        }
+        
+        alert('you won: '+ yerp);
+        this.userApi.LoginOrReggi(currentUser).subscribe((res) =>
+        {
+          currentUser = res;
+          console.log(currentUser);
+          window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); 
+        })
+        
+        this.resourceApi.CheckFood(currentUser.userId as number).subscribe((res) =>
+    {
+      console.log(this.foodDisplay);
+      this.foodDisplay= res;
+      if(this.foodDisplay.length>0)
+      {
+        window.sessionStorage.setItem('SpicyFoodCount', this.foodDisplay[0].foodCount as unknown as string);
+        window.sessionStorage.setItem('ColdFoodCount', this.foodDisplay[1].foodCount as unknown as string);
+        window.sessionStorage.setItem('LeafyFoodCount', this.foodDisplay[2].foodCount as unknown as string);
+        window.sessionStorage.setItem('FluffyFoodCount', this.foodDisplay[3].foodCount as unknown as string);
+        window.sessionStorage.setItem('BlessedFoodCount', this.foodDisplay[4].foodCount as unknown as string);
+        window.sessionStorage.setItem('CursedFoodCount', this.foodDisplay[5].foodCount as unknown as string);
+        return true;
+      }
+      else
+      {
+        window.sessionStorage.setItem('SpicyFoodCount', '0');
+        window.sessionStorage.setItem('ColdFoodCount', '0');
+        window.sessionStorage.setItem('LeafyFoodCount', '0');
+        window.sessionStorage.setItem('FluffyFoodCount', '0');
+        window.sessionStorage.setItem('BlessedFoodCount', '0');
+        window.sessionStorage.setItem('CursedFoodCount', '0');
+        return false;
+      }
+    });
         if(canvas){
           canvas.style.display ='none';
         }

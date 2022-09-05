@@ -96,7 +96,7 @@ public class ResourceController : ControllerBase
         }	        
     }   
 
-    [Route("/Resources/GemAdds")]
+    [Route("/Resources/PurchaseGems")]
     [HttpPut]
     public ActionResult<Order> PurchaseGems(int userId, int Amount, decimal cost)
     {

@@ -1,0 +1,175 @@
+.row {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    margin: 0 -16px;
+    color: rgb(87, 69, 138, 0.95);
+  }
+  
+  .col-25 {
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+  }
+  
+  .col-50 {
+    -ms-flex: 50%; /* IE10 */
+    flex: 50%;
+  }
+  
+  .col-75 {
+    -ms-flex: 75%; /* IE10 */
+    flex: 75%;
+  }
+  
+  .col-25,
+  .col-50,
+  .col-75 {
+    padding: 0 16px;
+  }
+  
+  .container {
+    background-color: rgb(242, 242, 242, .6);
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+  }
+
+  input {
+    border-color: rgba(159, 89, 134, 0.7);
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+  }
+  
+  input[type=text] {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    color: rgb(87, 69, 138, 0.95);
+  }
+
+  input:hover {
+    border-color: rgba(159, 89, 134, 0.7);
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+  }
+
+  input:after {
+    border-color: rgba(159, 89, 134, 0.7);
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+  }
+  
+  label {
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .icon-container {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;
+  }
+  
+  .btn {
+    background-color: rgb(86, 6, 75, .7);
+    color: white;
+    padding: 12px;
+    margin-top: 32px;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    font-size: 17px;
+    border-style: solid;
+    border-color: rgba(54, 28, 45, 0.9);
+    border-radius: 10px;
+    border-width: 2px; 
+  }
+  
+  .btn:hover {
+    background-color: rgb(176, 124, 160, .9);
+    color: rgba(112, 63, 95, 0.9);
+    border-color: rgba(159, 89, 134, 0.7);
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px; 
+  }
+  
+  span.price {
+    float: right;
+    color: grey;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(87, 69, 138, 0.95);
+  }
+
+  .month {
+    margin-right: 10px;
+    text-align: center;
+    
+  }
+
+  #state {
+    text-align: center;
+  }
+
+  #zip {
+    text-align: center;
+  }
+
+  #cname {
+    text-align: center;
+  }
+
+  #ccnum {
+    text-align: center;
+  }
+
+  .extra-card-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    color: rgb(87, 69, 138, 0.95);
+    text-align: center;
+  }
+
+  .form-control {
+    color: rgb(87, 69, 138, 0.95);
+    height: 50px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .form-inline {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 50px;
+    color: rgb(87, 69, 138, 0.95);
+  }
+
+  .final-row {
+    display: flex;
+    flex-direction: row;
+    margin-left: 25px;
+  }
+
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+  @media (max-width: 800px) {
+    .row {
+      flex-direction: column-reverse;
+    }
+    
+    .col-25 {
+      margin-bottom: 20px;
+    }
+  }

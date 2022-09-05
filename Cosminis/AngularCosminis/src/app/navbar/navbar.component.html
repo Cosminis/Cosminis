@@ -7,6 +7,7 @@
         <div class="child-container">
             <div class="midchild" *ngIf="Loggedin()">Eggcount: {{userEgg}}</div>
             <div class="midchild" *ngIf="Loggedin()">Gold: {{userGold}}</div>
+            <div class="midchild" *ngIf="Loggedin()">Gems: {{userGems}}</div>
         </div>
         <div class="child-container">
             <div class="midchild" *ngIf="Loggedin()">Sp: {{SpicyFoodCount}}</div>
@@ -23,7 +24,7 @@
     </div>
     <div class="NavRight">
         <button *ngIf="Loggedin()" type="button" (click)="Logout()" class="btn log-out btn-light">Logout</button>
-        <button *ngIf="Loggedin()" type="button" (click)="needyCompanion()" class="btn log-out btn-light">:(</button>
+        <button *ngIf="Loggedin()" type="button" (click)="buySomeGems()" class="btn gems btn-light">Purchase Gems</button>
     </div>
     <!--<button type="button" (click)="Song1()" class="btn btn-light">Song1</button>
     <button type="button" (click)="Song2()" class="btn btn-light">Song2</button>-->

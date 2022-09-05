@@ -14,7 +14,7 @@ export class LotteryService {
   CanPlay(gemSpent: number , userId: number): Observable<number> {
     return this.http.get<number>(this.apiUrl +"gemSpent=" + gemSpent + "&userID=" + userId) as Observable<number>;
   }
-  GiveRewards(spins:number,user:Users): Observable<Users> {
-    return this.http.put<Users>(this.apiUrl+"spins="+spins, user) as Observable<Users>;
+  GiveRewards(spins:number,user:Users): Observable<number []> {
+    return this.http.put<number[]>(this.apiUrl+"spins="+spins, user) as Observable<number []>;
   }
 }

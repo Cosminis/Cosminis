@@ -8,6 +8,7 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
 import { ShopMenuComponent } from './shop-menu/shop-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GemSpendingMenuComponent } from './gem-spending-menu/gem-spending-menu.component';
+import { PaymentComponent } from './payment/payment.component';
 import { LotteryComponent } from './lottery/lottery.component';
 import { SelectBattleComponent } from './select-battle/select-battle.component'; 
 import { BattleMenuComponent } from './battle-menu/battle-menu.component'; 
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'Battle/Menu', 
     component: BattleMenuComponent
+  },
+  {
+    path: 'GemPurchaseShop',
+    component:PaymentComponent
   },
   {
     path: '',
