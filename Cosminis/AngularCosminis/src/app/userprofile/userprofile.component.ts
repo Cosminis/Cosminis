@@ -3,8 +3,10 @@ import { PostSpiServicesService } from '../services/Post-api-services/post-spi-s
 import { UserApiServicesService } from '../services/User-Api-Service/user-api-services.service';
 import { FriendsService } from '../services/Friends-api-service/friends.service';
 import { ResourceApiServicesService } from '../services/Resource-Api-Service/resource-api-service.service';
+import { ComsinisApiServiceService } from '../services/Comsini-api-service/comsinis-api-service.service';
 import { Posts } from '../Models/Posts';
 import { Users } from '../Models/User';
+import { Cosminis } from '../Models/Cosminis';
 import { Router } from '@angular/router';
 import { Friends } from '../Models/Friends';
 import { FoodElement } from '../Models/FoodInventory';
@@ -16,7 +18,9 @@ import { FoodElement } from '../Models/FoodInventory';
 })
 export class UserprofileComponent implements OnInit {
 
-  constructor(private api:PostSpiServicesService, private router: Router, private userApi:UserApiServicesService, private friendApi:FriendsService, private resourceApi: ResourceApiServicesService) { }
+  constructor(private api:PostSpiServicesService, private router: Router, private comsiniApi:ComsinisApiServiceService, private userApi:UserApiServicesService, private friendApi:FriendsService, private resourceApi: ResourceApiServicesService) { }
+
+  imageLib = new Map<number, string>();
 
   friendshipInstance : Friends =
   {
@@ -43,6 +47,19 @@ export class UserprofileComponent implements OnInit {
     showcaseCompanionFk:1,
     aboutMe:"I am Boring... zzzz snoringgg",    
   }
+
+  displayCosmini : Cosminis = 
+  {
+    companionId : 1,
+    trainerId : 1,
+    userFk : 1,
+    speciesFk : 1,
+    nickname : "Shrek",
+    emotion : 100,
+    mood : 100,
+    hunger : 100,
+    image : "mystery-opponent.png"
+  }  
 
   posts : Posts[] = []
   ownersPosts : Posts[] = []
@@ -378,8 +395,30 @@ export class UserprofileComponent implements OnInit {
     this.doesExist = false;
   }
 
+  cosminiDisplay():void
+  {
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser : Users = JSON.parse(stringUser);
+
+    this.comsiniApi.getCosminiByUserID(currentUser.userId as number).subscribe({
+      next: (res)=>{}, 
+     })
+    this.comsiniApi.getCosminiByID(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+        {
+          res.image = this.imageLib.get(res.speciesFk);
+          this.displayCosmini = res;
+        })
+  }   
+
   ngOnInit(): void 
   {
+    this.imageLib.set(3, "InfernogFire.png");
+    this.imageLib.set(4, "plutofinal.png");
+    this.imageLib.set(5, "15.png");
+    this.imageLib.set(6, "cosmofinal.png");
+    this.imageLib.set(7, "librianfinall.png");
+    this.imageLib.set(8, "cancerfinal.png");
+
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
     let currentUsername = currentUser.username;
