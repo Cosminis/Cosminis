@@ -5,6 +5,7 @@ import { UserApiServicesService } from '../services/User-Api-Service/user-api-se
 import { FriendsService } from '../services/Friends-api-service/friends.service';
 import { ResourceApiServicesService } from '../services/Resource-Api-Service/resource-api-service.service';
 import { ComsinisApiServiceService } from '../services/Comsini-api-service/comsinis-api-service.service';
+import { InteractionService } from '../services/Interaction-Api-Service/interaction.service';
 import { Posts } from '../Models/Posts';
 import { Users } from '../Models/User';
 import { Cosminis } from '../Models/Cosminis';
@@ -19,9 +20,17 @@ import { FoodElement } from '../Models/FoodInventory';
 })
 export class UserprofileComponent implements OnInit {
 
-  constructor(private api:PostSpiServicesService, private router: Router, private comsiniApi:ComsinisApiServiceService, private userApi:UserApiServicesService, private friendApi:FriendsService, private resourceApi: ResourceApiServicesService) { }
+  constructor(private api:PostSpiServicesService, private router: Router, private comsiniApi:ComsinisApiServiceService, private userApi:UserApiServicesService, private friendApi:FriendsService, private resourceApi: ResourceApiServicesService, private interApi:InteractionService) { }
+
+  speciesNickname : number = 0;
+
+  foodChoice : number = 0;
 
   imageLib = new Map<number, string>();
+
+  currentEmotion = new Map<number, string>();
+
+  DisplayName = new Map<number, string>();
 
   comsiniArr : Cosminis[] = [];
 
@@ -321,7 +330,6 @@ export class UserprofileComponent implements OnInit {
     }) 
   }
 
-
   searchRelationshipsByStatus(status : string)
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
@@ -416,13 +424,36 @@ export class UserprofileComponent implements OnInit {
         {
             this.displayCosmini = res; 
             res.image = this.imageLib.get(res.speciesFk);
+            res.emotionString = this.currentEmotion.get(res.emotion);
+            res.speciesNickname = this.DisplayName.get(res.speciesFk);
+            console.log(res);
             this.comsiniArr.push(res);
-            console.log(this.comsiniArr);
         })
       }
     })
   }
-    
+
+  pettingOurFriendsBaby(companionId : number)
+  {
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser : Users = JSON.parse(stringUser);
+
+    this.interApi.PetCompanion(currentUser.userId as number, companionId).subscribe((res) =>
+      {
+        window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+      })
+  }
+
+  feedingOurFriendsBaby(foodId : number, companionId : number)
+  {
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser = JSON.parse(stringUser);
+
+    this.interApi.FeedCompanion(currentUser.userId, companionId, foodId).subscribe((res) =>
+      {
+        window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
+      })    
+  }  
 
   ngOnInit(): void 
   {
@@ -432,6 +463,25 @@ export class UserprofileComponent implements OnInit {
     this.imageLib.set(6, "cosmofinal.png");
     this.imageLib.set(7, "librianfinall.png");
     this.imageLib.set(8, "cancerfinal.png");
+
+    this.currentEmotion.set(1, "Hopeless");
+    this.currentEmotion.set(2, "Hostile");
+    this.currentEmotion.set(3, "Angry");
+    this.currentEmotion.set(4, "Distant");
+    this.currentEmotion.set(5, "Inadequate");
+    this.currentEmotion.set(6, "Calm");
+    this.currentEmotion.set(7, "Thankful");
+    this.currentEmotion.set(8, "Happy");
+    this.currentEmotion.set(9, "Playful");
+    this.currentEmotion.set(10, "Inspired");
+    this.currentEmotion.set(11, "Blissful");
+
+    this.DisplayName.set(3, "Infernog");
+    this.DisplayName.set(4, "Pluto");
+    this.DisplayName.set(5, "Buds");
+    this.DisplayName.set(6, "Cosmo");
+    this.DisplayName.set(7, "Librian");
+    this.DisplayName.set(8, "Cancer");
 
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
