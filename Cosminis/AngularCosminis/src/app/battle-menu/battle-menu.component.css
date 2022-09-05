@@ -109,3 +109,7 @@ h1 {
 .betting-container {
 	display: flex;
 }
+
+.hide {
+	display: none;
+}
