@@ -38,8 +38,15 @@
             <div class="card friend-options mb-3" *ngFor="let us of users" >
                 <div class="card-body">
                     <h5 class="friend-title">{{us.password}}</h5>
-                    <button type="button" class="btn" id ="removeButton" (click)="removeFriends(us.username)">Remove User</button>
-                    <button type="button" class="btn" id ="blockButton" (click)="blockUsers(us.username)">Block user</button>
+                    <button type="button" class="btn" id="removeButton" (click)="removeFriends(us.username)">Remove User</button>
+                    <button type="button" class="btn" id="blockButton" (click)="blockUsers(us.username)">Block user</button>
+                    <div class="friend-interactions">
+                        <div class="cardhead">
+                            <img class="all-cosminis" src="../../assets/Pics/15.png">
+                        </div>
+                        <button type="button" class="btn small-btn">Pet</button>
+                        <button type="button" class="btn small-btn">Feed</button>
+                    </div>
                 </div>           
             </div>
         </div>
