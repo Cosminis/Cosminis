@@ -16,7 +16,7 @@ import { tick } from '@angular/core/testing';
   
 export class BattleMenuComponent implements OnInit {
 
-  constructor(private battle: BattleService) { }
+  constructor(private battle: BattleService, private router: Router,) { }
   
   OpponentRoster: Cosminis[] = [];
   PlayerRoster: Cosminis[] = [];
@@ -24,6 +24,7 @@ export class BattleMenuComponent implements OnInit {
   PlayerRisk: number = 0;
   WinStreak: number = 0;
   LoseStreak: number = 0;
+  tieCount:number = 0;
   roundCount: number = 0;
   maxRoundCount: number = 0;
   ConfirmedGold:number = 0;
@@ -256,6 +257,7 @@ export class BattleMenuComponent implements OnInit {
       }
       else
       {
+        this.tieCount++;
         this.roundCount++;
       }
 
@@ -268,6 +270,11 @@ export class BattleMenuComponent implements OnInit {
       {
         this.Battling = false;
         this.Won = true;
+      }
+      else //loop back to picking
+      {
+        this.Picking = true;
+        this.Battling = false;
       }
       this.GamePlayLoop();
     })
@@ -285,7 +292,7 @@ export class BattleMenuComponent implements OnInit {
     let stringUser: string = sessionStorage.getItem('currentUser') as string;
     let currentUser: Users = JSON.parse(stringUser);
     console.log("Paying");
-    let amount:number = this.battle.Payout(currentUser.userId as number, this.PlayerGoldBet, this.PlayerRisk, this.WinStreak);
+    let amount:number = this.battle.Payout(currentUser.userId as number, this.PlayerGoldBet, this.PlayerRisk, this.WinStreak, this.tieCount);
     console.log(amount);
   }
 
@@ -300,6 +307,11 @@ export class BattleMenuComponent implements OnInit {
     //this.LoseStreak ++;
     this.Picked = true;
     this.GamePlayLoop();
+  }
+
+  ICanStopAnyTimeIWant()
+  {
+    this.router.navigateByUrl('/homepage');  // define your component where you want to go
   }
 
   ngOnInit(): void

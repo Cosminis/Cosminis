@@ -103,14 +103,12 @@ export class BattleService {
     return FriendId;
   }
 
-  Payout(UserId: number, GoldBet: number, Difficulty: number, WinStreak: number): number {
-    if (WinStreak == 0 || Difficulty == -100) {
+  Payout(UserId: number, GoldBet: number, Difficulty: number, WinStreak: number, tieCount:number): number {
+    if (Difficulty == -100) {
       return 0;
     }
     
-    let NewGoldPayout: number = GoldBet + Math.pow(GoldBet * (1.1), .2 * WinStreak);
-    
-    NewGoldPayout = GoldBet * 1.5 * WinStreak;
+    let NewGoldPayout = (GoldBet * 1.5 * WinStreak) + (GoldBet * tieCount * 0.5);
 
     this.resourceAPI.AddGold(UserId,NewGoldPayout).subscribe((res)=>
     {
