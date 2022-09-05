@@ -48,17 +48,17 @@ export class NavbarComponent implements OnInit {
       
       let stringUser : string = sessionStorage.getItem('currentUser') as string;
       let currentUser : Users = JSON.parse(stringUser);
-  
-        this.interApi.DecrementCompanionMoodValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
-        {
-          window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
-        })
-  
-        this.interApi.DecrementCompanionHungerValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
-        {
-          window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
-        })
-    } ,150000);
+
+      this.interApi.DecrementCompanionMoodValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+      {
+        window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+      })
+
+      this.interApi.DecrementCompanionHungerValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+      {
+        window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
+      })
+    } ,60000);
   }
 
   needyCompanion():void

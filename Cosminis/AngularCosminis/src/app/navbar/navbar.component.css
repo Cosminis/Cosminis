@@ -50,3 +50,12 @@
     background: plum;
     opacity: 80%;
 }
+
+.gems {
+    background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScPwUJ_XTLLOx_6yW9-SmlVLIT2eAKzgALOQ&usqp=CAU) no-repeat center center;
+    color: rgba(255, 255, 216);
+    font-weight: bold;
+    text-shadow: 0 0 3px rgb(255, 247, 193);
+    -webkit-text-stroke-width: .5px;
+    -webkit-text-stroke-color: rgb(70, 13, 75);
+}

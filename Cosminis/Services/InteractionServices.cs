@@ -152,6 +152,7 @@ public class InteractionService
 
                 _interRepo.SetCompanionMoodValue(companionID, moodDecrementAmount);
 
+                
                 ReRollCompanionEmotion(companionID); //idk if we want to do this EVERY time but it's kinda cool.
 
                 Console.WriteLine(companionMoodToShift); 
@@ -195,16 +196,36 @@ public class InteractionService
             double totalMinutes = DateTime.Now.Subtract(notNullableDate).TotalMinutes;  //converting minutes to a double
             if(isDisplay)//determine the amount
             {
-                amount = (int)Math.Floor(totalMinutes * .5 * 1.3); //SOMEONE PLEASE NORMALIZED THE NUMBERS
+                amount = (int)Math.Round(totalMinutes * .75 * 1.3); //SOMEONE PLEASE NORMALIZED THE NUMBERS
             }
             else
             {
-                amount = (int)Math.Floor(totalMinutes * .5); 
+                amount = (int)Math.Round(totalMinutes * .75); 
             }
 
             amount = amount * -1;
 
+
+            Random RNGjesusManifested = new Random(); 
+            int offSet = RNGjesusManifested.Next(-10,11);
+            double compHung = companionHungerToShift.Hunger ?? 75; //whoever set the mood and hunger to be nullable in the database needs to be condemned 
+            double chanceRR = (100 * Math.Exp(-0.05*compHung)) + offSet; //Maths
+            Console.WriteLine(100 * Math.Exp(-0.05*compHung));
+            bool RR = (RNGjesusManifested.Next(010) < chanceRR); //see of the emotion gets re rolled
+            if(RR)
+            {
+                try
+                {
+                    ReRollCompanionEmotion(companionID);
+                }
+                catch(Exception)
+                {
+                    throw;
+                }
+            }
+
             return _interRepo.SetCompanionHungerValue(companionID,amount);
+            
         }
         catch(Exception e)
         {
@@ -226,6 +247,7 @@ public class InteractionService
         int rerollDeterminer = 0;                         //This will be the output of these logical operations and set the new emotion of the companion.
         int qualityMod = 0;                      //This is a modifier based on current companion Emotion quality (these affect the CHANCE of a re roll)
         int moodMod = 0;                         //This is a modifier based on current companion mood (these affect the CHANCE of a re roll)
+        int hungerMod = 0;                         //This is a modifier based on current companion hunger (these affect the CHANCE of a re roll)
         bool reRoll = false;
 
         if(emotionToFind.Quality <= 2)
@@ -266,38 +288,112 @@ public class InteractionService
             moodMod = 15;
         }  
 
-        rerollDeterminer = baseEmotionRand + qualityMod + moodMod;
+        if(companionEmotionToSet.Hunger <= 15)               //These tables increase the likelyhood of a mood reroll if the companion has a bad mood or bad quality emotion
+        {
+            hungerMod = 0;
+        }
+        else if(companionEmotionToSet.Hunger <= 35)
+        {
+            hungerMod = 1;
+        }
+        else if(companionEmotionToSet.Hunger <= 50)
+        {
+            hungerMod = 3;
+        }            
+        else if(companionEmotionToSet.Hunger <= 75)
+        {
+            hungerMod = 9;
+        }
+        else if(companionEmotionToSet.Hunger >= 85)
+        {
+            hungerMod = 15;
+        }  
 
-        if(rerollDeterminer <= 20)
+
+        rerollDeterminer = baseEmotionRand + qualityMod + moodMod + hungerMod;
+
+        if(rerollDeterminer <= 27)
         {
             reRoll = true;
         }
 
         Random secondPass = new Random(); //at this point we determine which emotion we will get with a modifier if there was a better mood/emotion quality before.
 
-        int emotionAdjust = secondPass.Next(1, 12);            //"Weight" of moodDecrement determined by hungerlvl
+        int emotionAdjust = secondPass.Next(0, 11);            //"Weight" of moodDecrement determined by hungerlvl
         int secondaryMoodMod = 0;
         int secondaryQualityMod = 0;
+        int secondaryHungerMod = 0;
 
-        if(emotionToFind.Quality >= 6)
+        if(emotionToFind.Quality <= 1)
+        {
+            secondaryQualityMod = -2;
+        }
+        else if(emotionToFind.Quality <= 3)
         {
             secondaryQualityMod = 1;
-        }
-        else if(emotionToFind.Quality > 8)
+        }        
+        else if(emotionToFind.Quality <= 5)
         {
-            secondaryQualityMod = 2;
+            secondaryQualityMod = 0;
         }
-
-        if(companionEmotionToSet.Mood >= 70)
+        else if(emotionToFind.Quality <= 7)
         {
             secondaryQualityMod = 1;
-        }
-        else if(companionEmotionToSet.Mood > 90)
+        } 
+        else if(emotionToFind.Quality <= 10)
         {
             secondaryQualityMod = 2;
+        }        
+
+
+        if(companionEmotionToSet.Mood <= 20)
+        {
+            secondaryMoodMod = -2;
         }
+        else if(companionEmotionToSet.Mood <= 40)
+        {
+            secondaryMoodMod = -1;
+        }         
+        else if(companionEmotionToSet.Mood <= 60)
+        {
+            secondaryMoodMod = 0;
+        }  
+        else if(companionEmotionToSet.Mood <= 80)
+        {
+            secondaryMoodMod = 2;
+        }
+        else if(companionEmotionToSet.Mood <= 100)
+        {
+            secondaryMoodMod = 2;
+        }        
+
+        if(companionEmotionToSet.Hunger <= 20)
+        {
+            secondaryHungerMod = -2;
+        }
+        else if(companionEmotionToSet.Hunger <= 40)
+        {
+            secondaryHungerMod = -1;
+        }         
+        else if(companionEmotionToSet.Hunger <= 60)
+        {
+            secondaryHungerMod = 0;
+        }  
+        else if(companionEmotionToSet.Hunger <= 80)
+        {
+            secondaryHungerMod = 2;
+        }
+        else if(companionEmotionToSet.Hunger <= 100)
+        {
+            secondaryHungerMod = 2;
+        }                          
 
         int emotionId = emotionAdjust + secondaryQualityMod + secondaryMoodMod;
+
+        if(emotionId < 0)
+        {
+            emotionId = 0;
+        }
 
         if(emotionId > 11)
         {

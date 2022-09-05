@@ -71,6 +71,12 @@
     width: 150px;
 }
 
+.BButton
+{
+    height: 100%;
+    width: 50%;
+}
+
 .SeeAllCosminis
 {
     height: 400px;
