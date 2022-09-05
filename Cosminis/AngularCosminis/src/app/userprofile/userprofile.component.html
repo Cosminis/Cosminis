@@ -38,13 +38,25 @@
             <div class="card friend-options mb-3" *ngFor="let us of users" >
                 <div class="card-body"  *ngFor="let cos of comsiniArr">
                     <h5 class="friend-title" *ngIf="cos.companionId == us.showcaseCompanionFk">{{us.password}}</h5>
-                    <button type="button" class="btn" id ="removeButton" (click)="removeFriends(us.username)" *ngIf="cos.companionId == us.showcaseCompanionFk" >Remove User</button>
-                    <button type="button" class="btn" id ="blockButton" (click)="blockUsers(us.username)" *ngIf="cos.companionId == us.showcaseCompanionFk"     >Block user</button>
-                    <img class="all-cosminis" *ngIf="cos.companionId == us.showcaseCompanionFk" src="../../assets/Pics/{{cos.image}}">
+                    <button type="button" class="btn" id ="removeButton" (click)="removeFriends(us.username)" *ngIf="cos.companionId == us.showcaseCompanionFk">Remove User</button>
+                    <button type="button" class="btn" id ="blockButton" (click)="blockUsers(us.username)" *ngIf="cos.companionId == us.showcaseCompanionFk">Block user</button>
+                    <div class="friend-interactions" *ngIf="cos.companionId == us.showcaseCompanionFk">
+                        <div class="cardhead" *ngIf="cos.companionId == us.showcaseCompanionFk">
+                            <img class="all-cosminis" *ngIf="cos.companionId == us.showcaseCompanionFk" src="../../assets/Pics/{{cos.image}}">
+                        </div>                    
+                        <button type="button" class="btn small-btn" *ngIf="cos.companionId == us.showcaseCompanionFk">Pet</button>
+                        <button type="button" class="btn small-btn" *ngIf="cos.companionId == us.showcaseCompanionFk">Feed</button>
+                    </div> 
                     <h5 class="friend-title" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">{{us.password}}</h5>
                     <button type="button" class="btn" id ="removeButton" (click)="removeFriends(us.username)" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Remove User</button>
                     <button type="button" class="btn" id ="blockButton" (click)="blockUsers(us.username)" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Block user</button>
-                    <img class="all-cosminis" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)" src="../../assets/Pics/mystery-opponent.png">
+                    <div class="friend-interactions" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">
+                        <div class="cardhead" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">
+                            <img class="all-cosminis" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)" src="../../assets/Pics/{{cos.image}}">
+                        </div>                    
+                        <button type="button" class="btn small-btn" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Pet</button>
+                        <button type="button" class="btn small-btn" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Feed</button>
+                    </div>                        
                 </div>           
             </div>
         </div>
