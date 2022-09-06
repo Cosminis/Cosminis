@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  api: 'https://cosminis.azurewebsites.net/',
+  api: 'https://comsinisthe2nd.azurewebsites.net/',
   auth:
   {
     domain: "cosminis.us.auth0.com",
