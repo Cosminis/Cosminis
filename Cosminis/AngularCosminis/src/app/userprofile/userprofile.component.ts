@@ -242,6 +242,7 @@ export class UserprofileComponent implements OnInit {
     {
       res.reverse();
       this.posts = res;
+      console.log(this.posts);
       let postUser:Users;
       let userID:number;
       for(let i =0; i<this.posts.length;i++)
