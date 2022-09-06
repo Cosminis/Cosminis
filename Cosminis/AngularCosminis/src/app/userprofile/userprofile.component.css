@@ -33,7 +33,12 @@
 
 .card-body {
     color: mistyrose;
-    padding: 0px;
+}
+
+.column-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
 }
 
 .card-title {
@@ -112,16 +117,25 @@ h2 {
     margin-right: 10px;
 }
 
-.sub-btn {
-    background-color: rgba(185, 117, 181, 0.8);
-    color: mistyrose;
-    border-radius: 10px;
-    border-color: rgb(17, 3, 15);   
+.column-uno {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
-.friend-interactions {
+.column-dos {
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
+    color: rgb(7, 2, 31);
+}
+
+.column-tres {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    color: rgb(7, 2, 31);
 }
 
 .small-btn {
@@ -130,9 +144,21 @@ h2 {
     padding: 0;
 }
 
+.row-one {
+    display: flex;
+}
+
+.mood-child {
+    margin-right: 20px;
+}
+
+.food-choice {
+    width: 180px;
+    height: 30px;
+}
 .cardhead {
-    height: 40x;
-    width: 75px;
+    height: 50x;
+    width: 95px;
     background-color: rgba(0,0,0,.5);
     border-width: 3px;
     border-style: solid;
