@@ -98,7 +98,7 @@ h1 {
 	align-items: center;
 	justify-content: center;
 	background-color: rgba(0,0,0,.5);
-	height: 800px;
+	height: 100vh;
 }
 
 /*.mini-background {
@@ -108,8 +108,4 @@ h1 {
 
 .betting-container {
 	display: flex;
-}
-
-.hide {
-	display: none;
 }

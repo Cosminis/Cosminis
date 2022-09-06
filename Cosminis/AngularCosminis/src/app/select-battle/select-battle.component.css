@@ -45,3 +45,7 @@ ul {
 	font-size: 25px;
 }
 
+.battle-button3 {
+   color: transparent;
+   opacity: 0;
+}
