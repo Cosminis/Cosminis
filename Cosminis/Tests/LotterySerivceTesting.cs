@@ -103,10 +103,8 @@ namespace Tests
         {
             var moqRepo = new Mock<IResourceGen>();
             LotteryService v = new(moqRepo.Object);
-            int rn = v.Prize(); 
-             
+            int rn = v.Prize();              
             Assert.InRange(rn, 1, 100);
-
         }
     }
 }
