@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { FriendsService } from '../Friends-api-service/friends.service';
 import { Cosminis } from 'src/app/Models/Cosminis';
 import { ResourceApiServicesService } from '../Resource-Api-Service/resource-api-service.service';
+import { UserApiServicesService } from '../User-Api-Service/user-api-services.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class BattleService {
   
   constructor(private http: HttpClient,
     private friend: FriendsService,
-    private resourceAPI : ResourceApiServicesService
+    private resourceAPI: ResourceApiServicesService,
+    private UserService: UserApiServicesService
   ) { }
 
   DisplayName = new Map<number, string>();
@@ -84,25 +86,6 @@ export class BattleService {
     }
   }
 
-  GetRandomFriendsUserId(): number {
-    let stringUser: string = sessionStorage.getItem('currentUser') as string;
-    let currentUser: Users = JSON.parse(stringUser);
-    let FriendId: number = 0;
-    let friends: Friends[] = [];
-
-    this.friend.getAcceptedFriends(currentUser.username).subscribe((res) => friends = res);
-    
-    //gets a rando friends from user's friend list
-    let randoFriendinArr: number = Math.floor(Math.random() * friends.length);
-    if (friends[randoFriendinArr].userIdTo == currentUser.userId) {
-      FriendId = friends[randoFriendinArr].userIdFrom;
-    }
-    else {
-      FriendId = friends[randoFriendinArr].userIdTo;
-    }
-    return FriendId;
-  }
-
   Payout(UserId: number, GoldBet: number, Difficulty: number, WinStreak: number, tieCount:number): number {
     if (Difficulty == -100) {
       return 0;
@@ -110,10 +93,25 @@ export class BattleService {
     
     let NewGoldPayout = (GoldBet * 1.5 * WinStreak) + (GoldBet * tieCount * 0.5);
 
+    NewGoldPayout = Math.round(NewGoldPayout);
+
     this.resourceAPI.AddGold(UserId,NewGoldPayout).subscribe((res)=>
     {
-      console.log(res);
-      alert("You've won, here is your payout: " + NewGoldPayout);
+      let stringUser: string = sessionStorage.getItem('currentUser') as string;
+      let currentUser: Users = JSON.parse(stringUser);
+
+      this.UserService.LoginOrReggi(currentUser).subscribe((res) => {
+        currentUser = res;
+        window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+      });
+      if (NewGoldPayout == 0)
+      {
+        alert("You've lost, here is your payout: " + NewGoldPayout);
+      }
+      else
+      {
+        alert("You've won, here is your payout: " + NewGoldPayout);
+      }
     });
 
 
