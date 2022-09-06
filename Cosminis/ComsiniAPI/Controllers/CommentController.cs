@@ -21,7 +21,7 @@ public class CommentController : ControllerBase
 
     [Route("/Comments/SubmitComment")]
     [HttpPost]
-    public ActionResult<Comment> SubmitComment(int commenterID, int postsID, [FromBody]string content)
+    public ActionResult<Comment> SubmitComment(int commenterID, int postsID, [FromForm]string content)
     {
         try 
         {
