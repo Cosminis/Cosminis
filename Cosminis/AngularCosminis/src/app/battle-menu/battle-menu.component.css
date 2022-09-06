@@ -1,4 +1,14 @@
+h2 {
+	color: mistyrose;
+	margin-left: 30px;
+}
+
+h1 {
+	color: mistyrose;
+}
+
 .container1 {
+	margin-left: 30px;
 	display: flex;
 	flex-wrap: wrap;
 	row-gap: 95px;
@@ -56,7 +66,7 @@
 	border-color: plum;
 }
 
-.battle-button {
+.game-button {
     background: plum;
     opacity: 80%;
 }
@@ -66,4 +76,40 @@
 	flex-wrap: wrap;
 	row-gap: 95px;
 	column-gap: 40px;
+	margin-top: 30px;
+	margin-left: 30px;
+}
+
+.stats-container {
+	display: flex;
+	margin-left: 30px;
+}
+
+.player-stats {
+	color: mistyrose;
+	margin-right: 15px;
+	margin-bottom: 20px;
+	font-size: 20px;
+}
+
+.container5 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0,.5);
+	height: 800px;
+}
+
+/*.mini-background {
+	background-color: rgba(0,0,0,.5);
+	padding: 50px;
+}*/
+
+.betting-container {
+	display: flex;
+}
+
+.hide {
+	display: none;
 }

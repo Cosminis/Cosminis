@@ -19,33 +19,67 @@ export class BattleService {
     private resourceAPI : ResourceApiServicesService
   ) { }
 
+  DisplayName = new Map<number, string>();
+  currentEmotion = new Map<number, string>();
+  imageLib = new Map<number, string>();
+
+  OnGameStartUp() {
+    this.DisplayName.set(3, "Infernog");
+    this.DisplayName.set(4, "Pluto");
+    this.DisplayName.set(5, "Buds");
+    this.DisplayName.set(6, "Cosmo");
+    this.DisplayName.set(7, "Librian");
+    this.DisplayName.set(8, "Cancer");
+
+    this.imageLib.set(3, "InfernogFire.png");
+    this.imageLib.set(4, "plutofinal.png");
+    this.imageLib.set(5, "15.png");
+    this.imageLib.set(6, "cosmofinal.png");
+    this.imageLib.set(7, "librianfinall.png");
+    this.imageLib.set(8, "cancerfinal.png");
+
+    this.currentEmotion.set(1, "Hopeless");
+    this.currentEmotion.set(2, "hostile");
+    this.currentEmotion.set(3, "Distant");
+    this.currentEmotion.set(4, "Inadequate");
+    this.currentEmotion.set(5, "Calm");
+    this.currentEmotion.set(6, "Thankful");
+    this.currentEmotion.set(7, "Happy");
+    this.currentEmotion.set(8, "Playful");
+    this.currentEmotion.set(9, "Inspired");
+    this.currentEmotion.set(10, "Blissful");
+  }
+
   apiUrl: string = environment.api + 'Battle/';
 
   //this generate a roster from a rando user
   CreateRoster(): Observable<Cosminis[]> {
-    return this.http.get(this.apiUrl) as unknown as Observable<Cosminis[]>;
+    return this.http.get(this.apiUrl + "Roster") as unknown as Observable<Cosminis[]>;
   }
   
   //this generates a roster from a given userId
   CreateRosterWithId(UserId: number): Observable<Cosminis[]> {
-    return this.http.get(this.apiUrl + UserId) as unknown as Observable<Cosminis[]>;
+    return this.http.get(this.apiUrl + "Opponent?OpponentID=" + UserId) as unknown as Observable<Cosminis[]>;
   }
   
   //this will give who one!
   BattleResult(OpponentZero: number, OpponentOne: number): Observable<number> {
-    return this.http.get(this.apiUrl + "Result/" + OpponentZero + "/" + OpponentOne) as unknown as Observable<number>;
+    return this.http.get(this.apiUrl + "Result?CombatantZero=" + OpponentZero + "&CombatantOne=" + OpponentOne) as unknown as Observable<number>;
   }
   
   //this obtains the difficult of the battle
-  DifficultyScale(CompleteRoster: Cosminis[], SizeOfPlayerRoster: number): Observable<number> {
-    return this.http.get(this.apiUrl + "Scalar"  + CompleteRoster + "/" + SizeOfPlayerRoster) as unknown  as Observable<number>;
+  DifficultyScale(CompleteRoster: number[], SizeOfPlayerRoster: number): Observable<number> {
+    return this.http.put(this.apiUrl + "Scalar?SizeOne="+ SizeOfPlayerRoster, CompleteRoster) as unknown  as Observable<number>;
   }
   
   //the length of the match is determined by the roster with the smallest amount of cosminis
   BattleLength(RosterOne: Cosminis[], RosterTwo: Cosminis[]): number {
-    if (RosterOne.length > RosterTwo.length) {
+    if (RosterOne.length > RosterTwo.length) 
+    {
       return RosterTwo.length;
-    } else {
+    } 
+    else 
+    {
       return RosterOne.length;
     }
   }
@@ -69,25 +103,25 @@ export class BattleService {
     return FriendId;
   }
 
-  Payout(UserId: number, GoldBet: number, Difficulty: number, WinStreak: number): number {
-    let stringUser: string = sessionStorage.getItem('currentUser') as string;
-    let currentUser: Users = JSON.parse(stringUser);
-
-    if (WinStreak == 0 || Difficulty == -100) {
+  Payout(UserId: number, GoldBet: number, Difficulty: number, WinStreak: number, tieCount:number): number {
+    if (Difficulty == -100) {
       return 0;
     }
     
-    let NewGoldPayout: number = Math.pow(GoldBet * (1 + (.1)), .1 * WinStreak);
-    
-    NewGoldPayout = NewGoldPayout + (NewGoldPayout * (Difficulty / 100));
+    let NewGoldPayout = (GoldBet * 1.5 * WinStreak) + (GoldBet * tieCount * 0.5);
 
-    this.resourceAPI.AddGold(UserId,NewGoldPayout);
+    this.resourceAPI.AddGold(UserId,NewGoldPayout).subscribe((res)=>
+    {
+      console.log(res);
+      alert("You've won, here is your payout: " + NewGoldPayout);
+    });
+
 
     return NewGoldPayout;
   }
 
   PlaceBet(UserId: number, GoldBet: number)
   {
-    this.resourceAPI.AddGold(UserId,-1*GoldBet);
+    this.resourceAPI.AddGold(UserId,-1*GoldBet).subscribe();
   }
 }

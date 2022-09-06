@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   currentUsernickname : string ="";
   userGold:number = 0;
   userEgg:number = 0;
+  userGems:number =0;
   SpicyFoodCount : number = 0;
   LeafyFoodCount : number = 0;
   ColdFoodCount : number = 0;
@@ -35,6 +36,10 @@ export class NavbarComponent implements OnInit {
   gotoHome(){
     this.router.navigateByUrl('/homepage');  // define your component where you want to go
   }
+
+  buySomeGems(){
+    this.router.navigateByUrl('/GemPurchaseShop');  // define your component where you want to go
+  }
     
   ngOnInit(): void 
   {
@@ -43,19 +48,17 @@ export class NavbarComponent implements OnInit {
       
       let stringUser : string = sessionStorage.getItem('currentUser') as string;
       let currentUser : Users = JSON.parse(stringUser);
-  
-        this.interApi.DecrementCompanionMoodValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
-        {
-          console.log(res);
-          window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
-        })
-  
-        this.interApi.DecrementCompanionHungerValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
-        {
-          console.log(res);
-          window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
-        })
-    } ,150000);
+
+      this.interApi.DecrementCompanionMoodValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+      {
+        window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+      })
+
+      this.interApi.DecrementCompanionHungerValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
+      {
+        window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
+      })
+    } ,60000);
   }
 
   needyCompanion():void
@@ -65,22 +68,19 @@ export class NavbarComponent implements OnInit {
 
     this.interApi.DecrementCompanionMoodValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
       {
-        console.log(res);
         window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
       })
 
     this.interApi.DecrementCompanionHungerValue(currentUser.showcaseCompanionFk as number).subscribe((res) =>
       {
-        console.log(res);
         window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
       })
   }
 
   Logout():void{
-    this.auth0.logout()
     this.router.navigateByUrl('/login');
-    console.log(this.currentUsername);
-    sessionStorage.clear();
+    window.sessionStorage.clear();    
+    this.auth0.logout()
   }
 
   Loggedin():boolean
@@ -98,7 +98,8 @@ export class NavbarComponent implements OnInit {
     this.CursedFoodCount = sessionStorage.getItem('CursedFoodCount') as unknown as number; //Comment here
     
     this.userEgg = currentUser.eggCount;
-    this.userGold = currentUser.goldCount;  
+    this.userGold = currentUser.goldCount;
+    this.userGems = currentUser.gemCount;  
 
     this.DisplayCompanionMood = sessionStorage.getItem('DisplayCompanionMood') as unknown as number;
     this.DisplayCompanionHunger = sessionStorage.getItem('DisplayCompanionHunger') as unknown as number;

@@ -135,5 +135,24 @@ public class InteractionController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-    }           
+    }
+
+    [Route("/Interactions/ReRollEmotion")]
+    [HttpPut]
+    public ActionResult<bool> ReRollCompanionEmotion(int companionID)
+    {
+        try
+    	{
+            _interactionService.ReRollCompanionEmotion(companionID); 
+            return Ok(true);
+        }
+        catch(ResourceNotFound)
+        {
+            return NotFound();
+        }
+        catch(Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }               
 }

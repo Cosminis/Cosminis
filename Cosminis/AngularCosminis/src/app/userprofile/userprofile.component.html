@@ -4,7 +4,7 @@
         <h2>Post Into the Cosmos!</h2>
         <textarea name="text" placeholder="What's happenin'?" id="text" cols="53" rows="8"></textarea>
         <div class="post-button">
-            <button class="sub-btn post-selector" (click)="submitPost()" type="button">Submit</button>
+            <button class="btn post-selector" (click)="submitPost()" type="button">Submit</button>
         </div>
         <div class="card owners-feed mb-3" *ngFor="let pot of ownersPosts">
             <div class="card-body">
@@ -19,6 +19,13 @@
             <div class="card-body">
                 <h5 class="card-title">{{pot.posterNickname}}</h5>
                 <div>{{pot.content}}</div>
+                <input type="text" [(ngModel)]="postComment" placeholder="Comment...'?" id="comment" cols="50" rows="1">
+                <div class="post-button">
+                    <button class="btn post-selector" (click)="createComment(pot.postId)" type="button">Submit</button>
+                </div>
+                <div *ngFor="let com of commentArr">
+                    <div *ngIf="com.postIdFk == pot.postId">{{com.content}}</div>
+                </div>
             </div>
         </div> 
     </div>
@@ -26,7 +33,7 @@
         <div class="searchbar">
             <h2 class="friends-text">Friends</h2>
             <input type="text" [(ngModel)]="userInstance.username" placeholder="Search user to add..." class="username">
-            <button class="sub-btn search-button" (click)="searchUsers(userInstance.username)" type="button">Submit</button>
+            <button class="btn search-button" (click)="searchUsers(userInstance.username)" type="button">Submit</button>
         </div>
         <div class="card friend-options mb-3" >
             <div class="search-body" *ngIf="doesExist">
@@ -36,10 +43,52 @@
         </div> 
         <div class="friends">
             <div class="card friend-options mb-3" *ngFor="let us of users" >
-                <div class="card-body">
-                    <h5 class="friend-title">{{us.password}}</h5>
-                    <button type="button" class="btn" id ="removeButton" (click)="removeFriends(us.username)">Remove User</button>
-                    <button type="button" class="btn" id ="blockButton" (click)="blockUsers(us.username)">Block user</button>
+                <div class="card-body column-container"  *ngFor="let cos of comsiniArr">
+                    <div class="column-uno">
+                        <h5 class="friend-title" *ngIf="cos.companionId == us.showcaseCompanionFk">{{us.password}}</h5>
+                        <button type="button" class="btn" id ="removeButton" (click)="removeFriends(us.username)" *ngIf="cos.companionId == us.showcaseCompanionFk">Remove User</button>
+                        <button type="button" class="btn" id ="blockButton" (click)="blockUsers(us.username)" *ngIf="cos.companionId == us.showcaseCompanionFk">Block user</button>
+                    </div>
+                    <div class="column-dos">
+                        <div class="cardhead" *ngIf="cos.companionId == us.showcaseCompanionFk">
+                            <img class="all-cosminis" *ngIf="cos.companionId == us.showcaseCompanionFk" src="../../assets/Pics/{{cos.image}}">
+                        </div>    
+                        <div class="midchild" *ngIf="(cos.companionId == us.showcaseCompanionFk) && (cos.nickname)">Nickname: {{cos.nickname}}</div>    
+                        <div class="midchild" *ngIf="(cos.companionId == us.showcaseCompanionFk) && !(cos.nickname)">Species: {{cos.speciesNickname}}</div>
+                        <div class="midchild" *ngIf="cos.companionId == us.showcaseCompanionFk">Emotion: {{cos.emotionString}}</div>     
+                    </div>
+                    <div class="column-tres" *ngIf="cos.companionId == us.showcaseCompanionFk">
+                        <div class="row-one">
+                            <div class="mood-child" *ngIf="cos.companionId == us.showcaseCompanionFk">Mood: {{cos.mood}}</div>
+                            <div class="midchild" *ngIf="cos.companionId == us.showcaseCompanionFk">Hunger: {{cos.hunger}}</div> 
+                        </div>
+                        <div class="row-two">
+                            <button type="button" class="btn small-btn" *ngIf="cos.companionId == us.showcaseCompanionFk" (click)="pettingOurFriendsBaby(cos.companionId)">Pet</button>
+                            <button type="button" class="btn small-btn" *ngIf="cos.companionId == us.showcaseCompanionFk" (click)="feedingOurFriendsBaby(foodChoice, cos.companionId)">Feed</button>
+                        </div>
+                        <div class="row-three">       
+                            <select class="food-choice" [(ngModel)]="foodChoice" id="Choice-number"> 
+                                <option value="1" id="Choice-zero">Chili</option>
+                                <option value="2" id="Choice-one">Cold Cut</option>
+                                <option value="3" id="Choice-two">'Special' Salad</option>
+                                <option value="4" id="Choice-three">Marshmallow</option>
+                                <option value="5" id="Choice-four">Holy Water</option>
+                                <option value="6" id="Choice-five">Devil Fruit</option>
+                            </select>
+                        </div>                
+                    </div> 
+                    <!--Duplicate starts here-->
+                    <div class="duplicate1">
+                        <h5 class="friend-title" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">{{us.password}}</h5>
+                        <button type="button" class="btn" id ="removeButton" (click)="removeFriends(us.username)" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Remove User</button>
+                        <button type="button" class="btn" id ="blockButton" (click)="blockUsers(us.username)" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Block user</button>
+                    </div>    
+                    <div class="duplicate2" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">
+                        <div class="cardhead" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">
+                            <img class="all-cosminis" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)" src="../../assets/Pics/{{cos.image}}">
+                        </div>
+                        <div class="message">Showcase companion not set for this user.</div>                    
+                    </div>                      
                 </div>           
             </div>
         </div>

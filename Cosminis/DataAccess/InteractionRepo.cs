@@ -98,7 +98,12 @@ public class InteractionRepo : Interactions
             throw new CompNotFound();
         }
 
-        companionEmotionToSet.Emotion = emotionId; //You can get less than 0 and greater than 10 but I figure we will figure this out together
+        IEnumerable<EmotionChart> emotionToSet =                   
+            from EmotionCharts in _context.EmotionCharts                 //(Logic the same in below cases)
+            where EmotionCharts.Quality == emotionId
+            select EmotionCharts;      
+
+        companionEmotionToSet.Emotion = emotionToSet.FirstOrDefault().EmotionId; //You can get less than 0 and greater than 10 but I figure we will figure this out together
 
         _context.SaveChanges();
 
@@ -417,7 +422,7 @@ public class InteractionRepo : Interactions
         
         companionToPet.Mood = companionToPet.Mood + moodToOffset; //I think rolling for agitation is good, but the actual numbers may wanna be changed in the end.
 
-        if(companionToPet.Mood <= 0) //preventing negatives and values over 100
+        if(companionToPet.Mood < 0) //preventing negatives and values over 100
         {
             companionToPet.Mood = 0;
         }

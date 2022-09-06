@@ -1,8 +1,7 @@
-.Container1
-{
+.Container1 {
     display:flex;
-
     justify-content: space-around;
+    margin-top: 30px;
 }
 
 .row1 {
@@ -24,8 +23,7 @@
     border-color:black;
 }
 
-@keyframes pulse 
-{
+@keyframes pulse {
     0% 
     {
         transform: scale(0.5);
@@ -56,8 +54,7 @@
     animation: pulse 10s linear infinite;
 }
 
-.InvisibleBox
-{
+.InvisibleBox {
     background-color: transparent;
     display:flex;
     border-width: 0px;
@@ -65,14 +62,24 @@
     align-items: center;
 }
 
-.GoButton
-{
+.GoButton {
     height: 75x;
     width: 150px;
 }
 
-.SeeAllCosminis
-{
+.shop-icon {
+    margin-top: 30px;
+    height: 105x;
+    width: 210px;
+}
+
+.BButton {
+    height: 100%;
+    width: 50%;
+    margin-top: 200px;
+}
+
+.SeeAllCosminis {
     height: 400px;
     width: 575px;
     padding-bottom: 100px;
@@ -89,6 +96,7 @@
 }
 
 .userprof {
+    margin-top: 45px;
     height: 100%;
     width: 100%;
 }

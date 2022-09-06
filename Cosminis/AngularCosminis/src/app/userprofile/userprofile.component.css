@@ -35,6 +35,12 @@
     color: mistyrose;
 }
 
+.column-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+}
+
 .card-title {
     color:  plum;
 }
@@ -105,16 +111,70 @@ h2 {
     color: rgb(17, 5, 77);
 }
 
-.btn
-{
+.btn {
     background-color: rgba(185, 117, 181, 0.8);
     color: mistyrose;
     margin-right: 10px;
 }
 
-.sub-btn{
-    background-color: rgba(185, 117, 181, 0.8);
-    color: mistyrose;
-    border-radius: 10px;
-    border-color:rgba(17, 3, 15, 0.0);   
+.column-uno {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.column-dos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    color: rgb(7, 2, 31);
+}
+
+.column-tres {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    color: rgb(7, 2, 31);
+}
+
+.small-btn {
+    width: 80px;
+    height: 30px;
+    padding: 0;
+}
+
+.row-one {
+    display: flex;
+}
+
+.mood-child {
+    margin-right: 20px;
+}
+
+.food-choice {
+    width: 180px;
+    height: 30px;
+}
+
+.duplicate2 {
+    color: rgb(7, 2, 31);
+}
+
+.message {
+    margin-top: 10px;
+}
+
+.cardhead {
+    height: 50x;
+    width: 95px;
+    background-color: rgba(0,0,0,.5);
+    border-width: 3px;
+    border-style: solid;
+    border-color: plum;
+}
+
+.all-cosminis {
+    height: 100%;
+    width: 100%;
 }

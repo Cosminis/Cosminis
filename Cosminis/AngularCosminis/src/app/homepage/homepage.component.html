@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
 <section class="Container1">
     <div class="row1 CosminisGo InvisibleBox">
-        <img src="../../assets/Pics/fittedcosmini-meteor.png" (click)="gotoBattleSelect()" class="GoButton" type="button">
+        <img src="../../assets/Pics/battle!.png" (click)="gotoBattleSelect()" class="BButton" type="button">
         <img src="../../assets/Pics/fittedcosmini-meteor.png" (click)="GoAway()" class="GoButton" type="button">
     </div>
     <div class="row1 Shop InvisibleBox">
-        <button type="button" (click)="gotoShop()" class="btn btn-light">ShopTillYaDrop</button>
+        <img src="../../assets/Pics/shop-icon.png" (click)="gotoShop()" class="shop-icon" type="button">
         <button type="button" (click)="gotoLottery()" class="btn btn-light" id="lotto-btn">Roulette</button>
     </div>
     <div class="row1 UserProfilePortal InvisibleBox">
@@ -27,7 +27,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Pet or feed your companion here!
+                        Here you can interaction with your companion... Set their nickname, or you can pet or feed them!
+                        <input type="text" [(ngModel)]="enteredName" placeholder="Set Nickname here..." class="companionName">
                         <select class="FoodChoice" [(ngModel)]="foodChoice" id="Choice-number"> 
                             <option value="1" id="Choice-zero">Chili</option>
                             <option value="2" id="Choice-one">Cold Cut</option>
@@ -37,7 +38,8 @@
                             <option value="6" id="Choice-five">Devil Fruit</option>
                         </select>
                     </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer"> 
+                        <button class="btn btn-primary" (click)="setNickname(enteredName)" type="button">Set Nickname</button>    
                         <button type="button" class="btn btn-primary" (click)="pettingOurBaby()">Pet</button>    
                         <button type="button" class="btn btn-primary" (click)="feedingOurBaby(foodChoice)">Feed</button>
                     </div>

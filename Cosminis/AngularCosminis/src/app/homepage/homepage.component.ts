@@ -14,6 +14,8 @@ export class HomepageComponent implements OnInit {
 
   constructor(private router: Router, private comsiniApi:ComsinisApiServiceService, private interApi:InteractionService) { }
 
+  enteredName : string = "FluffyCloud69"
+
   displayCosmini : Cosminis = 
   {
     companionId : 1,
@@ -23,8 +25,11 @@ export class HomepageComponent implements OnInit {
     nickname : "Shrek",
     emotion : 100,
     mood : 100,
-    hunger : 100
+    hunger : 100,
+    image : "mystery-opponent.png"
   }
+
+  cosminiLoader : boolean = false;
 
   foodChoice : number = 0;
 
@@ -40,8 +45,7 @@ export class HomepageComponent implements OnInit {
     this.imageLib.set(8, "cancerfinal.png");
 
     this.cosminiDisplay();
-
-    //setInterval(this.smellingHandler, 2500, "my text");
+    //setInterval(this.smellingHandler, 5000, "my text");
   }
 
   feedingOurBaby(foodId : number){
@@ -50,7 +54,6 @@ export class HomepageComponent implements OnInit {
 
     this.interApi.FeedCompanion(currentUser.userId, currentUser.showcaseCompanionFk, foodId).subscribe((res) =>
       {
-        console.log(res);
         window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
       })    
   }
@@ -61,7 +64,6 @@ export class HomepageComponent implements OnInit {
 
     this.interApi.PetCompanion(currentUser.userId, currentUser.showcaseCompanionFk).subscribe((res) =>
       {
-        console.log(res);
         window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
       })
   }
@@ -105,9 +107,20 @@ export class HomepageComponent implements OnInit {
       error:(err)=>{ if(err.stauts===404){this.comsiniApi.free(currentUser.userId as number).subscribe();}}})
     this.comsiniApi.getCosminiByID(currentUser.showcaseCompanionFk as number).subscribe((res) =>
         {
+          this.cosminiLoader = true;
           res.image = this.imageLib.get(res.speciesFk);
           this.displayCosmini = res;
         })
-        
   } 
+
+  setNickname(enteredName : string) : void
+  {
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser : Users = JSON.parse(stringUser);
+
+    this.comsiniApi.setCompanionNickname(currentUser.showcaseCompanionFk as number, enteredName).subscribe((res) =>
+    {
+      console.log(res);
+    })
+  }  
 }
