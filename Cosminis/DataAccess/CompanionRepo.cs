@@ -66,16 +66,16 @@ public class CompanionRepo : ICompanionDAO
             TimeSinceLastFed = DateTime.Now,
             CompanionBirthday = DateTime.Now        
         };
-        userInstance.EggCount--;           
         if(userInstance.EggCount < 0)
         {
             userInstance.EggCount = 0;                              
             throw new TooFewResources();
         }
-        if(userInstance.EggCount >= 1) 
+        else if(userInstance.EggCount >= 1) 
         {
             userInstance.EggTimer = DateTime.Now;
         }
+        userInstance.EggCount--;           
         _context.Companions.Add(newCompanion); 
         _context.SaveChanges();
         _context.ChangeTracker.Clear(); 
