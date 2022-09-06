@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Friends } from '../Models/Friends';
 import { BattleService } from '../services/battle-service/battle.service';
+import { FriendsService } from '../services/Friends-api-service/friends.service';
 import { UserApiServicesService } from '../services/User-Api-Service/user-api-services.service';
-import { FriendsService } from '../services/Friends-api-service/friends.service'
+
 import { Users } from '../Models/User';
 import { Cosminis } from '../Models/Cosminis';
-import { tick } from '@angular/core/testing';
+import { Friends } from '../Models/Friends';
+
 
 @Component({
   selector: 'app-battle-menu',
@@ -16,7 +17,10 @@ import { tick } from '@angular/core/testing';
   
 export class BattleMenuComponent implements OnInit {
 
-  constructor(private battle: BattleService, private router: Router,) { }
+  constructor(private battle: BattleService,
+    private router: Router,
+    private friend: FriendsService,
+    private user: UserApiServicesService) { }
   
   OpponentRoster: Cosminis[] = [];
   PlayerRoster: Cosminis[] = [];
@@ -41,6 +45,17 @@ export class BattleMenuComponent implements OnInit {
   };
 
   PlayerCosmini2Battle: Cosminis = {
+    companionId: 0,
+    trainerId : 0,
+    userFk : 0,
+    speciesFk : 0,
+    nickname : "PlayerCosmini",
+    emotion : 0,
+    mood : 0,
+    hunger: 0,
+  };
+
+  DefaultCosmini2Battle: Cosminis = {
     companionId: 0,
     trainerId : 0,
     userFk : 0,
@@ -80,6 +95,7 @@ export class BattleMenuComponent implements OnInit {
     else if(this.Starting)
     {
       console.log("Starting...");
+
       this.battle.OnGameStartUp();
 
       //gathering appropriate roster determined by player preference
@@ -122,7 +138,13 @@ export class BattleMenuComponent implements OnInit {
     {
       console.log("Picking...");
       //may both side of the combatant get ready please
-      if(this.Picked)
+      if (this.DefaultCosmini2Battle.companionId == this.PlayerCosmini2Battle.companionId)
+      {
+        this.Picked = false;
+        this.Picking = true;
+        this.Battling = false;
+      }
+      else if (this.Picked)
       {
         this.OpponentChoosesCosmini();
   
@@ -173,19 +195,41 @@ export class BattleMenuComponent implements OnInit {
   }
 
   CreateAFriendRoster() {
-    this.battle.CreateRosterWithId(this.battle.GetRandomFriendsUserId()).subscribe((res) => {
-      this.OpponentRoster = res;
-      for(let i=0;i<this.OpponentRoster.length;i++)
+    let stringUser: string = sessionStorage.getItem('currentUser') as string;
+    let currentUser: Users = JSON.parse(stringUser);
+    let FriendId: number = 0;
+    let friends: Friends[] = [];
+
+    this.friend.getAcceptedFriends(currentUser.username).subscribe((res) => {
+      friends = res;
+      
+      let randoFriendinArr: number = Math.floor(Math.random() * friends.length);
+      
+      if (friends[randoFriendinArr].userIdTo == currentUser.userId)
       {
-        this.OpponentRoster[i].speciesNickname = this.battle.DisplayName.get(this.OpponentRoster[i].speciesFk);
-        this.OpponentRoster[i].emotionString = this.battle.currentEmotion.get(this.OpponentRoster[i].emotion);
-        this.OpponentRoster[i].image = this.battle.imageLib.get(this.OpponentRoster[i].speciesFk);
-        
+        FriendId = friends[randoFriendinArr].userIdFrom;
       }
-      this.MadeOpponentRoster = true;
-      this.CutRosters();
-    });
+      else
+      {
+        FriendId = friends[randoFriendinArr].userIdTo;
+      }
+      this.user.Find(FriendId).subscribe((res) => {
+        this.Opponent = res.password
+      })
+      this.battle.CreateRosterWithId(FriendId).subscribe((res) => {
+        this.OpponentRoster = res;
+        for(let i=0;i<this.OpponentRoster.length;i++)
+        {
+          this.OpponentRoster[i].speciesNickname = this.battle.DisplayName.get(this.OpponentRoster[i].speciesFk);
+          this.OpponentRoster[i].emotionString = this.battle.currentEmotion.get(this.OpponentRoster[i].emotion);
+          this.OpponentRoster[i].image = this.battle.imageLib.get(this.OpponentRoster[i].speciesFk);
+        }
+        this.MadeOpponentRoster = true;
+        this.CutRosters();
+      });;
+      });
   }
+    
 
   CreatePlayerRoster() {
     let stringUser: string = sessionStorage.getItem('currentUser') as string;
@@ -231,11 +275,20 @@ export class BattleMenuComponent implements OnInit {
     this.battle.DifficultyScale(RosterID, this.PlayerRoster.length).subscribe((res) => this.PlayerRisk = res);
   }
 
-  OpponentChoosesCosmini() {
-    this.OpponentCosmini2Battle = this.OpponentRoster[Math.floor(Math.random() * this.OpponentRoster.length)];
+  OpponentChoosesCosmini()
+  {
+    let indexOfCosmini: number = Math.floor(Math.random() * this.OpponentRoster.length);
+    if (this.OpponentRoster[indexOfCosmini].hasBattled)
+    {
+      this.OpponentChoosesCosmini();
+    }
+    this.OpponentRoster[indexOfCosmini].hasBattled = true;
+    console.log(indexOfCosmini);
+    this.OpponentCosmini2Battle = this.OpponentRoster[indexOfCosmini];
   }
 
-  PlayerChoosesCosmini(Choice: Cosminis) {
+  PlayerChoosesCosmini(Choice: Cosminis)
+  {
     this.PlayerCosmini2Battle = Choice;
   }
 
@@ -244,6 +297,14 @@ export class BattleMenuComponent implements OnInit {
     let BattleResult: number;
     this.battle.BattleResult(this.PlayerCosmini2Battle.companionId, this.OpponentCosmini2Battle.companionId).subscribe((res) => 
     {
+      for (let i = 0; i < this.PlayerRoster.length; i++)
+      {
+        if (this.PlayerCosmini2Battle.companionId == this.PlayerRoster[i].companionId)
+        {
+          this.PlayerRoster[i].hasBattled = true;
+        }
+      }
+      
       BattleResult = res;
       if (BattleResult == 0)
       {
@@ -276,6 +337,7 @@ export class BattleMenuComponent implements OnInit {
         this.Picking = true;
         this.Battling = false;
       }
+      this.PlayerCosmini2Battle = this.DefaultCosmini2Battle;
       this.GamePlayLoop();
     })
   }
@@ -316,6 +378,7 @@ export class BattleMenuComponent implements OnInit {
 
   ngOnInit(): void
   {
+    this.BattleMode = window.sessionStorage.getItem("BattleMode") as string;
     this.GamePlayLoop()
   }
 

@@ -14,6 +14,16 @@ export class SelectBattleComponent implements OnInit {
     this.router.navigateByUrl('/Battle/Menu');  // goes to the battle menu screen
   }
 
+  BattleFriend() {
+    window.sessionStorage.setItem("BattleMode", "Friend");
+    this.router.navigateByUrl('/Battle/Menu');  // goes to the battle menu screen
+  }
+
+  BattleRandom() {
+    window.sessionStorage.setItem("BattleMode", "Random");
+    this.router.navigateByUrl('/Battle/Menu');  // goes to the battle menu screen
+  }
+
   ngOnInit(): void {
   }
 

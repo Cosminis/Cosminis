@@ -1,16 +1,18 @@
-<h2 *ngIf="!betting">Opponent Name:{{Opponent}}</h2>
+<h2 *ngIf="(!betting) && (BattleMode == 'Friend')">Opponent Name: {{Opponent}}</h2>
+<h2 *ngIf="(!betting) && (BattleMode == 'Random')">Random Opponent</h2>
 <section class="container1" *ngIf="!betting">
 	<div class="card-wrapper" *ngFor="let com of OpponentRoster">
-        <div class="cardhead">
-            <img class="all-cosminis" src="../assets/Pics/mystery-opponent.png">
-        </div>
-
-        <div class="cardbody bg-dark">
-            <h5 *ngIf="com.nickname" class="card-title">Nickname: {{com.nickname}}</h5>
-            <h5 *ngIf="!com.nickname" class="card-title">Species: {{com.speciesNickname}}</h5>
-            <h6 class="card-title"> Mood: {{com.mood}}</h6>
-            <h6 class="card-title"> Hunger: {{com.hunger}}</h6>
-            
+        <div *ngIf="!com.hasBattled">
+            <div class="cardhead">
+                <img class="all-cosminis" src="../assets/Pics/mystery-opponent.png">
+            </div>
+    
+            <div class="cardbody bg-dark">
+                <h5 *ngIf="com.nickname" class="card-title">Nickname: {{com.nickname}}</h5>
+                <h5 *ngIf="!com.nickname" class="card-title">Species: {{com.speciesNickname}}</h5>
+                <h6 class="card-title"> Mood: {{com.mood}}</h6>
+                <h6 class="card-title"> Hunger: {{com.hunger}}</h6>
+            </div>
         </div>
     </div> 
 </section>
@@ -32,15 +34,17 @@
 </section>
 <section class="container3" *ngIf="!betting">
 	<div class="card-wrapper" type="button" *ngFor="let com of PlayerRoster" (click)="PlayerChoosesCosmini(com)">
-        <div class="cardhead">
-            <img class="all-cosminis" src="../assets/Pics/{{com.image}}">
-        </div>
-
-        <div class="cardbody bg-dark">
-            <h5 *ngIf="com.nickname" class="card-title">{{com.nickname}}</h5>
-            <h5 *ngIf="!com.nickname" class="card-title">{{com.speciesNickname}}</h5>
-            <h6 class="card-title"> Mood: {{com.mood}}</h6>
-            <h6 class="card-title"> Hunger: {{com.hunger}}</h6>
+        <div *ngIf="!com.hasBattled">
+            <div class="cardhead">
+                <img class="all-cosminis" src="../assets/Pics/{{com.image}}">
+            </div>
+    
+            <div class="cardbody bg-dark">
+                <h5 *ngIf="com.nickname" class="card-title">{{com.nickname}}</h5>
+                <h5 *ngIf="!com.nickname" class="card-title">{{com.speciesNickname}}</h5>
+                <h6 class="card-title"> Mood: {{com.mood}}</h6>
+                <h6 class="card-title"> Hunger: {{com.hunger}}</h6>
+            </div>
         </div>
     </div>
 </section>
