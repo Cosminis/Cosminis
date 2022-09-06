@@ -79,6 +79,7 @@ export class BattleMenuComponent implements OnInit {
   Battling: boolean = false;
   Lost: boolean = false;
   Won: boolean = false;
+  CashedOut: boolean = false;
 
   GamePlayLoop()
   {
@@ -107,6 +108,10 @@ export class BattleMenuComponent implements OnInit {
         else if (this.BattleMode === "Friend")
         {
           this.CreateAFriendRoster();
+        }
+        else if (this.BattleMode === "Boss")
+        {
+          this.CreateBossRoster()
         }
         else
         {
@@ -176,6 +181,14 @@ export class BattleMenuComponent implements OnInit {
 
       //you stink, click a button to either route you back to the picking page to play again or back to home
     }
+    else if(this.CashedOut)
+    {
+      console.log("You cashed out...");
+      //payout
+      this.Payout();
+
+      //you stink, click a button to either route you back to the picking page to play again or back to home
+    }
   }
   
   CreateARandoRoster()
@@ -229,7 +242,19 @@ export class BattleMenuComponent implements OnInit {
       });;
       });
   }
-    
+
+  CreateBossRoster() {
+    this.battle.CreateRosterWithId(5).subscribe((res) => {
+      this.OpponentRoster = res;
+      for (let i = 0; i < this.OpponentRoster.length; i++) {
+        this.OpponentRoster[i].speciesNickname = this.battle.DisplayName.get(this.OpponentRoster[i].speciesFk);
+        this.OpponentRoster[i].emotionString = this.battle.currentEmotion.get(this.OpponentRoster[i].emotion);
+        this.OpponentRoster[i].image = this.battle.imageLib.get(this.OpponentRoster[i].speciesFk);
+      }
+      this.MadeOpponentRoster = true;
+      this.CutRosters();
+    });
+  }
 
   CreatePlayerRoster() {
     let stringUser: string = sessionStorage.getItem('currentUser') as string;
@@ -308,16 +333,19 @@ export class BattleMenuComponent implements OnInit {
       BattleResult = res;
       if (BattleResult == 0)
       {
+        alert("You won the round!");
         this.WinStreak++;
         this.roundCount++;
       }
       else if (BattleResult == 1)
       {
+        alert("You lost the round!");
         this.LoseStreak++;
         this.roundCount++;
       }
       else
       {
+        alert("You tied the round!");
         this.tieCount++;
         this.roundCount++;
       }
@@ -346,7 +374,7 @@ export class BattleMenuComponent implements OnInit {
   {
     let stringUser: string = sessionStorage.getItem('currentUser') as string;
     let currentUser: Users = JSON.parse(stringUser);
-    this.battle.PlaceBet(currentUser.userId as number, this.PlayerGoldBet);
+    this.battle.PlaceBet(currentUser.userId as number, this.ConfirmedGold);
   }
 
   Payout()
@@ -360,7 +388,25 @@ export class BattleMenuComponent implements OnInit {
 
   ConfirmBet()
   {
-    this.ConfirmedGold = this.PlayerGoldBet;
+    let stringUser: string = sessionStorage.getItem('currentUser') as string;
+    let currentUser: Users = JSON.parse(stringUser);
+    if (isNaN(this.PlayerGoldBet))
+    {
+      alert("Please input a number!")
+    }
+    else if (this.PlayerGoldBet <= 0)
+    {
+      alert("Please input a POSITIVE number!")
+    }
+    else if (0 <= currentUser.goldCount)
+    {
+      console.log()
+      this.ConfirmedGold = Math.round(this.PlayerGoldBet);
+    }
+    else
+    {
+      alert("You're in debt; you need to get more gold.")
+    }
     this.GamePlayLoop();
   }
 
@@ -376,8 +422,19 @@ export class BattleMenuComponent implements OnInit {
     this.router.navigateByUrl('/homepage');  // define your component where you want to go
   }
 
+  CashOut()
+  {
+    this.Picked = false;
+    this.Picking = false;
+    this.Battling = false;
+
+    this.CashedOut = true;
+    this.GamePlayLoop();
+  }
+
   ngOnInit(): void
   {
+    
     this.BattleMode = window.sessionStorage.getItem("BattleMode") as string;
     this.GamePlayLoop()
   }

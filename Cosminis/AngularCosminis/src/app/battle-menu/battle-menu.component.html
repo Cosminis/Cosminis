@@ -1,10 +1,13 @@
+<app-navbar *ngIf="betting"></app-navbar>
+
 <h2 *ngIf="(!betting) && (BattleMode == 'Friend')">Opponent Name: {{Opponent}}</h2>
 <h2 *ngIf="(!betting) && (BattleMode == 'Random')">Random Opponent</h2>
+
 <section class="container1" *ngIf="!betting">
 	<div class="card-wrapper" *ngFor="let com of OpponentRoster">
         <div *ngIf="!com.hasBattled">
             <div class="cardhead">
-                <img class="all-cosminis" src="../assets/Pics/mystery-opponent.png">
+                <img class="all-cosminis" src="../assets/Pics/{{com.image}}">
             </div>
     
             <div class="cardbody bg-dark">
@@ -16,6 +19,7 @@
         </div>
     </div> 
 </section>
+
 <section class="container2" *ngIf="!betting">
 	<div class="column one">
 		<h1>Your Cosmini</h1>
@@ -23,15 +27,17 @@
         <img class="battle-cosmini" src="../assets/Pics/mystery-opponent.png" *ngIf="!PlayerCosmini2Battle.image">
 	</div>  
 	<div class="column two">
+        <button type="button" class="btn cashout-button btn-light" (click)="CashOut()" *ngIf="Picking">Cash Out</button>
 		<h1>VS</h1>
 		<button type="button" class="btn battle-button btn-light" (click)="ConfirmingPick()" *ngIf="Picking">BATTLE</button>
-    <button type="button" class="btn battle-button btn-light" (click)="ICanStopAnyTimeIWant()" *ngIf="Lost || Won">Go Back Home</button>
+    <button type="button" class="btn battle-button btn-light" (click)="ICanStopAnyTimeIWant()" *ngIf="Lost || Won || CashedOut">Go Back Home</button>
 	</div>
 	<div class="column three">
 		<h1>Opponent Cosmini</h1>
 		<img class="battle-cosmini" src="../assets/Pics/mystery-opponent.png">
 	</div>
 </section>
+
 <section class="container3" *ngIf="!betting">
 	<div class="card-wrapper" type="button" *ngFor="let com of PlayerRoster" (click)="PlayerChoosesCosmini(com)">
         <div *ngIf="!com.hasBattled">
@@ -48,6 +54,7 @@
         </div>
     </div>
 </section>
+
 <section class="container4" *ngIf="!betting">
     <h2>Your Team</h2>
     <div class="stats-container">
@@ -57,6 +64,7 @@
         <div class="player-stats"> Win Count: {{WinStreak}}</div>
     </div>
 </section>
+
 <section class="container5" *ngIf="betting">
     <div class="mini-background">
         <h1>Betting Phase</h1>
