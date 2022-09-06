@@ -1,4 +1,4 @@
-using DataAccess.Entities;
+/*using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using CustomExceptions;
 using Models;
@@ -18,7 +18,7 @@ public class CommentController : ControllerBase
     {
         _commentServices = commentServices;
     }
-
+    
     [Route("/Comments/SubmitComment")]
     [HttpPost]
     public ActionResult<Comment> SubmitComment(int commenterID, int postsID, [FromBody]string content)
@@ -70,5 +70,5 @@ public class CommentController : ControllerBase
         {
             return NotFound("Such a comment does not exist"); 
         }
-    }       
-}
+    }     
+}*/  
