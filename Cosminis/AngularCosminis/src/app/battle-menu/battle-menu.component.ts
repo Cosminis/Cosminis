@@ -334,19 +334,19 @@ export class BattleMenuComponent implements OnInit {
       BattleResult = res;
       if (BattleResult == 0)
       {
-        Swal.fire("You won the round!");
+        Swal.fire("You won the round!", "Opponent Cosmini's Nickname: " + this.OpponentCosmini2Battle.speciesNickname);
         this.WinStreak++;
         this.roundCount++;
       }
       else if (BattleResult == 1)
       {
-        Swal.fire("You lost the round!");
+        Swal.fire("You lost the round!", "Opponent Cosmini's Nickname: " + this.OpponentCosmini2Battle.speciesNickname);
         this.LoseStreak++;
         this.roundCount++;
       }
       else
       {
-        Swal.fire("You tied the round!");
+        Swal.fire("You tied the round!", "Opponent Cosmini's Nickname: " + this.OpponentCosmini2Battle.speciesNickname,);
         this.tieCount++;
         this.roundCount++;
       }
