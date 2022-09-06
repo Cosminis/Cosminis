@@ -16,7 +16,7 @@ import { tick } from '@angular/core/testing';
   
 export class BattleMenuComponent implements OnInit {
 
-  constructor(private battle: BattleService) { }
+  constructor(private battle: BattleService, private router: Router,) { }
   
   OpponentRoster: Cosminis[] = [];
   PlayerRoster: Cosminis[] = [];
@@ -24,6 +24,7 @@ export class BattleMenuComponent implements OnInit {
   PlayerRisk: number = 0;
   WinStreak: number = 0;
   LoseStreak: number = 0;
+  tieCount:number = 0;
   roundCount: number = 0;
   maxRoundCount: number = 0;
   ConfirmedGold:number = 0;
@@ -141,6 +142,7 @@ export class BattleMenuComponent implements OnInit {
     else if(this.Lost)
     {
       console.log("Lost...");
+      alert("You Have Lost All of Your Money, Have You Tried Betting More?");
       //you stink, click a button to either route you back to the picking page to play again or back to home
     }
     else if(this.Won)
@@ -148,6 +150,7 @@ export class BattleMenuComponent implements OnInit {
       console.log("Won...");
       //payout
       this.Payout();
+      console.log("Paid");
 
       //you stink, click a button to either route you back to the picking page to play again or back to home
     }
@@ -217,8 +220,15 @@ export class BattleMenuComponent implements OnInit {
   CalculateRiskFactor()
   {
     let CompleteRoster = [];
+    let RosterID :number[] = [];
     CompleteRoster = this.PlayerRoster.concat(this.OpponentRoster);
-    this.battle.DifficultyScale(CompleteRoster, this.PlayerRoster.length).subscribe((res) => this.PlayerRisk = res);
+
+    CompleteRoster.forEach(function (value)
+    {
+      RosterID.push(value.companionId);
+    });
+    
+    this.battle.DifficultyScale(RosterID, this.PlayerRoster.length).subscribe((res) => this.PlayerRisk = res);
   }
 
   OpponentChoosesCosmini() {
@@ -245,6 +255,11 @@ export class BattleMenuComponent implements OnInit {
         this.LoseStreak++;
         this.roundCount++;
       }
+      else
+      {
+        this.tieCount++;
+        this.roundCount++;
+      }
 
       if(this.LoseStreak>=2) //you have lost
       {
@@ -255,6 +270,11 @@ export class BattleMenuComponent implements OnInit {
       {
         this.Battling = false;
         this.Won = true;
+      }
+      else //loop back to picking
+      {
+        this.Picking = true;
+        this.Battling = false;
       }
       this.GamePlayLoop();
     })
@@ -271,7 +291,9 @@ export class BattleMenuComponent implements OnInit {
   {
     let stringUser: string = sessionStorage.getItem('currentUser') as string;
     let currentUser: Users = JSON.parse(stringUser);
-    this.battle.Payout(currentUser.userId as number, this.PlayerGoldBet, this.PlayerRisk, this.WinStreak);
+    console.log("Paying");
+    let amount:number = this.battle.Payout(currentUser.userId as number, this.PlayerGoldBet, this.PlayerRisk, this.WinStreak, this.tieCount);
+    console.log(amount);
   }
 
   ConfirmBet()
@@ -282,8 +304,14 @@ export class BattleMenuComponent implements OnInit {
 
   ConfirmingPick()
   {
+    //this.LoseStreak ++;
     this.Picked = true;
     this.GamePlayLoop();
+  }
+
+  ICanStopAnyTimeIWant()
+  {
+    this.router.navigateByUrl('/homepage');  // define your component where you want to go
   }
 
   ngOnInit(): void

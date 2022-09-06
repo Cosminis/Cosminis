@@ -12,11 +12,13 @@ public class BattleServices
     //Honey wake up, it is time for you to write your dependacy injection!
     private readonly ICompanionDAO _compRepo;
 	private readonly IUserDAO _userRepo;
+    private readonly Interactions _InterRepo;
 
-    public BattleServices(ICompanionDAO compRepo, IUserDAO userRepo)
+    public BattleServices(ICompanionDAO compRepo, IUserDAO userRepo, Interactions InterRepo)
     {
         this._compRepo = compRepo;
         this._userRepo = userRepo;
+        this._InterRepo = InterRepo;
     }   
     public List<Companion> CreateRoster()
     {
@@ -106,6 +108,9 @@ public class BattleServices
         Companion OneComp = new Companion();
         Species ZeroSpe = new Species();
         Species OneSpe = new Species();
+        EmotionChart EmotionZero = new EmotionChart();
+        EmotionChart EmotionOne = new EmotionChart();
+        Random RNGjesusManifested = new Random(); 
         
         try
         {
@@ -113,6 +118,8 @@ public class BattleServices
             OneComp = _compRepo.GetCompanionByCompanionId(CombatantOne);
             ZeroSpe = _compRepo.FindSpeciesByID(ZeroComp.SpeciesFk);
             OneSpe = _compRepo.FindSpeciesByID(OneComp.SpeciesFk);
+            EmotionZero = _InterRepo.GetEmotionByEmotionId(ZeroComp.Emotion);
+            EmotionOne = _InterRepo.GetEmotionByEmotionId(OneComp.Emotion);
             hungerDiff = ZeroComp.Hunger - OneComp.Hunger;
             moodDiff = ZeroComp.Mood - OneComp.Mood;
         }
@@ -120,7 +127,7 @@ public class BattleServices
         {
             throw;
         }
-
+        
         if(ZeroSpe.OpposingEle == OneSpe.OpposingEle)
         {
             ZeroPower = ZeroPower + 50;
@@ -147,6 +154,11 @@ public class BattleServices
         {
             OnePower = OnePower + (moodDiff/-2);
         }
+
+        ZeroPower = ZeroPower + (EmotionZero.Quality * 3);
+        OnePower = OnePower + (EmotionOne.Quality * 3);
+        ZeroPower = ZeroPower + RNGjesusManifested.Next(-10,11);
+        OnePower = OnePower + RNGjesusManifested.Next(-10,11);
         
         if(ZeroPower>OnePower)
         {
@@ -172,6 +184,7 @@ public class BattleServices
         List<int> CompTwoHunger = new List<int>();
         List<int> CompOneMood = new List<int>();
         List<int> CompTwoMood = new List<int>();
+        Random RNGjesusManifested = new Random(); 
 
         try
         {
@@ -195,6 +208,15 @@ public class BattleServices
             }
 
             returnValue = (int) (-1 * (((CompOneHunger.Average()/2)-(CompTwoHunger.Average()/2)) + ((CompOneMood.Average()/2)-(CompTwoMood.Average()/2))));
+            returnValue = returnValue + RNGjesusManifested.Next(-10,10);
+            if(returnValue>100)
+            {
+                returnValue = 100;
+            }
+            if(returnValue<-100)
+            {
+                returnValue = -100;
+            }
         }
         catch
         {

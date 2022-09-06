@@ -22,7 +22,8 @@
 	</div>  
 	<div class="column two">
 		<h1>VS</h1>
-		<button type="button" class="btn game-button btn-light" (click)="ConfirmingPick()">BATTLE</button>
+		<button type="button" class="btn battle-button btn-light" (click)="ConfirmingPick()" *ngIf="Picking">BATTLE</button>
+    <button type="button" class="btn battle-button btn-light" (click)="ICanStopAnyTimeIWant()" *ngIf="Lost || Won">Go Back Home</button>
 	</div>
 	<div class="column three">
 		<h1>Opponent Cosmini</h1>
@@ -52,7 +53,6 @@
         <div class="player-stats"> Win Count: {{WinStreak}}</div>
     </div>
 </section>
-
 <section class="container5" *ngIf="betting">
     <div class="mini-background">
         <h1>Betting Phase</h1>

@@ -68,7 +68,7 @@ export class BattleService {
   }
   
   //this obtains the difficult of the battle
-  DifficultyScale(CompleteRoster: Cosminis[], SizeOfPlayerRoster: number): Observable<number> {
+  DifficultyScale(CompleteRoster: number[], SizeOfPlayerRoster: number): Observable<number> {
     return this.http.put(this.apiUrl + "Scalar?SizeOne="+ SizeOfPlayerRoster, CompleteRoster) as unknown  as Observable<number>;
   }
   
@@ -103,19 +103,19 @@ export class BattleService {
     return FriendId;
   }
 
-  Payout(UserId: number, GoldBet: number, Difficulty: number, WinStreak: number): number {
-    let stringUser: string = sessionStorage.getItem('currentUser') as string;
-    let currentUser: Users = JSON.parse(stringUser);
-
-    if (WinStreak == 0 || Difficulty == -100) {
+  Payout(UserId: number, GoldBet: number, Difficulty: number, WinStreak: number, tieCount:number): number {
+    if (Difficulty == -100) {
       return 0;
     }
     
-    let NewGoldPayout: number = Math.pow(GoldBet * (1 + (.1)), .1 * WinStreak);
-    
-    NewGoldPayout = NewGoldPayout + (NewGoldPayout * (Difficulty / 100));
+    let NewGoldPayout = (GoldBet * 1.5 * WinStreak) + (GoldBet * tieCount * 0.5);
 
-    this.resourceAPI.AddGold(UserId,NewGoldPayout);
+    this.resourceAPI.AddGold(UserId,NewGoldPayout).subscribe((res)=>
+    {
+      console.log(res);
+      alert("You've won, here is your payout: " + NewGoldPayout);
+    });
+
 
     return NewGoldPayout;
   }
