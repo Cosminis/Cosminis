@@ -8,6 +8,11 @@
     border-bottom-color: plum;
 }
 
+.btn {
+    background-color: rgba(185, 117, 181, 0.9);
+    color: mistyrose;
+}
+
 .NavLeft {
     display: flex;
     flex-direction: column;
@@ -44,11 +49,6 @@
     -moz-background-clip:text;
     background-clip:text; 
     -webkit-text-stroke: 1px mistyrose;
-}
-
-.log-out {
-    background: plum;
-    opacity: 80%;
 }
 
 .gems {
