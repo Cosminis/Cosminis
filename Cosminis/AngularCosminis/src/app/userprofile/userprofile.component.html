@@ -78,15 +78,16 @@
                         </div>                
                     </div> 
                     <!--Duplicate starts here-->
-                    <h5 class="friend-title" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">{{us.password}}</h5>
-                    <button type="button" class="btn" id ="removeButton" (click)="removeFriends(us.username)" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Remove User</button>
-                    <button type="button" class="btn" id ="blockButton" (click)="blockUsers(us.username)" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Block user</button>
-                    <div class="friend-interactions" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">
+                    <div class="duplicate1">
+                        <h5 class="friend-title" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">{{us.password}}</h5>
+                        <button type="button" class="btn" id ="removeButton" (click)="removeFriends(us.username)" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Remove User</button>
+                        <button type="button" class="btn" id ="blockButton" (click)="blockUsers(us.username)" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Block user</button>
+                    </div>    
+                    <div class="duplicate2" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">
                         <div class="cardhead" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">
                             <img class="all-cosminis" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)" src="../../assets/Pics/{{cos.image}}">
-                        </div>                    
-                        <button type="button" class="btn small-btn" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Pet</button>
-                        <button type="button" class="btn small-btn" *ngIf="!(us.showcaseCompanionFk) && (cos.companionId == 0)">Feed</button>
+                        </div>
+                        <div class="message">Showcase companion not set for this user.</div>                    
                     </div>                      
                 </div>           
             </div>

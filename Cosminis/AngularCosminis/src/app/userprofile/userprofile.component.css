@@ -156,6 +156,15 @@ h2 {
     width: 180px;
     height: 30px;
 }
+
+.duplicate2 {
+    color: rgb(7, 2, 31);
+}
+
+.message {
+    margin-top: 10px;
+}
+
 .cardhead {
     height: 50x;
     width: 95px;
