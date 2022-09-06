@@ -72,12 +72,12 @@ namespace Services
         public int CanPlay(int gemsPaid, User user)
         {
             int yes = gemsPaid % 5 != 0 ? 0 : gemsPaid / 5;
-            //Remove Gems
-            gemsPaid *= -1;
+            //Remove Gems 
             if (user.GemCount <gemsPaid)
             {
                 return 0;
             }
+            gemsPaid *= -1;
             user = _resource.UpdateGems((int)user.UserId!, gemsPaid);
             return yes;
         }
