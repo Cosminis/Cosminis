@@ -54,7 +54,9 @@ updateTotal() : void {
 goToGemShop(){
   this.router.navigateByUrl('/GemSpendingShop');  // define your component where you want to go
 }
-
+lottery(){
+  this.router.navigateByUrl('/lottery');  // define your component where you want to go
+}
 
   ngOnInit(): void {
     this.ref.detectChanges();

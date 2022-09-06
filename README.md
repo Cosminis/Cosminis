@@ -1,15 +1,25 @@
-# Cosmini’s <3 #
+# Cosminis #
 
 ## Overview ##
 With the rise in popularity of metaverses, we are excited to announce our addition to it - Cosmini’s! A social media hub where users socialize and showcase their digital pets. Free from physical limits, users decide what their companion will be like; shapes and forms are checked only by their imagination! This application will allow users to sign in and register themselves. Trade, adopt and perform various activities with your pets. Most importantly, you can showcase your fluffy, scaly or ethereal companions to your friends and gain further resources for growing and expanding your team.
 
+_Suggested from Team Default_
+We present to you, an eccommerence marketplace built with an underlying social aspect and game for consumer interaction. Pulling from the familarity of gacha games, this is an ecommerce app focused on microtransactions. These microtransactions almost force a user to buy into the system to progress in a neopet esq. environment. A user can purchase gems, a resource not found in the game, to gain in game currency and food for their creatures. The gems also allow the user to enter a lottery where they can gain a large amount of resources for a small price of gems.
+
 ## User Stories ##
 * Users should be able to obtain a companion.
+* Users should be able to purchase gems in bundles and with a monthly subscription
+* Users should be able to use gems in a shop to purchase in game resources
+* Users should be able to use in game currency to purchase in game resources
+* Users should be able to use gems in a lottery
 * Users should be able to like/comment on content.
 * Users should be able to add one another to their friends list.
 * Users should be able to view user profiles.
 * Users should be able to showcase their companion.
 * Users should be able to login using a third party account.
+* Users should be able to feed their companions
+* Users should be able to pet their companions
+
 
 ## MVP Goals ##
 * User Registration
@@ -22,6 +32,9 @@ With the rise in popularity of metaverses, we are excited to announce our additi
 * Resource/Economics system
     * When posting/commenting on posts/being liked/making new friends generates a finite amount of resources
     * In-game marketplace that allows users to trade food/gold/eggs
+    * Marketplace that allows users to purchase gems
+    * Marketplace that allows users to use gems on in-game resources
+    * Lottery roulette system where users can spend gems to spin the wheel and gain a random selection of items
 * Companion interactions
     * Petting
     * Feeding - use your resources to accomplish this
@@ -30,9 +43,7 @@ With the rise in popularity of metaverses, we are excited to announce our additi
     * Conversation based on Companion status
         * Happy, sad, sick, angry, silly, tired....
 * Companion Customization/Equipment
-    * Stock elemental companions (volcanic, glacial, forest, sky, holy, dark) 
-    * Stock attributes for companions for permutation (Str, Dex, Int)
-    * Heath, magic points, food, and attack power (these are dependent upon attributes)
+    * Stock elemental companions (volcanic, glacial, forest, sky, holy, dark)   
     * Creature species name, and also a nickname
 
 ## Stretch Goals ##
@@ -48,15 +59,14 @@ With the rise in popularity of metaverses, we are excited to announce our additi
 * Hunger now influences the companions' combat stats
 * In-game shop where you can use gold to buy food or items (mtx)
     * Items can be healing/offensive/or temporary power ups
-    * Eventually more eggs or creature parts
-* Daily item spinner/reward
+    * Eventually more eggs or creature parts 
 * Customization/Theme
 * Visual/Audio Feedback
 * Teams/Guilds
 * Time limited events
 * Inter-pet conversation
 
-## Tech Stack ##
+## Technologies ##
 * C#
 * SQL
 * ASP.NET
@@ -67,20 +77,21 @@ With the rise in popularity of metaverses, we are excited to announce our additi
 * CSS
 * Typescript
 * Github Action
-* Entity Core Framework
-* ORM
-* Docker
+* Entity Framework Core
 
 ## Tables ##
-* Users
-* Posts
-* Friends
+* Comments
 * Companions
-* Likes
-* Food
-* FoodType
-* User_Has_Food
+* Conversations
+* EmotionCharts 
+* FoodElements
+* FoodInventories
+* FoodStats
+* Friends
+* Orders
+* Posts
 * Species
+* Users
 
 ## ERD ##
 ![Screenshot](P2_ERD_FinalFinal.png)

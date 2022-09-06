@@ -112,6 +112,11 @@ public class CompanionServices
 
         return false;
     }
+    /// <summary>
+    /// Generates companions
+    /// </summary>
+    /// <param name="userIdInput">Valid userID</param>
+    /// <returns>New Companion</returns>
     public Companion GenerateCompanion(int userIdInput)
     {
         try
