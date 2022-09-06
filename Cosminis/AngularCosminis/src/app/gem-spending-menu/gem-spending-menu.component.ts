@@ -18,7 +18,16 @@ export class GemSpendingMenuComponent implements OnInit {
   eggQty : number = 0;
   goldQty : number = 0;
   foodQty : [number, number, number, number, number, number] = [0, 0, 0, 0, 0, 0];
-  purchaseTotal : number = 0;
+  purchaseTotal: number = 0;
+  
+  goldSub: number = 0;
+  eggSub: number = 0;
+  chiliSub: number = 0;
+  sandwhichSub: number = 0;
+  saladSub: number = 0;
+  marshmellowSub: number = 0;
+  holySub: number = 0;
+  devilSub: number = 0;
 
 
   confirmPurchase() : void 
@@ -49,11 +58,21 @@ export class GemSpendingMenuComponent implements OnInit {
 
   updateTotal() : void 
   {
-    this.purchaseTotal = this.eggQty * 100;  // This value needs to be updated
+    this.purchaseTotal = this.eggQty * 10;
+    this.purchaseTotal = this.goldQty / 10;  // This value needs to be updated
     for(let i = 0; i < this.foodQty.length; i++) 
     {
-      this.purchaseTotal += this.foodQty[i] * 10;  // this value needs to be updated
+      this.purchaseTotal += this.foodQty[i] * 1;  // this value needs to be updated
     }
+    this.goldSub = this.goldQty / 10;
+    this.eggSub = this.eggQty * 10;
+    this.chiliSub = this.foodQty[0];
+    this.sandwhichSub = this.foodQty[1];
+    this.saladSub = this.foodQty[2];
+    this.marshmellowSub = this.foodQty[3];
+    this.holySub = this.foodQty[4];
+    this.devilSub = this.foodQty[5];
+
   }
 
   gotoShop(){
