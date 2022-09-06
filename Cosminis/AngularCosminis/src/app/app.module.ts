@@ -19,7 +19,7 @@ import { InteractionsComponent } from './interactions/interactions.component';
 import { GemSpendingMenuComponent } from './gem-spending-menu/gem-spending-menu.component';
 import { LotteryComponent } from './lottery/lottery.component'; 
 import { PaymentComponent } from './payment/payment.component';
-import { CcformComponent } from './payment/ccform/ccform.component';
+import { CcformComponent } from '././payment/ccform/ccform.component';
 import { SelectBattleComponent } from './select-battle/select-battle.component'; 
 import { BattleMenuComponent } from './battle-menu/battle-menu.component'; 
 
@@ -50,6 +50,7 @@ import { BattleMenuComponent } from './battle-menu/battle-menu.component';
     MatButtonModule,
     MatCardModule,
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule,
     AuthModule.forRoot
     ({

@@ -115,7 +115,10 @@
   .month {
     margin-right: 10px;
     text-align: center;
-    
+  }
+
+  .year {
+    text-align: center;
   }
 
   #state {
@@ -154,6 +157,7 @@
     flex-direction: row;
     justify-content: space-evenly;
     height: 50px;
+    width: 175px;
     color: rgb(87, 69, 138, 0.95);
   }
 
