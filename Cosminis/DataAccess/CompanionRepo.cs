@@ -47,7 +47,7 @@ public class CompanionRepo : ICompanionDAO
                 creatureRoulette = 8;                           //this is super rare
                 break;
         }         
-        int emotionRoulette = randomCreature.Next(0,10); 
+        int emotionRoulette = randomCreature.Next(1,12); 
         User? userInstance = _context.Users.Find(userIdInput); 
         if(userInstance == null)
         {

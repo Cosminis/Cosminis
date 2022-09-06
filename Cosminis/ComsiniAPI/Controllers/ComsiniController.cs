@@ -75,6 +75,24 @@ public class CompanionController : ControllerBase
         }         
     }
 
+    [Route("companions/hatch")]
+    [HttpGet]
+    public ActionResult<int> HatchCompanion(string username)
+    {
+        try
+        {
+            return _companionRepo.HatchCompanion(username);
+        }
+        catch (UserNotFound)
+        {
+            return BadRequest("No User has that username");
+        }
+        catch (ResourceNotFound)
+        {
+            return BadRequest("No Eggs available");
+        }
+    }
+
     [Route("companions/generate")]
     [HttpPost()]
     public ActionResult<Companion> GenerateFreeCompanion(int userId)

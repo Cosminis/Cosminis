@@ -17,22 +17,19 @@ public class CompanionServices
         _userRepo = userRepo;
     }
 
-    public int? HatchCompanion(string username)
+    public int HatchCompanion(string username)
     {
         try
         {
             User newUser = _userRepo.GetUserByUserName(username);
-            if(newUser == null)
-            {
-                throw new UserNotFound();
-            }
-            Companion companionToGenerate = _CompanionRepo.GenerateCompanion((int)newUser.UserId);
-
-
+            Companion companionToGenerate = _CompanionRepo.GenerateCompanion(newUser.UserId);
             return companionToGenerate.CompanionId;
-
         }
         catch (ResourceNotFound)
+        {
+            throw;
+        }
+        catch (UserNotFound)
         {
             throw;
         }
