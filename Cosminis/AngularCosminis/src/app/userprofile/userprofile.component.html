@@ -16,9 +16,14 @@
     <div class="column two">
         <h2 class="feed">Cosminis Feed</h2>
         <div class="card friends-feed mb-3" *ngFor="let pot of posts">
-            <div class="card-body">
+            <div class="card-body" *ngFor="let com of commentArr">
                 <h5 class="card-title">{{pot.posterNickname}}</h5>
                 <div>{{pot.content}}</div>
+                <input type="text" [(ngModel)]="postComment" placeholder="Comment...'?" id="comment" cols="50" rows="1">
+                <div class="post-button">
+                    <button class="btn post-selector" (click)="createComment(pot.postId)" type="button">Submit</button>
+                </div>
+                <div *ngIf="com.postIdFk == pot.postId">{{com.content}}</div>
             </div>
         </div> 
     </div>
