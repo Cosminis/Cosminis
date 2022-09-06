@@ -1,4 +1,4 @@
-using DataAccess.Entities;
+/*using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using CustomExceptions;
 using Models;
@@ -18,7 +18,7 @@ public class LikeController : ControllerBase
     {
         _likeServices = likeServices;
     }
-
+    
     [Route("/Likes/RemoveLikes")]
     [HttpPut]
     public ActionResult<bool> RemoveLikes(int UserID, int PostID)
@@ -83,4 +83,4 @@ public class LikeController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-}
+}*/
