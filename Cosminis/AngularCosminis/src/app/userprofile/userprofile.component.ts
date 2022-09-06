@@ -5,9 +5,11 @@ import { UserApiServicesService } from '../services/User-Api-Service/user-api-se
 import { FriendsService } from '../services/Friends-api-service/friends.service';
 import { ResourceApiServicesService } from '../services/Resource-Api-Service/resource-api-service.service';
 import { ComsinisApiServiceService } from '../services/Comsini-api-service/comsinis-api-service.service';
+import { CommentService } from '../services/Comment-Service/comment.service';
 import { InteractionService } from '../services/Interaction-Api-Service/interaction.service';
 import { Posts } from '../Models/Posts';
 import { Users } from '../Models/User';
+import { Comment } from '../Models/Comments'
 import { Cosminis } from '../Models/Cosminis';
 import { Router } from '@angular/router';
 import { Friends } from '../Models/Friends';
@@ -20,7 +22,11 @@ import { FoodElement } from '../Models/FoodInventory';
 })
 export class UserprofileComponent implements OnInit {
 
-  constructor(private api:PostSpiServicesService, private router: Router, private comsiniApi:ComsinisApiServiceService, private userApi:UserApiServicesService, private friendApi:FriendsService, private resourceApi: ResourceApiServicesService, private interApi:InteractionService) { }
+  constructor(private api:PostSpiServicesService, private router: Router, private comsiniApi:ComsinisApiServiceService, private commentApi:CommentService, private userApi:UserApiServicesService, private friendApi:FriendsService, private resourceApi: ResourceApiServicesService, private interApi:InteractionService) { }
+
+  postComment : string = "";
+
+  commentArr : Comment[] = [];
 
   speciesNickname : number = 0;
 
@@ -162,7 +168,7 @@ export class UserprofileComponent implements OnInit {
       let postUser:Users;
       let userID:number;   
       for(let i=0; i<this.ownersPosts.length; i++)
-      {
+      {        
         userID = this.ownersPosts[i].userIdFk;
         this.userApi.Find(userID).subscribe((res) =>
         {
@@ -236,6 +242,7 @@ export class UserprofileComponent implements OnInit {
     {
       res.reverse();
       this.posts = res;
+      console.log(this.posts);
       let postUser:Users;
       let userID:number;
       for(let i =0; i<this.posts.length;i++)
@@ -246,6 +253,7 @@ export class UserprofileComponent implements OnInit {
           postUser = res;
           console.log(postUser);
           this.posts[i].posterNickname = postUser.password;
+          this.displayComments(this.posts[i].postId);
         })
         this.posts.splice(10, this.posts.length-10);
       }
@@ -416,7 +424,6 @@ export class UserprofileComponent implements OnInit {
       if(this.userInstance.showcaseCompanionFk == null)
       {
         this.comsiniArr.push(this.displayCosmini);
-        console.log("this worked");
       }
       else
       {
@@ -454,6 +461,37 @@ export class UserprofileComponent implements OnInit {
         window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
       })    
   }  
+
+  createComment(postId : number)
+  {
+    let stringUser : string = sessionStorage.getItem('currentUser') as string;
+    let currentUser : Users = JSON.parse(stringUser);
+    let commentersId = currentUser.userId;
+    
+    console.log(this.postComment);
+
+    this.commentApi.submitComment(commentersId as number, postId, this.postComment).subscribe((res) =>
+    {
+      this.userApi.LoginOrReggi(currentUser).subscribe((res) =>
+      {
+        currentUser = res;
+        window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        this.CheckFood();
+        alert("Comment submitted!");
+      })
+      console.log(res);
+    })
+  }
+
+  displayComments(postId : number)
+  {
+    this.commentApi.getCommentByPostId(postId).subscribe((res) =>
+    {
+      this.commentArr = res;
+    })
+  }
+
+
 
   ngOnInit(): void 
   {
