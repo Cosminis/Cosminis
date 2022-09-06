@@ -8,7 +8,7 @@ import { FriendsService } from '../Friends-api-service/friends.service';
 import { Cosminis } from 'src/app/Models/Cosminis';
 import { ResourceApiServicesService } from '../Resource-Api-Service/resource-api-service.service';
 import { UserApiServicesService } from '../User-Api-Service/user-api-services.service';
-
+import Swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root'
 })
@@ -106,11 +106,11 @@ export class BattleService {
       });
       if (NewGoldPayout == 0)
       {
-        alert("You've lost, here is your payout: " + NewGoldPayout);
+        Swal.fire("You've lost! Your payout is " + NewGoldPayout);
       }
       else
       {
-        alert("You've won, here is your payout: " + NewGoldPayout);
+        Swal.fire("You've won! Your payout is " + NewGoldPayout);
       }
     });
 
