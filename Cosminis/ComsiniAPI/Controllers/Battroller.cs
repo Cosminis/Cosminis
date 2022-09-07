@@ -71,7 +71,7 @@ public class BattleController : ControllerBase
     {
         try
         {
-            /*List<int> TempList = new List<int>();
+            List<int> TempList = new List<int>();
             foreach(Companion com in Roster)
             {
                 TempList.Add(com.CompanionId);
