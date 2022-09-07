@@ -56,13 +56,13 @@ export class HomepageComponent implements OnInit {
 
         if(newMood > currentMood)
         {
-          Swal.fire("uwu! Your companion was so happy to be pet!");
+          Swal.fire("Your companion LOVED its dinner!");
         }
         else if(newMood <= currentMood)
         {
-          Swal.fire("Your companion was hostile! Try feeding it first next time...");
+          Swal.fire("This companion really didn't like this food. Try feeding it something else next time...");
         }
-      },(Error : HttpErrorResponse) => Swal.fire("It has been too soon since this companion has been last pet! Try again soon."))
+      },(Error : HttpErrorResponse) => Swal.fire("It has been too soon since this companion has been last fed! Try again soon."))
     })
   }
   
@@ -81,11 +81,11 @@ export class HomepageComponent implements OnInit {
 
         if(newHung > currentHung)
         {
-          Swal.fire("Your companion LOVED its dinner!");
+          Swal.fire("uwu! Your companion was so happy to be pet!");
         }
         else if(newHung <= currentHung)
         {
-          Swal.fire("This companion really didn't like this food. Try feeding it something else next time...");
+          Swal.fire("Your companion was hostile! Try feeding it first next time...");
         }
       },(Error : HttpErrorResponse) => Swal.fire("It has been too soon since this companion has been last pet! Try again soon."))
     })
