@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Users } from '../Models/User';
 import { FoodElement } from '../Models/FoodInventory';
 import {ChangeDetectorRef} from '@angular/core';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-gem-spending-menu',
@@ -38,20 +39,17 @@ export class GemSpendingMenuComponent implements OnInit {
     this.api.PurchaseWithGems(currentUserId, this.foodQty, this.eggQty, this.goldQty).subscribe((res) => 
     {
       this.foodInvInstance = res;
-      console.log(res);
       window.sessionStorage.setItem('SpicyFoodCount', this.foodInvInstance[0].foodCount as unknown as string);
       window.sessionStorage.setItem('ColdFoodCount', this.foodInvInstance[1].foodCount as unknown as string);
       window.sessionStorage.setItem('LeafyFoodCount', this.foodInvInstance[2].foodCount as unknown as string);
       window.sessionStorage.setItem('FluffyFoodCount', this.foodInvInstance[3].foodCount as unknown as string);
       window.sessionStorage.setItem('BlessedFoodCount', this.foodInvInstance[4].foodCount as unknown as string);
       window.sessionStorage.setItem('CursedFoodCount', this.foodInvInstance[5].foodCount as unknown as string);
-      console.log(this.foodInvInstance);
       this.userApi.LoginOrReggi(currentUser).subscribe((res) =>
       {
         currentUser = res;
-        console.log(currentUser);
         window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-        alert("Congratulations, you just spent a lot of Gems");
+        Swal.fire("Congratulations, you just spent a lot of Gems");
       })
     })
   }
@@ -59,7 +57,7 @@ export class GemSpendingMenuComponent implements OnInit {
   updateTotal() : void 
   {
     this.purchaseTotal = this.eggQty * 10;
-    this.purchaseTotal = this.goldQty / 10;  // This value needs to be updated
+    this.purchaseTotal += this.goldQty / 10;  // This value needs to be updated
     for(let i = 0; i < this.foodQty.length; i++) 
     {
       this.purchaseTotal += this.foodQty[i] * 1;  // this value needs to be updated

@@ -5,6 +5,9 @@ import { Users } from '../Models/User';
 import { Cosminis } from '../Models/Cosminis';
 import { InteractionService } from '../services/Interaction-Api-Service/interaction.service';
 import { UserApiServicesService } from '../services/User-Api-Service/user-api-services.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-homepage',
@@ -42,19 +45,49 @@ export class HomepageComponent implements OnInit {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser = JSON.parse(stringUser);
     
-    this.interApi.FeedCompanion(currentUser.userId, currentUser.showcaseCompanionFk, foodId).subscribe((res) =>
+    this.comsiniApi.getCosminiByID(currentUser.showcaseCompanionFk).subscribe((res) => 
     {
-      window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
-    })    
+      let currentMood = res.mood;
+
+      this.interApi.FeedCompanion(currentUser.userId, currentUser.showcaseCompanionFk, foodId).subscribe((res) =>
+      {
+        let newMood = res.mood;
+        window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
+
+        if(newMood > currentMood)
+        {
+          Swal.fire("uwu! Your companion was so happy to be pet!");
+        }
+        else if(newMood <= currentMood)
+        {
+          Swal.fire("Your companion was hostile! Try feeding it first next time...");
+        }
+      },(Error : HttpErrorResponse) => Swal.fire("It has been too soon since this companion has been last pet! Try again soon."))
+    })
   }
   
   pettingOurBaby(){
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser = JSON.parse(stringUser);
-    
-    this.interApi.PetCompanion(currentUser.userId, currentUser.showcaseCompanionFk).subscribe((res) =>
+
+    this.comsiniApi.getCosminiByID(currentUser.showcaseCompanionFk).subscribe((res) => 
     {
-      window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+      let currentHung = res.mood;
+
+      this.interApi.PetCompanion(currentUser.userId, currentUser.showcaseCompanionFk).subscribe((res) =>
+      {
+        let newHung = res.mood;
+        window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+
+        if(newHung > currentHung)
+        {
+          Swal.fire("Your companion LOVED its dinner!");
+        }
+        else if(newHung <= currentHung)
+        {
+          Swal.fire("This companion really didn't like this food. Try feeding it something else next time...");
+        }
+      },(Error : HttpErrorResponse) => Swal.fire("It has been too soon since this companion has been last pet! Try again soon."))
     })
   }
   

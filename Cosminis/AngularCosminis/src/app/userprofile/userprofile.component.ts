@@ -16,6 +16,8 @@ import { Friends } from '../Models/Friends';
 import { FoodElement } from '../Models/FoodInventory';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import Swal from 'sweetalert2'
+
 @Component({
   selector: 'app-userprofile',
   templateUrl: './userprofile.component.html',
@@ -107,8 +109,6 @@ export class UserprofileComponent implements OnInit {
     this.inputValue = (document.querySelector('.form-control') as HTMLInputElement).value;
     let inputNumber = parseInt(this.inputValue);
     this.updatePostFeed(inputNumber);
-    
-    console.log(this.inputValue);
   }
 
   searchAndAdd(requestReceiver : string)
@@ -121,13 +121,10 @@ export class UserprofileComponent implements OnInit {
     this.friendApi.addFriendByUsername(searchingUser.username, this.userInstance.username).subscribe((res) => 
     {
       this.friendshipInstance = res;
-      console.log(this.friendshipInstance);
 
       if(this.friendshipInstance.status == 'Pending')
       {
-        console.log(res);
-        alert("Friend request sent!");
-        console.log(alert);
+        Swal.fire("Friend request sent!");
       }
     })
     this.doesExist = false;
@@ -138,7 +135,7 @@ export class UserprofileComponent implements OnInit {
     this.userApi.searchFriend(searchedUser).subscribe((res) =>
     {
       this.userInstance = res;
-      console.log(this.userInstance);
+
 
       if(this.userInstance.username != 'DefaultUserName')
       {
@@ -174,7 +171,7 @@ export class UserprofileComponent implements OnInit {
         this.userApi.Find(userID).subscribe((res) =>
         {
           postUser = res;
-          console.log(postUser);
+
           this.ownersPosts[i].posterNickname = postUser.password;
         })
         this.posts.splice(6, this.posts.length-6);
@@ -185,7 +182,7 @@ export class UserprofileComponent implements OnInit {
   CheckFood():boolean
   {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
-    console.log(stringUser);
+
     let currentUser : Users = JSON.parse(stringUser);
     this.resourceApi.CheckFood(currentUser.userId as number).subscribe((res) =>
     {
@@ -232,7 +229,7 @@ export class UserprofileComponent implements OnInit {
         currentUser = res;
         window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
         this.CheckFood();
-        alert("Your post has been submitted, please refresh to see your post below.");
+        Swal.fire("Your post has been submitted, please refresh to see your post below.");
       })
     })
   }
@@ -243,7 +240,7 @@ export class UserprofileComponent implements OnInit {
     {
       res.reverse();
       this.posts = res;
-      console.log(this.posts);
+
       let postUser:Users;
       let userID:number;
       for(let i =0; i<this.posts.length;i++)
@@ -252,7 +249,7 @@ export class UserprofileComponent implements OnInit {
         this.userApi.Find(userID).subscribe((res) =>
         {
           postUser = res;
-          console.log(postUser);
+
           this.posts[i].posterNickname = postUser.password;
           this.displayComments(this.posts[i].postId);
         })
@@ -276,7 +273,7 @@ export class UserprofileComponent implements OnInit {
           this.userApi.Find(this.friends[i].userIdTo).subscribe((res) =>
           {
             this.users[i] = res;
-            console.log(this.users[i].password);
+
             this.cosminiDisplay(this.users[i].username);
           })
         }
@@ -285,7 +282,7 @@ export class UserprofileComponent implements OnInit {
           this.userApi.Find(this.friends[i].userIdFrom).subscribe((res) =>
           {
             this.users[i] = res;
-            console.log(this.users[i].password);
+
             this.cosminiDisplay(this.users[i].username);
           })
         }
@@ -310,8 +307,7 @@ export class UserprofileComponent implements OnInit {
       {           
         window.sessionStorage.setItem('currentUser', JSON.stringify(acceptingUser));
       })
-      alert("Friend request accepted! Enjoy your blossoming friendship :3");
-      console.log(alert);      
+      Swal.fire("Friend request accepted! Enjoy your blossoming friendship :3");     
     })
     this.doesExist = false;
   }
@@ -347,7 +343,7 @@ export class UserprofileComponent implements OnInit {
     this.friendApi.RelationshipStatusByUserId(searchingUser.userId, status).subscribe((res) =>
     {
       this.friends = res;
-      console.log(res);
+
       for(let i=0; i<this.friends.length;i++)
       {
         if(searchingUser.userId==this.friends[i].userIdFrom)
@@ -355,7 +351,6 @@ export class UserprofileComponent implements OnInit {
           this.userApi.Find(this.friends[i].userIdTo).subscribe((res) =>
           {
             this.pendingFriends[i] = res;         
-            console.log(this.pendingFriends[i].username);
           })
         }
         else
@@ -364,7 +359,6 @@ export class UserprofileComponent implements OnInit {
           {
             this.pendingFriends[i] = res;
             this.friendPending = true;
-            console.log(this.pendingFriends[i].username);
           })
         }
       }
@@ -388,8 +382,7 @@ export class UserprofileComponent implements OnInit {
       {           
         window.sessionStorage.setItem('currentUser', JSON.stringify(removingUser));
       })
-      alert("This friend has been removed.");
-      console.log(alert);      
+      Swal.fire("This friend has been removed.");      
     })
     this.doesExist = false;
   }
@@ -411,8 +404,7 @@ export class UserprofileComponent implements OnInit {
       {           
         window.sessionStorage.setItem('currentUser', JSON.stringify(blockingUser));
       })
-      alert("This user has been blocked. They will no longer appear on your feed and they will not be able to add you as a friend.");
-      console.log(alert);      
+      Swal.fire("This user has been blocked. They will no longer appear on your feed and they will not be able to add you as a friend.");    
     })   
     this.doesExist = false;
   }
@@ -456,13 +448,13 @@ export class UserprofileComponent implements OnInit {
 
         if(newMood > currentMood)
         {
-          alert("Good on you for petting your friend's friend!");
+          Swal.fire("Good on you for petting your friend's friend!");
         }
         else if(newMood <= currentMood)
         {
-          alert("This companion was hostile! Try feeding it first next time...");
+          Swal.fire("This companion was hostile! Try feeding it first next time...");
         }
-      },(Error : HttpErrorResponse) => alert("It has been too soon since this companion has been last pet! Try again soon."))
+      },(Error : HttpErrorResponse) => Swal.fire("It has been too soon since this companion has been last pet! Try again soon."))
     })
 
   }
@@ -482,13 +474,13 @@ export class UserprofileComponent implements OnInit {
 
         if(newHung > currentHung)
         {
-          alert("Good on you for feeding your friend's friend!");
+          Swal.fire("Good on you for feeding your friend's friend!");
         }
         else if(newHung <= currentHung)
         {
-          alert("This companion didn't like this food! Try feeding it something else next time...");
+          Swal.fire("This companion didn't like this food! Try feeding it something else next time...");
         }
-      },(Error : HttpErrorResponse) => alert("It has been too soon since this companion has been last fed! Try again soon.")) 
+      },(Error : HttpErrorResponse) => Swal.fire("It has been too soon since this companion has been last fed! Try again soon.")) 
     })   
   }  
 
@@ -497,8 +489,6 @@ export class UserprofileComponent implements OnInit {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
     let commentersId = currentUser.userId;
-    
-    console.log(this.postComment);
 
     this.commentApi.submitComment(commentersId as number, postId, this.postComment).subscribe((res) =>
     {
@@ -507,7 +497,7 @@ export class UserprofileComponent implements OnInit {
         currentUser = res;
         window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
         this.CheckFood();
-        alert("Comment submitted!");
+        Swal.fire("Comment submitted!");
       })
       console.log(res);
     })

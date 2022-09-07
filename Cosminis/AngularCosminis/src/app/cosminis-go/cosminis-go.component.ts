@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 declare var $:any;
 
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-cosminis-go',
   templateUrl: './cosminis-go.component.html',
@@ -40,7 +42,7 @@ export class CosminisGoComponent implements OnInit
                   LeftSelect = false;
                   $('.image1').removeClass('colour');
                   $('.image4').removeClass('colour');
-                  alert("You have won purely by luck, zero skill involved");
+                  Swal.fire("You have won purely by luck, zero skill involved");
               }
               else if(LeftSelect === false && RightSelect === false)
               {
@@ -51,7 +53,7 @@ export class CosminisGoComponent implements OnInit
                   LeftSelect = false;
                   $('.image1').removeClass('colour');
                   $('.image4').removeClass('colour');
-                  alert("Are you even trying?")
+                  Swal.fire("Are you even trying?")
               }
               else
               {
@@ -62,7 +64,7 @@ export class CosminisGoComponent implements OnInit
                   LeftSelect = false;
                   $('.image1').removeClass('colour');
                   $('.image4').removeClass('colour');
-                  alert("You stink")
+                  Swal.fire("You stink")
               }
               
               let topImg = document.createElement("img"); //creates an html img tag
@@ -96,7 +98,7 @@ export class CosminisGoComponent implements OnInit
               $('.image4').removeClass('colour');
               LeftSelect = false;
               RightSelect = false;
-              alert("How TF you got here m8");
+              Swal.fire("How TF you got here m8");
           }
           else if(LeftSelect===false && RightSelect===false)
           {
@@ -127,7 +129,7 @@ export class CosminisGoComponent implements OnInit
               $('.image4').removeClass('colour');
               LeftSelect = false;
               RightSelect = false;
-              alert("How TF you got here m8");
+              Swal.fire("How TF you got here m8");
           }
           else if(LeftSelect===false && RightSelect===false)
           {

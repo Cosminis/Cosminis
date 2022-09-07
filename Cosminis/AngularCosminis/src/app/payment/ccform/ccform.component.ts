@@ -7,6 +7,7 @@ import { Order } from '../../Models/Orders';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-ccform',
@@ -88,7 +89,7 @@ export class CcformComponent implements OnInit {
       {
         currentUser = res;
         window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-        alert("Congratulations, you just spent a lot of REAL money");
+        Swal.fire("Congratulations, you just spent a lot of REAL money");
       })
     })
   }
