@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit {
       let stringUser : string = sessionStorage.getItem('currentUser') as string;
       let currentUser : Users = JSON.parse(stringUser);
       this.comsiniApi.HatchEgg(currentUser.username).subscribe();
-    }, 360000);
+    }, 3600000);
     setInterval(() => 
     {
       
