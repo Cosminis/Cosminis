@@ -13,7 +13,7 @@ export class CommentService {
   constructor(private http: HttpClient) { }
 
   submitComment(commenterId : number, postId : number, content : string) : Observable<Comment> {
-    return this.http.post(this.url + `Comments/SubmitComment?commenterID=${commenterId}&postsID=${postId}`, content) as Observable<Comment>;  
+    return this.http.post(this.url + `Comments/SubmitCommentEmpty?commenterID=${commenterId}&postsID=${postId}&content=${content}`, commenterId) as Observable<Comment>;  
   }
 
   getCommentByPostId(postId : number) : Observable<Comment[]> {
