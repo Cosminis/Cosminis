@@ -19,7 +19,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{pot.posterNickname}}</h5>
                 <div>{{pot.content}}</div>
-                <input type="text" [(ngModel)]="postComment" placeholder="Comment...'?" id="comment" cols="50" rows="1">
+                <input class="form-control" type="text" name="username" id="username" [formControl]="Comment">
                 <div class="post-button">
                     <button class="btn post-selector" (click)="createComment(pot.postId)" type="button">Submit</button>
                 </div>
