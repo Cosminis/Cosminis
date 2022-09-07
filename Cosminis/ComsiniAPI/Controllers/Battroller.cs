@@ -71,12 +71,12 @@ public class BattleController : ControllerBase
     {
         try
         {
-            /*List<int> TempList = new List<int>();
-            foreach(Companion com in Roster)
+            List<int> TempList = new List<int>();
+            foreach(int com in Roster)
             {
-                TempList.Add(com.CompanionId);
+                TempList.Add(com);
             }
-            int[] tempArray = TempList.ToArray();*/
+            int[] tempArray = TempList.ToArray();      //the comment ending was here before!
             int[] RosterOne = Roster.Take(SizeOne).ToArray();
             int[] RosterTwo = Roster.Skip(SizeOne).ToArray();
             int ReturnCompIDs = _service.JudgingDiffculty(RosterOne, RosterTwo);

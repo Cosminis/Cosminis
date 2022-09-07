@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { PostSpiServicesService } from '../services/Post-api-services/post-spi-services.service';
 import { UserApiServicesService } from '../services/User-Api-Service/user-api-services.service';
 import { FriendsService } from '../services/Friends-api-service/friends.service';
@@ -15,7 +14,7 @@ import { Router } from '@angular/router';
 import { Friends } from '../Models/Friends';
 import { FoodElement } from '../Models/FoodInventory';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -28,6 +27,10 @@ export class UserprofileComponent implements OnInit {
   constructor(private api:PostSpiServicesService, private router: Router, private comsiniApi:ComsinisApiServiceService, private commentApi:CommentService, private userApi:UserApiServicesService, private friendApi:FriendsService, private resourceApi: ResourceApiServicesService, private interApi:InteractionService) { }
 
   postComment : string = "";
+
+  Comment : FormControl = new FormControl('', [
+    Validators.required
+  ]);
 
   commentArr : Comment[] = [];
 
@@ -489,8 +492,10 @@ export class UserprofileComponent implements OnInit {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
     let commentersId = currentUser.userId;
-
-    this.commentApi.submitComment(commentersId as number, postId, this.postComment).subscribe((res) =>
+    
+    let postsContent : string = this.Comment.value;
+    
+    this.commentApi.submitComment(commentersId as number, postId, postsContent).subscribe((res) =>
     {
       this.userApi.LoginOrReggi(currentUser).subscribe((res) =>
       {

@@ -77,6 +77,10 @@ export class GemSpendingMenuComponent implements OnInit {
     this.router.navigateByUrl('/shop');  // define your component where you want to go
   }
 
+  lottery(){
+  this.router.navigateByUrl('/lottery');  // define your component where you want to go
+  }
+
   ngOnInit(): void {
   }
 
