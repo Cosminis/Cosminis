@@ -4,4 +4,5 @@ export interface Comment
     userIdFk : number;
     postIdFk : number;
     content : string;
+    commenter? : string;
 }

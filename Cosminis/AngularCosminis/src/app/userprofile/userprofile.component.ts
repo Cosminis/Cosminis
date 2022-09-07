@@ -230,12 +230,13 @@ export class UserprofileComponent implements OnInit {
 
     this.api.SubmitPostResourceGen(postsContent, postersId as number).subscribe((res) =>
     {
+      this.updatePostFeed(currentUser.userId as number);
       this.userApi.LoginOrReggi(currentUser).subscribe((res) =>
       {
         currentUser = res;
         window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
         this.CheckFood();
-        Swal.fire("Your post has been submitted, please refresh to see your post below.");
+        //Swal.fire("Your post has been submitted, please refresh to see your post below.");
       })
     })
   }
@@ -259,7 +260,7 @@ export class UserprofileComponent implements OnInit {
           this.posts[i].posterNickname = postUser.password;
           this.displayComments(this.posts[i].postId);
         })
-        this.posts.splice(10, this.posts.length-10);
+        this.posts.splice(30, this.posts.length-30);
       }
     })
   }
@@ -450,6 +451,15 @@ export class UserprofileComponent implements OnInit {
 
       this.interApi.PetCompanion(currentUser.userId as number, companionId).subscribe((res) =>
       {
+        for(let i = 0; i < this.comsiniArr.length; i++)
+        {
+          if(this.comsiniArr[i].companionId == res.companionId)
+          {
+            res.image = this.imageLib.get(res.speciesFk); 
+            this.comsiniArr[i] = res;
+          }
+        }
+
         let newMood = res.mood;
 
         if(newMood > currentMood)
@@ -476,6 +486,15 @@ export class UserprofileComponent implements OnInit {
 
       this.interApi.FeedCompanion(currentUser.userId, companionId, foodId).subscribe((res) =>
       {
+        for(let i = 0; i < this.comsiniArr.length; i++)
+        {
+          if(this.comsiniArr[i].companionId == res.companionId)
+          {
+            res.image = this.imageLib.get(res.speciesFk);            
+            this.comsiniArr[i] = res;
+          }
+        }
+
         let newHung = res.hunger;
 
         if(newHung > currentHung)
@@ -516,6 +535,13 @@ export class UserprofileComponent implements OnInit {
     this.commentApi.getCommentByPostId(postId).subscribe((res) =>
     {
       this.commentArr = this.commentArr.concat(res);
+      for(let i = 0; i < this.commentArr.length; i++)
+      {
+        this.userApi.Find(this.commentArr[i].userIdFk).subscribe((res) =>
+        {
+          this.commentArr[i].commenter = res.password;
+        })
+      }
     })
   }
 
@@ -524,7 +550,13 @@ export class UserprofileComponent implements OnInit {
     this.commentApi.getCommentByPostId(postId).subscribe((res) =>
     {
       this.commentArr2 = this.commentArr2.concat(res);
-      console.log(this.commentArr2);
+      for(let i = 0; i < this.commentArr2.length; i++)
+      {
+        this.userApi.Find(this.commentArr2[i].userIdFk).subscribe((res) =>
+        {
+          this.commentArr2[i].commenter = res.password;
+        })
+      }
     })
   }  
 

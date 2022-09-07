@@ -12,7 +12,7 @@
                 <div class="owner-content">{{pot.content}}</div>
             </div>
             <div *ngFor="let com of commentArr2">
-                <div *ngIf="com.postIdFk == pot.postId">{{com.content}}</div>
+                <div *ngIf="com.postIdFk == pot.postId">{{com.commenter}} - {{com.content}}</div>
             </div>
         </div> 
     </div>
@@ -27,7 +27,7 @@
                     <button class="btn post-selector" (click)="createComment(pot.postId)" type="button">Submit</button>
                 </div>
                 <div *ngFor="let com of commentArr">
-                    <div *ngIf="com.postIdFk == pot.postId">{{com.content}}</div>
+                    <div *ngIf="com.postIdFk == pot.postId">{{com.commenter}} - {{com.content}}</div>
                 </div>
             </div>
         </div> 
