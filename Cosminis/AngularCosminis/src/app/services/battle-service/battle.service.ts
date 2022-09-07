@@ -95,6 +95,11 @@ export class BattleService {
 
     NewGoldPayout = Math.round(NewGoldPayout);
 
+    let Scalar:number = 1+(Difficulty/100);
+    console.log(Scalar);
+
+    NewGoldPayout = Math.round(Scalar*NewGoldPayout);
+
     this.resourceAPI.AddGold(UserId,NewGoldPayout).subscribe((res)=>
     {
       let stringUser: string = sessionStorage.getItem('currentUser') as string;
@@ -106,11 +111,11 @@ export class BattleService {
       });
       if (NewGoldPayout == 0)
       {
-        Swal.fire("You've lost! Your payout is " + NewGoldPayout);
+        Swal.fire("You've lost! Your payout is " + NewGoldPayout, "Your payout have a multiplier of:" + Scalar);
       }
       else
       {
-        Swal.fire("You've won! Your payout is " + NewGoldPayout);
+        Swal.fire("You've won! Your payout is " + NewGoldPayout, "Your payout have a multiplier of:" + Scalar);
       }
     });
 

@@ -334,19 +334,40 @@ export class BattleMenuComponent implements OnInit {
       BattleResult = res;
       if (BattleResult == 0)
       {
-        Swal.fire("You won the round!", "Opponent Cosmini's Nickname: " + this.OpponentCosmini2Battle.speciesNickname);
+        if(this.OpponentCosmini2Battle.nickname)
+        {
+          Swal.fire("You won the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.nickname + " is feeling pretty " + this.OpponentCosmini2Battle.emotionString + " about the lost.");
+        }
+        else
+        {  
+          Swal.fire("You won the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.speciesNickname + " is feeling pretty " + this.OpponentCosmini2Battle.emotionString + " about the lost.");
+        }
         this.WinStreak++;
         this.roundCount++;
       }
       else if (BattleResult == 1)
       {
-        Swal.fire("You lost the round!", "Opponent Cosmini's Nickname: " + this.OpponentCosmini2Battle.speciesNickname);
+        if(this.OpponentCosmini2Battle.nickname)
+        {
+          Swal.fire("You lost the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.nickname + " is feeling pretty " + this.OpponentCosmini2Battle.emotionString + " about their victory.");
+        }
+        else
+        {  
+          Swal.fire("You lost the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.speciesNickname + " is feeling pretty " + this.OpponentCosmini2Battle.emotionString + " about their victory.");
+        }
         this.LoseStreak++;
         this.roundCount++;
       }
       else
       {
-        Swal.fire("You tied the round!", "Opponent Cosmini's Nickname: " + this.OpponentCosmini2Battle.speciesNickname,);
+        if(this.OpponentCosmini2Battle.nickname)
+        {
+          Swal.fire("You tied the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.nickname + " showed great respect to your Cosmini's combat prowess.");        
+        }
+        else
+        {  
+          Swal.fire("You tied the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.speciesNickname + " showed great respect to your Cosmini's combat prowess.");
+        }
         this.tieCount++;
         this.roundCount++;
       }
