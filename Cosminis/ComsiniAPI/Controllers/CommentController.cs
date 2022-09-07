@@ -19,9 +19,9 @@ public class CommentController : ControllerBase
         _commentServices = commentServices;
     }
 
-    [Route("/Comments/SubmitComment")]
+    [Route("/Comments/SubmitCommentForm")]
     [HttpPost]
-    public ActionResult<Comment> SubmitComment(int commenterID, int postsID, [FromForm]string content)
+    public ActionResult<Comment> SubmitCommentForm(int commenterID, int postsID, [FromForm]string content)
     {
         try 
         {
@@ -41,6 +41,52 @@ public class CommentController : ControllerBase
             return BadRequest(e.Message); 
         }
     }
+
+    [Route("/Comments/SubmitCommentBody")]
+    [HttpPost]
+    public ActionResult<Comment> SubmitCommentBody(int commenterID, int postsID, [FromBody]string content)
+    {
+        try 
+        {
+            Comment commentInfo = _commentServices.SubmitCommentResourceGen(commenterID, postsID, content);
+            return Ok(commentInfo); 
+        }
+        catch(ResourceNotFound)
+        {
+            return NotFound("Such a user does not exist"); 
+        }
+        catch(PostsNotFound)
+        {
+            return NotFound("Such a post does not exist"); 
+        }
+        catch(Exception e)
+        {
+            return BadRequest(e.Message); 
+        }
+    }
+
+    [Route("/Comments/SubmitCommentEmpty")]
+    [HttpPost]
+    public ActionResult<Comment> SubmitCommentEmpty(int commenterID, int postsID, string content)
+    {
+        try 
+        {
+            Comment commentInfo = _commentServices.SubmitCommentResourceGen(commenterID, postsID, content);
+            return Ok(commentInfo); 
+        }
+        catch(ResourceNotFound)
+        {
+            return NotFound("Such a user does not exist"); 
+        }
+        catch(PostsNotFound)
+        {
+            return NotFound("Such a post does not exist"); 
+        }
+        catch(Exception e)
+        {
+            return BadRequest(e.Message); 
+        }
+    }    
 
     [Route("/Comments/GetComments")]
     [HttpGet]

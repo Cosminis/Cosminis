@@ -445,10 +445,24 @@ export class UserprofileComponent implements OnInit {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
 
-    this.interApi.PetCompanion(currentUser.userId as number, companionId).subscribe((res) =>
-      {
-        window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
-      })
+    this.comsiniApi.getCosminiByID(companionId).subscribe((res) => 
+    {
+      this.displayCosmini = res;
+      let currentMood = this.displayCosmini.mood;
+      console.log(currentMood);
+
+      this.interApi.PetCompanion(currentUser.userId as number, companionId).subscribe((res) =>
+        {
+          window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
+          let newMood = this.displayCosmini.mood;
+          console.log(newMood);
+          if(newMood > currentMood)
+          {
+            alert("Good on you for petting your friend's friend!");
+          }
+        })
+    })
+
   }
 
   feedingOurFriendsBaby(foodId : number, companionId : number)
