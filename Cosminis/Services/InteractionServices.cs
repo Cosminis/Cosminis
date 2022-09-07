@@ -457,10 +457,11 @@ public class InteractionService
         if(checkingComp.UserFk != feederID) //If friend or stranger, make post [Companions user_FK]; if it is your own, pat yourself on the back.
         {
             User feedingUser = _userRepo.GetUserByUserId(feederID);
+            Post Post = new Post();
 
             if(checkingComp2.Hunger > checkingComp.Hunger)
             {            
-                Post Post = new Post()//define post properties (This person came up and feed my companion!).
+                Post = new Post()//define post properties (This person came up and feed my companion!).
                 {
                     UserIdFk = checkingComp.UserFk,
                     Content = feedingUser.Password + " fed my companion while I was away, thank you!"
@@ -468,9 +469,9 @@ public class InteractionService
             }
             else
             {
-                Post Post = new Post()//define post properties (This person came up and feed my companion!).
+                Post = new Post()//define post properties (This person came up and feed my companion!).
                 {
-                    UserIdFk = companionInstance2.UserFk,
+                    UserIdFk = checkingComp2.UserFk,
                     Content = feedingUser.Password + " fed my companion some awful food, and now it's so hostile!... Thanks for nothing!"
                 };
             }            
@@ -529,10 +530,11 @@ public class InteractionService
             if(companionInstance.UserFk != userID) //If friend or stranger, make post [Companions user_FK]; if it is your own, pat yourself on the back.
             {
                 User feedingUser = _userRepo.GetUserByUserId(userID);
+                Post Post = new Post();
 
                 if(companionInstance2.Mood > companionInstance.Mood)
                 {
-                    Post Post = new Post()//define post properties (This person came up and feed my companion!).
+                    Post = new Post()//define post properties (This person came up and feed my companion!).
                     {
                         UserIdFk = companionInstance2.UserFk,
                         Content = feedingUser.Password + " pet my companion while I was away, thank you!"
@@ -540,7 +542,7 @@ public class InteractionService
                 }
                 else
                 {
-                    Post Post = new Post()//define post properties (This person came up and feed my companion!).
+                    Post = new Post()//define post properties (This person came up and feed my companion!).
                     {
                         UserIdFk = companionInstance2.UserFk,
                         Content = feedingUser.Password + " pet my companion while it was hostile and it's mood went down... Thanks for nothing!"
