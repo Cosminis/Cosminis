@@ -12,7 +12,8 @@
                 <div class="owner-content">{{pot.content}}</div>
             </div>
             <div class="comments-owner" *ngFor="let com of commentArr2"> <!--modify here-->
-                <div *ngIf="com.postIdFk == pot.postId">{{com.commenter}} - {{com.content}}</div>
+                <div class="comment-title" *ngIf="com.postIdFk == pot.postId">{{com.commenter}}</div>
+                <div class="comment-content" *ngIf="com.postIdFk == pot.postId">{{com.content}}</div>
             </div>
         </div> 
     </div>
@@ -27,7 +28,8 @@
                     <button id="comment-button" class="btn" (click)="createComment(pot.postId)" type="button">Submit</button>
                 </div>
                 <div class="comments" *ngFor="let com of commentArr"> <!--modify here-->
-                    <div *ngIf="com.postIdFk == pot.postId">{{com.commenter}} - {{com.content}}</div>
+                    <div class="comment-title" *ngIf="com.postIdFk == pot.postId">{{com.commenter}}</div>
+                    <div class="comment-content" *ngIf="com.postIdFk == pot.postId">{{com.content}}</div>
                 </div>
             </div>
         </div> 
@@ -36,7 +38,7 @@
         <div class="searchbar">
             <h2 class="friends-text">Friends</h2>
             <input type="text" [(ngModel)]="userInstance.username" placeholder="Search user to add..." class="username">
-            <button class="btn search-button" (click)="searchUsers(userInstance.username)" type="button">Submit</button>
+            <button class="btn" id="search-button" (click)="searchUsers(userInstance.username)" type="button">Submit</button>
         </div>
         <div class="card friend-options mb-3" >
             <div class="search-body" *ngIf="doesExist">
