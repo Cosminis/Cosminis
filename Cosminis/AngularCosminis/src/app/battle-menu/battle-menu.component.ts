@@ -8,6 +8,7 @@ import { Users } from '../Models/User';
 import { Cosminis } from '../Models/Cosminis';
 import { Friends } from '../Models/Friends';
 
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-battle-menu',
@@ -169,7 +170,7 @@ export class BattleMenuComponent implements OnInit {
     else if(this.Lost)
     {
       console.log("Lost...");
-      alert("You Have Lost All of Your Money, Have You Tried Betting More?");
+      Swal.fire("You Have Lost All of Your Money; Have You Tried Betting More?", );
       //you stink, click a button to either route you back to the picking page to play again or back to home
     }
     else if(this.Won)
@@ -333,19 +334,40 @@ export class BattleMenuComponent implements OnInit {
       BattleResult = res;
       if (BattleResult == 0)
       {
-        alert("You won the round!");
+        if(this.OpponentCosmini2Battle.nickname)
+        {
+          Swal.fire("You won the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.nickname + " is feeling pretty " + this.OpponentCosmini2Battle.emotionString + " about the lost.");
+        }
+        else
+        {  
+          Swal.fire("You won the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.speciesNickname + " is feeling pretty " + this.OpponentCosmini2Battle.emotionString + " about the lost.");
+        }
         this.WinStreak++;
         this.roundCount++;
       }
       else if (BattleResult == 1)
       {
-        alert("You lost the round!");
+        if(this.OpponentCosmini2Battle.nickname)
+        {
+          Swal.fire("You lost the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.nickname + " is feeling pretty " + this.OpponentCosmini2Battle.emotionString + " about their victory.");
+        }
+        else
+        {  
+          Swal.fire("You lost the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.speciesNickname + " is feeling pretty " + this.OpponentCosmini2Battle.emotionString + " about their victory.");
+        }
         this.LoseStreak++;
         this.roundCount++;
       }
       else
       {
-        alert("You tied the round!");
+        if(this.OpponentCosmini2Battle.nickname)
+        {
+          Swal.fire("You tied the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.nickname + " showed great respect to your Cosmini's combat prowess.");        
+        }
+        else
+        {  
+          Swal.fire("You tied the round!", "Opponent Cosmini: " + this.OpponentCosmini2Battle.speciesNickname + " showed great respect to your Cosmini's combat prowess.");
+        }
         this.tieCount++;
         this.roundCount++;
       }
@@ -392,11 +414,11 @@ export class BattleMenuComponent implements OnInit {
     let currentUser: Users = JSON.parse(stringUser);
     if (isNaN(this.PlayerGoldBet))
     {
-      alert("Please input a number!")
+      Swal.fire("Please input a number!")
     }
     else if (this.PlayerGoldBet <= 0)
     {
-      alert("Please input a POSITIVE number!")
+      Swal.fire("Please input a POSITIVE number!")
     }
     else if (0 <= currentUser.goldCount)
     {
@@ -405,7 +427,7 @@ export class BattleMenuComponent implements OnInit {
     }
     else
     {
-      alert("You're in debt; you need to get more gold.")
+      Swal.fire("You're in debt; you need to get more gold.")
     }
     this.GamePlayLoop();
   }

@@ -17,7 +17,15 @@ export class ShopMenuComponent implements OnInit {
   foodInvInstance : FoodElement[] = []
   eggQty : number = 0;
   foodQty : [number, number, number, number, number, number] = [0, 0, 0, 0, 0, 0];
-  purchaseTotal : number = 0;
+  purchaseTotal: number = 0;
+  
+  eggSub: number = 0;
+  chiliSub: number = 0;
+  sandwhichSub: number = 0;
+  saladSub: number = 0;
+  marshmellowSub: number = 0;
+  holySub: number = 0;
+  devilSub: number = 0;
 
   confirmPurchase() : void {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
@@ -49,6 +57,14 @@ updateTotal() : void {
   for(let i = 0; i < this.foodQty.length; i++) {
     this.purchaseTotal += this.foodQty[i] * 10;
   }
+
+  this.eggSub = this.eggQty * 100;
+  this.chiliSub = this.foodQty[0] * 10;
+  this.sandwhichSub = this.foodQty[1] * 10;
+  this.saladSub = this.foodQty[2] * 10;
+  this.marshmellowSub = this.foodQty[3] * 10;
+  this.holySub = this.foodQty[4] * 10;
+  this.devilSub = this.foodQty[5] * 10;
 }
 
 goToGemShop(){
