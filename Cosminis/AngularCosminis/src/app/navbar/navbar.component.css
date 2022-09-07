@@ -9,6 +9,8 @@
 }
 
 .btn {
+    margin-top: 6px;
+    margin-right:  10px;
     background-color: rgba(185, 117, 181, 0.9);
     color: mistyrose;
 }

@@ -5,7 +5,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-
+using System.Security.Cryptography;
 namespace DataAccess;
  
 public class CompanionRepo : ICompanionDAO
@@ -16,24 +16,28 @@ public class CompanionRepo : ICompanionDAO
     {
         _context = context;
     }
-  
-    public Companion GenerateCompanion(int userIdInput)         //This method hatches a companion of a random species w/ a random emotion.
+      /// <summary>
+      /// Generates random creature for user ranging from creature ID 3-8 due to legacy code
+      /// </summary>
+      /// <param name="userIdInput">Valid User ID</param>
+      /// <returns></returns>
+      /// <exception cref="UserNotFound">User doesn't exist</exception>
+      /// <exception cref="TooFewResources">No Eggs</exception>
+    public Companion GenerateCompanion(int userIdInput)          
     {
-        Random randomCreature = new Random();
-        //int creatureRoulette = randomCreature.Next(3,9);            //random species generator (species are 3-9 because of an error...).
-        int creatureRoulette = 0;           
-        int creatureRarityRoulette = randomCreature.Next(0,100);
+        Random randomCreature = new();           
+        int creatureRarityRoulette = randomCreature.Next(0,100), creatureRoulette;
 
         // this assigns rarity to the new creatures that are hatched
         //creature index is only 3-8
         switch (creatureRarityRoulette)
         {
             case int n when (n < 51):
-                Random common =  new Random();
+                Random common =  new();
                 creatureRoulette = common.Next(3,5);
                 break;
             case int n when (n < 75):
-                Random uncommon =  new Random();
+                Random uncommon =  new();
                 creatureRoulette = uncommon.Next(5,7);
                 break;
             case int n when (n < 99):                       //this is rare
@@ -42,49 +46,39 @@ public class CompanionRepo : ICompanionDAO
             default:
                 creatureRoulette = 8;                           //this is super rare
                 break;
-        }
-
-
-        Random randomEmotion = new Random();
-        int emotionRoulette = randomCreature.Next(0,10);            //random emotion generator (0 worst, 10 is best).
-
-        User userInstance = _context.Users.Find(userIdInput);       //grabbing user and checking null.
+        }         
+        int emotionRoulette = randomCreature.Next(1,12); 
+        User? userInstance = _context.Users.Find(userIdInput); 
         if(userInstance == null)
         {
             throw new UserNotFound();
-        }
-            
-        Companion newCompanion = new Companion()                    //New companion to be generated... standardized Mood/Hunger lvls for now.
+        }            
+        Companion newCompanion = new() 
         {
             UserFk = userIdInput,
             SpeciesFk = creatureRoulette,
             Emotion = emotionRoulette,
             Hunger = 100,
             Mood = 75,
-            TimeSinceLastChangedMood = DateTime.Now,                //These two control the hunger/mood refreshes.
+            TimeSinceLastChangedMood = DateTime.Now,                
             TimeSinceLastChangedHunger = DateTime.Now,
-            TimeSinceLastPet = DateTime.Now,                        //These two are timers so you can't pet and feed the comp. all the time.
+            TimeSinceLastPet = DateTime.Now,                         
             TimeSinceLastFed = DateTime.Now,
             CompanionBirthday = DateTime.Now        
         };
-
-        userInstance.EggCount = userInstance.EggCount - 1;          //Taking an egg from the user (it hatched from this...).
         if(userInstance.EggCount < 0)
         {
-            userInstance.EggCount = 0;                              //If they have 0 eggs the timer won't reset until they get another
+            userInstance.EggCount = 0;                              
             throw new TooFewResources();
         }
-        if(userInstance.EggCount >= 1)                              //If more than 1 egg, resets so that in x time the next egg will hatch
+        else if(userInstance.EggCount >= 1) 
         {
             userInstance.EggTimer = DateTime.Now;
         }
-
-        _context.Companions.Add(newCompanion);                      //adding and saving changes
-
+        userInstance.EggCount--;           
+        _context.Companions.Add(newCompanion); 
         _context.SaveChanges();
-
         _context.ChangeTracker.Clear(); 
-
         return newCompanion;                                                        
     }
     

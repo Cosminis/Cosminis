@@ -10,5 +10,6 @@ export interface Cosminis
     hunger : number;
     speciesNickname?:string;
     emotionString?:string;
-    image?:string;
+    image?: string;
+    hasBattled?: boolean;
 }

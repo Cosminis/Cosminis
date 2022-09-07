@@ -1,39 +1,47 @@
 <div class="row">
     <div class="col-75">
       <div class="container">
-        <form action="/action_page.php"> 
+        <form action="/action_page.php" [formGroup]="paymentForm"> 
           <div class="row">
             <div class="col-50">
               <h3>Billing Address</h3>
               <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-              <input class="form-control" type="text" id="fname" name="firstname" placeholder="John M. Doe">
+              <input class="form-control" type="text" id="fname" name="firstname" placeholder="John M. Doe" formControlName="fname" pattern="[^[A-Za-z]{2,30}+$]" (click)="validityChecker()">
+              <span *ngIf="(fname && fname.invalid && fname.touched)">Full Name is required</span>
               <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-              <input class="form-control" type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+              <input class="form-control" type="text" id="adr" name="address" placeholder="542 W. 15th Street" formControlName="address" (click)="validityChecker()">
+              <span *ngIf="(address && address.invalid && address.touched)">Address is required</span>
               <label for="city"><i class="fa fa-institution"></i> City</label>
-              <input class="form-control" type="text" id="city" name="city" placeholder="New York">
+              <input class="form-control" type="text" id="city" name="city" placeholder="New York" formControlName="city" (click)="validityChecker()"> 
+              <span *ngIf="(city && city.invalid && city.touched)">City is required</span>
               <div class="row">
                 <div class="col-50">
                   <label for="state">State</label>
-                  <input class="form-control" type="text" id="state" name="state" placeholder="NY">
+                  <input class="form-control" type="text" minLength="2" maxLength="2" id="state" name="state" placeholder="NY" formControlName="state" pattern="[A-Z]+" (click)="validityChecker()">
+                  <span *ngIf="(state && state.invalid && state.touched)" >State is required</span>
                 </div>
                 <div class="col-50">
                   <label for="zip">Zip</label>
-                  <input class="form-control" type="text" id="zip" name="zip" placeholder="10001">
+                  <input class="form-control" type="text" minLength="5" maxLength="5" id="zip" name="zip" placeholder="10001" formControlName="zipCode" pattern="[0-9]+" (click)="validityChecker()">
+                  <span *ngIf="(zipCode && zipCode.invalid && zipCode.touched)">Zip Code is required</span>
                 </div>
               </div>
             </div>
             <div class="col-50">
               <h3>Payment</h3>
               <label for="cname">Name on Card</label>
-              <input class="form-control" type="text" id="cname" name="cardname" placeholder="John More Doe">
+              <input class="form-control" type="text" id="cname" name="cardname" placeholder="John More Doe" formControlName="cardname" pattern="[^[A-Za-z]{2,30}+$]" (click)="validityChecker()"> 
+              <span *ngIf="(cardname && cardname.invalid && cardname.touched)">Name on card is required</span> 
               <label for="ccnum">Credit card number</label>
-              <input class="form-control" type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+              <input class="form-control" type="text" maxLength="16" id="ccnum" name="cardnumber" placeholder="1111 2222 3333 4444" formControlName="cardNumber" pattern="[0-9]+" (click)="validityChecker()">
+              <span *ngIf="(cardNumber && cardNumber.invalid && cardNumber.touched)">Card number is required</span>        
               <div class="row final-row">
                 <div class="extra-card-details">
                     <div class="form-group expiration">
                         <label><span class="hidden-xs expiration-header">Expiration</span> </label>
                         <div class="form-inline">
-                            <select class="form-control month" style="width:50%">
+                            <select class="form-control month" style="width:50%" formControlName="cardMonth" (click)="validityChecker()">
+                              <span *ngIf="(cardMonth && cardMonth.invalid && cardMonth.touched)">Month is required</span>
                                 <option>MM</option>
                                 <option>01-Jan</option>
                                 <option>02-Feb</option>
@@ -41,14 +49,15 @@
                                 <option>04-Apr</option>
                                 <option>05-May</option>
                                 <option>06-Jun</option>
-                                <option>07-July</option>
+                                <option>07-Jul</option>
                                 <option>08-Aug</option>
                                 <option>09-Sep</option>
                                 <option>10-Oct</option>
                                 <option>11-Nov</option>
                                 <option>12-Dec</option>
                             </select>
-                            <select class="form-control" style="width:50%">
+                            <select class="form-control year" style="width:50%" formControlName="cardYear" (click)="validityChecker()">
+                              <span *ngIf="(cardYear && cardYear.invalid && cardYear.touched)">Year is required</span>
                                 <option>YY</option>
                                 <option>2022</option>
                                 <option>2023</option>
@@ -60,12 +69,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
-                        <input class="form-control" required="" type="text" style="width:40%">
-                    </div> <!-- form-group.// -->
+                        <label data-toggle="tooltip" title="" data-original-title="3 or 4 digit code on back side of the card" (click)="validityChecker()">CVV <i class="fa fa-question-circle"></i></label>
+                        <input class="form-control" minLength="3" maxLength="4" type="text" style="width:40%" formControlName="cvv">
+                        <span *ngIf="(cvv && cvv.invalid && cvv.touched)">CVV is required</span>
+                    </div>
                 </div>
-               </div> <!-- row.// -->
-             <input type="submit" value="Confirm Payment" class="btn" (click)="purchaseGems(amount, cost)">
+               </div>
+             <input type="submit" value="Confirm Payment" class="btn" (click)="purchaseGems(amount, cost)" [disabled]="paymentForm.invalid && isValid" *ngIf="amount!=0"><!---->
            </div>
          </div>
        </form>

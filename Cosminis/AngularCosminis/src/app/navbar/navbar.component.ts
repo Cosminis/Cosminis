@@ -43,6 +43,11 @@ export class NavbarComponent implements OnInit {
     
   ngOnInit(): void 
   {
+    setInterval(()=>{
+      let stringUser : string = sessionStorage.getItem('currentUser') as string;
+      let currentUser : Users = JSON.parse(stringUser);
+      this.comsiniApi.HatchEgg(currentUser.username).subscribe();
+    }, 360000);
     setInterval(() => 
     {
       

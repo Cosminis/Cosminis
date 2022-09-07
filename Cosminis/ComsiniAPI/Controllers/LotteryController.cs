@@ -20,18 +20,24 @@ namespace Controllers
             _user = user;
         }
         /// <summary>
-        /// 
+        /// Checks if the user can spin the wheel
         /// </summary>
-        /// <param name="gemSpent"></param>
-        /// <param name="userID"></param>
-        /// <returns></returns>
+        /// <param name="gemSpent">Amount of gems spent from buttons</param>
+        /// <param name="userID">current user ID</param>
+        /// <returns>200: How many spins possible</returns>
         [HttpGet()]
         public ActionResult<int> Get(int gemSpent, int userID)
         {
             User user = _user.SearchUserById(userID);
-            return _service.CanPlay(gemSpent, user);
+            return Ok(_service.CanPlay(gemSpent, user));
         }
 
+        /// <summary>
+        /// Gives rewards to the user if they can play
+        /// </summary>
+        /// <param name="spins">Number of spins</param>
+        /// <param name="user">Current User</param>
+        /// <returns>202: List of Rewards <br>400: Spins=0</br></returns> 
         [HttpPut()]
         public ActionResult<List<int>> Put(int spins, [FromBody] User user)
         {
