@@ -2,6 +2,16 @@
 
 <h2 *ngIf="(!betting) && (BattleMode == 'Friend')">Opponent Name: {{Opponent}}</h2>
 <h2 *ngIf="(!betting) && (BattleMode == 'Random')">Random Opponent</h2>
+<h2 *ngIf="(!betting) && (BattleMode == 'Boss')">Boss Opponent</h2>
+<section class="container6" *ngIf="!betting">
+    <div class="stats-container">
+        <div class="player-stats"> MatchLength: {{maxRoundCount}}</div>
+        <div class="player-stats"> RoundCount: {{roundCount}}</div>
+        <div class="player-stats"> LoseStreak: {{LoseStreak}}</div>
+        <div class="player-stats"> Win Count: {{WinStreak}}</div>
+    </div>
+</section>
+
 
 <section class="container1" *ngIf="!betting">
 	<div class="card-wrapper" *ngFor="let com of OpponentRoster">
@@ -57,12 +67,6 @@
 
 <section class="container4" *ngIf="!betting">
     <h2>Your Team</h2>
-    <div class="stats-container">
-        <div class="player-stats"> MatchLength: {{maxRoundCount}}</div>
-        <div class="player-stats"> RoundCount: {{roundCount}}</div>
-        <div class="player-stats"> LoseStreak: {{LoseStreak}}</div>
-        <div class="player-stats"> Win Count: {{WinStreak}}</div>
-    </div>
 </section>
 
 <section class="container5" *ngIf="betting">
