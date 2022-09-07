@@ -77,9 +77,6 @@ export class HomepageComponent implements OnInit {
     this.router.navigateByUrl('/MyBabies');  // define your component where you want to go
   }
   
-  gotoLottery(){
-    this.router.navigateByUrl('/lottery');  // Goes to lottey roulette wheel
-  }
   gotoUserProfile(){
     this.router.navigateByUrl('/userprofile');  // define your component where you want to go
   }
