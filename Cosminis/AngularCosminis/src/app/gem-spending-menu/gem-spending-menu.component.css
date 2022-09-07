@@ -107,6 +107,13 @@ h3
   margin-right: 180px;
 }
 
+#lottery-button
+{
+  height: 40px;
+  width: 110px;
+  margin-top: 15px;
+}
+
 .gem-image
 {
   width: 80px;
@@ -123,7 +130,7 @@ h3
 .gem-button-container {
     display: flex;
     justify-content: center;
-    flex-grow: .3;
+    flex-grow: 1;
 }
 
 .gem-title-container {
