@@ -1,4 +1,4 @@
-/*using DataAccess.Entities;
+using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using CustomExceptions;
 using Models;
@@ -87,4 +87,4 @@ public class BattleController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-}*/
+}
