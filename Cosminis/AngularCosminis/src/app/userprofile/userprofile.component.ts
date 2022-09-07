@@ -34,6 +34,8 @@ export class UserprofileComponent implements OnInit {
 
   commentArr : Comment[] = [];
 
+  commentArr2 : Comment[] = [];
+
   speciesNickname : number = 0;
 
   foodChoice : number = 0;
@@ -176,6 +178,7 @@ export class UserprofileComponent implements OnInit {
           postUser = res;
 
           this.ownersPosts[i].posterNickname = postUser.password;
+          this.displaySelfComments(this.ownersPosts[i].postId);
         })
         this.posts.splice(6, this.posts.length-6);
       }  
@@ -512,9 +515,18 @@ export class UserprofileComponent implements OnInit {
   {
     this.commentApi.getCommentByPostId(postId).subscribe((res) =>
     {
-      this.commentArr = res;
+      this.commentArr = this.commentArr.concat(res);
     })
   }
+
+  displaySelfComments(postId : number)
+  {
+    this.commentApi.getCommentByPostId(postId).subscribe((res) =>
+    {
+      this.commentArr2 = this.commentArr2.concat(res);
+      console.log(this.commentArr2);
+    })
+  }  
 
   ngOnInit(): void 
   {
