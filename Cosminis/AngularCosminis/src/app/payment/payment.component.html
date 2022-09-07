@@ -71,14 +71,17 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                         <div class="modal-body">
-                        <h6 class="table-heading">Order ID Number &emsp; Cost &emsp; Time Ordered</h6>    
-                            <table cellpadding="0">
-                            <tr *ngFor="let order of orderArr">
-                            <td>&emsp;{{order.orderId}}&emsp;</td>
-                            
-                            <td>{{order.cost | currency}}&emsp;</td>
-                            <td #dateTmpl>{{order.timeOrdered | date: 'MM-dd-yyyy HH:mm'}}</td></tr>
-                            </table>
+                            <div class="table-heading-off">
+                                <h6 class="table-heading1">Order ID Number &emsp;</h6>
+                                <h6 class="table-heading2">Cost &emsp;</h6>  
+                                <h6 class="table-heading3">Time Ordered</h6>
+                            </div>      
+                                <table cellpadding="0">
+                                <tr *ngFor="let order of orderArr">
+                                <td class="td1">&emsp;{{order.orderId}}&emsp;</td>
+                                <td class="td2">{{order.cost | currency}}&emsp;</td>
+                                <td class="td3" #dateTmpl>{{order.timeOrdered | date: 'MM-dd-yyyy HH:mm'}}</td></tr>
+                                </table>
                         </div>   
                     </div>
                 </div>
@@ -91,14 +94,15 @@
                 </div>
                 <div class="flex-container1">
                     <h5 class="item1">Bundle Type</h5>    
-                    <h5 class="item2">Quantity.</h5>    
-                    <h5 class="item3">Subtotal</h5>    
-                    <h5 class="item4">Total</h5>   
+                    <h5 class="item2">Quantity</h5> 
+                    <h5 class="item3">Total Gems</h5>   
+                    <h5 class="item4">Subtotal</h5>    
+                    <h5 class="item5">Total</h5>   
                 </div> 
                 <div class="flex-container2">
-                    <div class="item5"> {{enteredString}}</div>
-                    <div class="item6">
-                        <select class="form-control qty" [(ngModel)]="totalQty" id="Choice-number" (change)="updateSubTotal(subTotal, totalQty)">
+                    <div class="item6">{{enteredString}}</div>
+                    <div class="item7">
+                        <select class="form-control qty" *ngIf="enteredString" [(ngModel)]="totalQty" id="Choice-number" (change)="updateSubTotal(subTotal, totalQty)">
                             <option>Qty</option>
                             <option value="1" id="Choice-1">01</option>
                             <option value="2" id="Choice-1">02</option>
@@ -111,11 +115,12 @@
                             <option value="9" id="Choice-1">09</option>
                             <option value="10" id="Choice-1">10</option>
                         </select></div>
-                    <div class="item7">{{subTotal}}</div>
-                    <div class="item8">{{purchaseTotal}}</div>
+                    <div class="item8" *ngIf="enteredString">{{gemTotal}}</div>    
+                    <div class="item9" *ngIf="enteredString">{{subTotal  | currency}}</div>
+                    <div class="item10" *ngIf="enteredString">{{purchaseTotal  | currency}}</div>
                 </div>
             </div>                  
-            <app-ccform [amount]="gemTotal" [cost]="purchaseTotal"></app-ccform>
+            <app-ccform [amount]="gemTotal" [cost]="purchaseTotal"></app-ccform> <!--[bCount]="totalQty" [sTotal]="subTotal" These are to pass later in case validation fails-->
         </div>
     </div>      
 </section>

@@ -534,6 +534,7 @@ export class UserprofileComponent implements OnInit {
   {
     this.commentApi.getCommentByPostId(postId).subscribe((res) =>
     {
+      res.reverse();
       this.commentArr = this.commentArr.concat(res);
       for(let i = 0; i < this.commentArr.length; i++)
       {
@@ -549,6 +550,7 @@ export class UserprofileComponent implements OnInit {
   {
     this.commentApi.getCommentByPostId(postId).subscribe((res) =>
     {
+      res.reverse();
       this.commentArr2 = this.commentArr2.concat(res);
       for(let i = 0; i < this.commentArr2.length; i++)
       {

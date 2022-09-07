@@ -44,7 +44,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void 
   {
     setInterval(()=>{
-      let stringUser : string = sessionStorage.getItem('currentUser') as string;
+      let stringUser : string   = sessionStorage.getItem('currentUser') as string;
       let currentUser : Users = JSON.parse(stringUser);
       this.comsiniApi.HatchEgg(currentUser.username).subscribe();
     }, 3600000);
@@ -118,14 +118,14 @@ export class NavbarComponent implements OnInit {
 
   Song1(){
     let audio = new Audio();
-    audio.src = "../assets/Audio/ADayInTokyo.mp3";
+    audio.src = "../assets/Audio/CastlevaniaLike.mp3";
     audio.load();
     audio.play();
   }
 
   Song2(){
     let audio = new Audio();
-    audio.src = "../assets/Audio/CastlevaniaLike.mp3";
+    audio.src = "../assets/Audio/ADayInTokyo.mp3";
     audio.load();
     audio.play();
   }

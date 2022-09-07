@@ -53,6 +53,10 @@ export class CcformComponent implements OnInit {
 
   @Input() cost = 0;
 
+  //@Input() sTotal = 0;  I will keep these in case validation fails later for extra measures, but it seems to be working now.
+
+  //@Input() bCount = 0;
+
   order : Order =
   {
     orderId : 0,

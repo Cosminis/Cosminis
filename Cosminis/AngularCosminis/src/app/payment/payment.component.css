@@ -25,6 +25,8 @@
 h2 {
     color: mistyrose;
     text-align: center;
+    -webkit-text-stroke-width: .5px;
+    -webkit-text-stroke-color: rgb(255, 250, 146);
 }
 
 .card-body {
@@ -97,9 +99,19 @@ h2 {
 }
 
 .orderhistorybutton {
-    color: mistyrose;
+    color: rgba(232, 206, 233, 0.75);
     background-color: rgba(87, 69, 138, 0.75);
     border-radius: 20px;
+    border-width: 3px;
+    border-color: blueviolet;
+}
+
+.orderhistorybutton:hover {
+  background-color: rgba(137, 119, 185, 0.75);
+  color: rgba(251, 193, 233, 0.75);
+  border-color: rgba(66, 9, 152, 0.7);
+  border-radius: 20px;
+  border-width: 3px;
 }
 
 .modal-body {
@@ -140,7 +152,7 @@ table tr::before {
   }
 
   .gem-bundles2:hover {
-    background-color: rgba(255, 222, 73, 0.9);
+    background-color: rgba(255, 222, 73, 0.75);
     color: rgba(112, 63, 95, 0.9);
     border-color: rgba(163, 86, 10, 0.7);
     border-style: solid;
@@ -179,10 +191,91 @@ table tr::before {
 
   .order-header {
     color: rgba(87, 69, 138, 0.95);
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: rgba(87, 69, 138, 0.4);
   }
 
   .form-control {
     color: rgb(87, 69, 138, 0.95);
     border-radius: 10px;
     text-align: center;
+  }
+
+  .item6 {
+    padding-right: 12px;
+  }
+
+  .item7 {
+    padding-right: 40px;
+  }
+
+  .item8 {
+    padding-right: 48px;
+    padding-left: 10px;
+  }
+
+
+  .item9 {
+    padding-right: 0px;
+  }
+
+  .item10 {
+    padding-right: 0px;
+    padding-left: 10px;
+  }
+
+  .modal-content {
+    background-color: rgb(242, 242, 242, .85);
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+  }
+
+  .modal-header{
+    padding-left: 150px;
+  }
+
+  td {
+    width: 145px;
+    padding-left: 20px;
+    margin-right: 100px;
+    text-align: left;
+  }
+
+  .table-heading-off {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 580px;
+    text-align: center;
+    margin-right: 75px;
+    margin-left: 40px;
+  }
+
+  .td1 {
+    margin-left: 60px;
+    padding-left: 45px;
+  }
+
+  .td2 {
+    padding-left: 40px;
+    padding-right: 20px;
+  }
+
+  .td3 {
+    margin-right: 25px;
+  }
+
+  .table-heading1 {
+    margin-left: 40px;
+    padding-left: 20px;
+    padding-right: 15px;
+  }
+
+  .table-heading2 {
+    padding-right: 42px;
+  }
+  
+  .table-heading3 {
+    padding-right: 20px;
+    padding-left: 15px;
   }
