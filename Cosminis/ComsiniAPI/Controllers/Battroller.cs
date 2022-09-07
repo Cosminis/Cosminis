@@ -1,4 +1,4 @@
-using DataAccess.Entities;
+/*using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using CustomExceptions;
 using Models;
@@ -76,7 +76,7 @@ public class BattleController : ControllerBase
             {
                 TempList.Add(com.CompanionId);
             }
-            int[] tempArray = TempList.ToArray();*/
+            int[] tempArray = TempList.ToArray();      //the comment ending was here before!
             int[] RosterOne = Roster.Take(SizeOne).ToArray();
             int[] RosterTwo = Roster.Skip(SizeOne).ToArray();
             int ReturnCompIDs = _service.JudgingDiffculty(RosterOne, RosterTwo);
@@ -87,4 +87,4 @@ public class BattleController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-}
+}*/

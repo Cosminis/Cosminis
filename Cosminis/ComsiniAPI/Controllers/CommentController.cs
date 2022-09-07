@@ -1,4 +1,4 @@
-using DataAccess.Entities;
+/*using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using CustomExceptions;
 using Models;
@@ -116,5 +116,5 @@ public class CommentController : ControllerBase
         {
             return NotFound("Such a comment does not exist"); 
         }
-    }       
-}
+    }     
+}*/  
