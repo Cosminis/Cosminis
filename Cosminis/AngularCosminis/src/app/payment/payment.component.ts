@@ -9,6 +9,7 @@ import { Order } from '../Models/Orders'
 import { Bundle } from '../Models/Bundle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -121,7 +122,7 @@ export class PaymentComponent implements OnInit {
     {
       this.order = res;
       window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-      alert("Congratulations, you just spent a lot of REAL money");
+      Swal.fire("Congratulations, you just spent a lot of REAL money");
     })
   }
   

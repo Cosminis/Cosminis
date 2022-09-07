@@ -54,9 +54,7 @@ export class AllCosminisComponent implements OnInit
   updateCosminis() : void {
       this.api.getAllComsinis().subscribe((res) => 
       {
-        console.log(res);
         this.cosminis = res;
-        console.log(this.cosminis);
         this.showCosminis=Promise.resolve(true);
       })
   }
@@ -65,9 +63,7 @@ export class AllCosminisComponent implements OnInit
   {
     this.api.getCosminiByID(ID).subscribe((res) => 
     {
-      console.log(res);
       this.cosminis1 = res;
-      console.log(this.cosminis1);
       this.showCosminis=Promise.resolve(true);
     })
   }
@@ -80,7 +76,6 @@ export class AllCosminisComponent implements OnInit
 
     this.interapi.SetShowcaseCompanion(currentUserID, companionID).subscribe((res) => 
     {
-      console.log(res);
       if(this.users.showcaseCompanionFk != companionID)
       {
         this.users.showcaseCompanionFk = companionID;
@@ -107,7 +102,6 @@ export class AllCosminisComponent implements OnInit
   {
     this.api.getCosminiByUserID(ID).subscribe((res) => 
     {
-      console.log(res);
       this.cosminis = res;
 
       for(let i=0;i<this.cosminis.length;i++)
@@ -115,7 +109,6 @@ export class AllCosminisComponent implements OnInit
         this.cosminis[i].speciesNickname = this.DisplayName.get(this.cosminis[i].speciesFk);
         this.cosminis[i].emotionString = this.currentEmotion.get(this.cosminis[i].emotion);
         this.cosminis[i].image = this.imageLib.get(this.cosminis[i].speciesFk);
-        console.log(this.cosminis[i].image);
 
         this.interapi.DecrementCompanionMoodValue(this.cosminis[i].companionId as number).subscribe((res) =>
         {
@@ -163,9 +156,9 @@ showCards = false;
 
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser : Users = JSON.parse(stringUser);
-    console.log(currentUser);
+
     let currentUserID : number = currentUser.userId as number;
-    console.log(currentUserID);
+
     this.getCosminiByUserID(currentUserID);
     this.SetShowcase(currentUser.showcaseCompanionFk as number);
   }

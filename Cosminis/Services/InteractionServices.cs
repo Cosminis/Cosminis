@@ -419,9 +419,16 @@ public class InteractionService
 
     public Companion FeedCompanion(int feederID, int companionID, int foodID)
     {
+        Companion checkingComp = _compRepo.GetCompanionByCompanionId(companionID);
+        if(checkingComp == null || checkingComp.Mood == null)
+        {
+            throw new ResourceNotFound();
+        }
+
+        Companion checkingComp2 = new Companion();
         try
         {
-            _interRepo.FeedCompanion(feederID, companionID, foodID); //first thing first
+            checkingComp2 = _interRepo.FeedCompanion(feederID, companionID, foodID); //first thing first
         }
         catch(Exception)
         {
@@ -429,11 +436,6 @@ public class InteractionService
         }
 
         Random RNGjesusManifested = new Random();  
-        Companion checkingComp = _compRepo.GetCompanionByCompanionId(companionID);
-        if(checkingComp == null || checkingComp.Mood == null)
-        {
-            throw new ResourceNotFound();
-        }
 
         int offSet = RNGjesusManifested.Next(-10,11);
         double compMood = checkingComp.Mood ?? 75; //whoever set the mood and hunger to be nullable in the database needs to be condemned 
@@ -456,11 +458,22 @@ public class InteractionService
         {
             User feedingUser = _userRepo.GetUserByUserId(feederID);
 
-            Post Post = new Post()//define post properties (This person came up and feed my companion!).
+            if(checkingComp2.Hunger > checkingComp.Hunger)
+            {            
+                Post Post = new Post()//define post properties (This person came up and feed my companion!).
+                {
+                    UserIdFk = checkingComp.UserFk,
+                    Content = feedingUser.Password + " fed my companion while I was away, thank you!"
+                };
+            }
+            else
             {
-                UserIdFk = checkingComp.UserFk,
-                Content = feedingUser.Password + " fed my companion while I was away, thank you!"
-            };
+                Post Post = new Post()//define post properties (This person came up and feed my companion!).
+                {
+                    UserIdFk = companionInstance2.UserFk,
+                    Content = feedingUser.Password + " fed my companion some awful food, and now it's so hostile!... Thanks for nothing!"
+                };
+            }            
 
             try
             {
@@ -492,7 +505,7 @@ public class InteractionService
                 throw new CompNotFound();
             }                       
 
-            companionInstance = _interRepo.PetCompanion(userID, companionID);
+            Companion companionInstance2 = _interRepo.PetCompanion(userID, companionID);
 
             Random RNGjesusManifested = new Random();
 
@@ -517,16 +530,27 @@ public class InteractionService
             {
                 User feedingUser = _userRepo.GetUserByUserId(userID);
 
-                Post Post = new Post()//define post properties (This person came up and feed my companion!).
+                if(companionInstance2.Mood > companionInstance.Mood)
                 {
-                    UserIdFk = companionInstance.UserFk,
-                    Content = feedingUser.Password + " pet my companion while I was away, thank you!"
-                };
+                    Post Post = new Post()//define post properties (This person came up and feed my companion!).
+                    {
+                        UserIdFk = companionInstance2.UserFk,
+                        Content = feedingUser.Password + " pet my companion while I was away, thank you!"
+                    };                    
+                }
+                else
+                {
+                    Post Post = new Post()//define post properties (This person came up and feed my companion!).
+                    {
+                        UserIdFk = companionInstance2.UserFk,
+                        Content = feedingUser.Password + " pet my companion while it was hostile and it's mood went down... Thanks for nothing!"
+                    };   
+                }
 
                 try
                 {
                     _PostRepo.SubmitPost(Post);
-                    return companionInstance;
+                    return companionInstance2;
                 }
                 catch(Exception)
                 {
