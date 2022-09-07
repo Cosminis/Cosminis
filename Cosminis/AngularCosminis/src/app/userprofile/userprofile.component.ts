@@ -14,6 +14,7 @@ import { Cosminis } from '../Models/Cosminis';
 import { Router } from '@angular/router';
 import { Friends } from '../Models/Friends';
 import { FoodElement } from '../Models/FoodInventory';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-userprofile',
@@ -447,20 +448,21 @@ export class UserprofileComponent implements OnInit {
 
     this.comsiniApi.getCosminiByID(companionId).subscribe((res) => 
     {
-      this.displayCosmini = res;
-      let currentMood = this.displayCosmini.mood;
-      console.log(currentMood);
+      let currentMood = res.mood;
 
       this.interApi.PetCompanion(currentUser.userId as number, companionId).subscribe((res) =>
+      {
+        let newMood = res.mood;
+
+        if(newMood > currentMood)
         {
-          window.sessionStorage.setItem('DisplayCompanionMood', JSON.stringify(res.mood));
-          let newMood = this.displayCosmini.mood;
-          console.log(newMood);
-          if(newMood > currentMood)
-          {
-            alert("Good on you for petting your friend's friend!");
-          }
-        })
+          alert("Good on you for petting your friend's friend!");
+        }
+        else if(newMood <= currentMood)
+        {
+          alert("This companion was hostile! Try feeding it first next time...");
+        }
+      },(Error : HttpErrorResponse) => alert("It has been too soon since this companion has been last pet! Try again soon."))
     })
 
   }
@@ -470,10 +472,24 @@ export class UserprofileComponent implements OnInit {
     let stringUser : string = sessionStorage.getItem('currentUser') as string;
     let currentUser = JSON.parse(stringUser);
 
-    this.interApi.FeedCompanion(currentUser.userId, companionId, foodId).subscribe((res) =>
+    this.comsiniApi.getCosminiByID(companionId).subscribe((res) => 
+    {
+      let currentHung = res.hunger;
+
+      this.interApi.FeedCompanion(currentUser.userId, companionId, foodId).subscribe((res) =>
       {
-        window.sessionStorage.setItem('DisplayCompanionHunger', JSON.stringify(res.hunger));
-      })    
+        let newHung = res.hunger;
+
+        if(newHung > currentHung)
+        {
+          alert("Good on you for feeding your friend's friend!");
+        }
+        else if(newHung <= currentHung)
+        {
+          alert("This companion didn't like this food! Try feeding it something else next time...");
+        }
+      },(Error : HttpErrorResponse) => alert("It has been too soon since this companion has been last fed! Try again soon.")) 
+    })   
   }  
 
   createComment(postId : number)
@@ -504,8 +520,6 @@ export class UserprofileComponent implements OnInit {
       this.commentArr = res;
     })
   }
-
-
 
   ngOnInit(): void 
   {
